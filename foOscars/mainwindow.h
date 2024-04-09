@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QVector>
+#include <QTcpServer>
+#include <QHostAddress>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -16,8 +19,12 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QTcpServer server;
 
 private:
     Ui::MainWindow *ui;
+
+    QVector<QTcpSocket> players;
+    void onPlayerConnect();
 };
 #endif // MAINWINDOW_H
