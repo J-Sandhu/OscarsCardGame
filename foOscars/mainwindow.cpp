@@ -81,7 +81,7 @@ void MainWindow::onPlayerConnect()
         //     cout<<"Number of Bytes Written: "<<playerSocket->write(block)<<endl;
         // }
 
-        cout<<"Number of Bytes Written to just Test Client, -1 if error occured: "<<testClient->testSocket->write(block)<<endl;
+        cout<<"Number of Bytes Written to just Test Client, -1 if error occured: "<<testClient->tcpSocket->write(block)<<endl;
 
         //can be used to force socket to be ready read
         // emit testClient->testSocket->readyRead();

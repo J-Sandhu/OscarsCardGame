@@ -4,28 +4,28 @@
 
 using namespace std;
 
-Client::Client(QWidget *parent,QString ipAddress,int port): QObject(parent),ipAddress(ipAddress), port(port), testSocket(new QTcpSocket(this))
+Client::Client(QWidget *parent,QString ipAddress,int port): QObject(parent),ipAddress(ipAddress), port(port), tcpSocket(new QTcpSocket(this))
 {
-    in.setDevice(testSocket);
+    in.setDevice(tcpSocket);
     in.setVersion(QDataStream::Qt_6_5);
 
-    connect(testSocket, &QIODevice::readyRead, this, &Client::testClientRead);
-    connect(testSocket, &QAbstractSocket::errorOccurred,this, &Client::errorOccured);
-    connect(testSocket, &QAbstractSocket::disconnected,  testSocket, &QObject::deleteLater);
+    connect(tcpSocket, &QIODevice::readyRead, this, &Client::testClientRead);
+    connect(tcpSocket, &QAbstractSocket::errorOccurred,this, &Client::errorOccured);
+    connect(tcpSocket, &QAbstractSocket::disconnected,  tcpSocket, &QObject::deleteLater);
 }
 
 void Client::testJoin()
 {
-    testSocket->abort();
-    testSocket->connectToHost(ipAddress,port);
+    tcpSocket->abort();
+    tcpSocket->connectToHost(ipAddress,port);
 
-    cout<<"Socket Descriptor in the Client Object after connectToHost is: "<< testSocket->socketDescriptor()<<endl;
+    cout<<"Socket Descriptor in the Client Object after connectToHost is: "<< tcpSocket->socketDescriptor()<<endl;
 }
 
 void Client::testClientRead()
 {
     cout<<"We get to test read in client!"<<endl;
-    cout<<"Socket Descriptor in the Client Object is: "<< testSocket->socketDescriptor()<<endl;
+    cout<<"Socket Descriptor in the Client Object is: "<< tcpSocket->state()<<endl;
 
     in.startTransaction();
 
@@ -36,7 +36,7 @@ void Client::testClientRead()
     if (!in.commitTransaction())
         return;
 
-     cout<< "Message from the server: "<<message.toStdString() <<endl;
+    cout<< "Message from the server: "<<message.toStdString() <<endl;
 }
 
 void Client::errorOccured(QAbstractSocket::SocketError socketError)
@@ -51,7 +51,7 @@ void Client::errorOccured(QAbstractSocket::SocketError socketError)
         cout<< ("The connection was refused by the peer. Make sure the fortune server is running, and check that the host name and port settings are correct.")<<endl;
         break;
     default:
-        cout<< (tr("The following error occurred: %1.").arg(testSocket->errorString())).toStdString()<<endl;
+        cout<< (tr("The following error occurred: %1.").arg(tcpSocket->errorString())).toStdString()<<endl;
     }
 
 }

@@ -23,7 +23,7 @@ public:
     QString ipAddress;
     int port;
 
-    QTcpSocket *testSocket = nullptr;
+    QTcpSocket *tcpSocket = nullptr;
     QDataStream in;
     void testJoin();
 
