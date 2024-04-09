@@ -6,6 +6,8 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QHostAddress>
+#include <QMap>
+#include "client.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,14 +22,22 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QTcpServer server;
+    QTcpServer* server;
+    QString ipAddress;
+    int port;
+
+    Client* testClient;
+
+
+public slots:
+    void testClientClicked();
+    void onPlayerConnect();
 
 private:
     Ui::MainWindow *ui;
-    QVector<QTcpSocket*> players;
+    QMap<int, QTcpSocket*> players;
     QByteArray outputBuffer;
 
-    void onPlayerConnect();
-    void testJoin();
+
 };
 #endif // MAINWINDOW_H
