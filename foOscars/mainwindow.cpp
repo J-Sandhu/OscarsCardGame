@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <iostream>
+#include <QNetworkInterface>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -7,17 +9,19 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-}
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-
-
+    QString ipAddress;
+    const QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+    // use the first non-localhost IPv4 address
+    for (const QHostAddress &entry : ipAddressesList) {
+        if (entry != QHostAddress::LocalHost && entry.toIPv4Address()) {
+            ipAddress = entry.toString();
+            break;
+        }
+    }
 
     server.listen(QHostAddress::Any,1200 );
-
-
+    std::cout<<"server IP: "<<server.serverAddress().toIPv4Address()<<std::endl;
 
     connect(&server, &QTcpServer::newConnection, this, &MainWindow::onPlayerConnect);
 
@@ -31,10 +35,34 @@ MainWindow::~MainWindow()
     }
 }
 
+MainWindow::~MainWindow()
+{
+    delete ui;
+
+}
+
 
 
 void MainWindow::onPlayerConnect()
 {
+    if (players.size()==4)
+    {
+        std::cout<<"rejecting player"<<std::endl;
+        server.close();                              //stop listening for new connections.
+        return;
+    }
+    players.push_back(server.nextPendingConnection());  //put newly connected player into vector
+    if (players.size()==2)
+    {
+        //enable some UI button that starts the game
+    }
 
 
+}
+
+void MainWindow::testJoin()
+{
+    QTcpSocket a;
+    //a.connectToHost()
+    //connect some socket
 }

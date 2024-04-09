@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QVector>
 #include <QTcpServer>
+#include <QTcpSocket>
 #include <QHostAddress>
 
 QT_BEGIN_NAMESPACE
@@ -23,8 +24,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QVector<QTcpSocket*> players;
+    QByteArray outputBuffer;
 
-    QVector<QTcpSocket> players;
     void onPlayerConnect();
+    void testJoin();
 };
 #endif // MAINWINDOW_H
