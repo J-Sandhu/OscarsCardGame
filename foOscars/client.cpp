@@ -11,28 +11,32 @@ Client::Client(QWidget *parent,QString ipAddress,int port): QObject(parent),ipAd
 
     connect(testSocket, &QIODevice::readyRead, this, &Client::testClientRead);
     connect(testSocket, &QAbstractSocket::errorOccurred,this, &Client::errorOccured);
+    connect(testSocket, &QAbstractSocket::disconnected,  testSocket, &QObject::deleteLater);
 }
 
 void Client::testJoin()
 {
+    testSocket->abort();
     testSocket->connectToHost(ipAddress,port);
+
+    cout<<"Socket Descriptor in the Client Object after connectToHost is: "<< testSocket->socketDescriptor()<<endl;
 }
 
 void Client::testClientRead()
 {
     cout<<"We get to test read in client!"<<endl;
+    cout<<"Socket Descriptor in the Client Object is: "<< testSocket->socketDescriptor()<<endl;
 
     in.startTransaction();
 
     QString message;
-    in >> message;
 
-    cout<< "Partial message from the server: " <<message.toStdString() <<endl;
+    in >> message;
 
     if (!in.commitTransaction())
         return;
 
-    cout<< "Full message from the server: "<<message.toStdString() <<endl;
+     cout<< "Message from the server: "<<message.toStdString() <<endl;
 }
 
 void Client::errorOccured(QAbstractSocket::SocketError socketError)
