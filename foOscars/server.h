@@ -7,6 +7,7 @@
 #include <QHostAddress>
 #include <QMessageBox>
 #include "client.h"
+#include "model.h"
 
 
 class Server: public QObject

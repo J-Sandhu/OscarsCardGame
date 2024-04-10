@@ -1,11 +1,17 @@
 #ifndef MODEL_H
 #define MODEL_H
 #include <iostream>
+#include <map>
 
 class Model
 {
 public:
     Model();
+
+    ///
+    /// \brief Method used for testing model functionality.
+    ///
+    void modelTestMethod();
 
 private:
     ///
@@ -19,9 +25,7 @@ private:
     /// functions must be of the type actionCardFuncPtr to match
     /// parameters
     ///
-    std::map<int, actionCardFuncPtr> actionMap {{0, addPointsFromActionCard(1,0,0)},
-                                                {1, addPointsFromActionCard(0,1,0)}
-        };
+    std::map<int, actionCardFuncPtr> actionMap;
 
     ///
     /// \brief Method that will modify players score modifier(Chase's idea)
@@ -49,6 +53,6 @@ private:
     ///
     void decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModification, int unused1);
 
-
+};
 
 #endif // MODEL_H

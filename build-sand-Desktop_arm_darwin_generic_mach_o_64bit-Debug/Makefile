@@ -57,6 +57,7 @@ SOURCES       = ../foOscars/client.cpp \
 		../foOscars/main.cpp \
 		../foOscars/mainwindow.cpp \
 		../foOscars/model.cpp \
+		../foOscars/player.cpp \
 		../foOscars/server.cpp moc_client.cpp \
 		moc_mainwindow.cpp \
 		moc_server.cpp
@@ -65,6 +66,7 @@ OBJECTS       = client.o \
 		main.o \
 		mainwindow.o \
 		model.o \
+		player.o \
 		server.o \
 		moc_client.o \
 		moc_mainwindow.o \
@@ -203,6 +205,7 @@ DIST          = /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_pre.pr
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/qt_config.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-clang/qmake.conf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_post.prf \
+		../foOscars/.qmake.stash \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/exclusive_builds.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/mac/sdk.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/toolchain.prf \
@@ -236,11 +239,13 @@ DIST          = /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_pre.pr
 		../foOscars/gamestate.h \
 		../foOscars/mainwindow.h \
 		../foOscars/model.h \
+		../foOscars/player.h \
 		../foOscars/server.h ../foOscars/client.cpp \
 		../foOscars/gamestate.cpp \
 		../foOscars/main.cpp \
 		../foOscars/mainwindow.cpp \
 		../foOscars/model.cpp \
+		../foOscars/player.cpp \
 		../foOscars/server.cpp
 QMAKE_TARGET  = sand
 DESTDIR       = 
@@ -250,7 +255,7 @@ TARGET        = sand.app/Contents/MacOS/sand
 EXPORT_QMAKE_MAC_SDK = macosx
 EXPORT_QMAKE_MAC_SDK_VERSION = 14.0
 EXPORT_QMAKE_XCODE_DEVELOPER_PATH = /Library/Developer/CommandLineTools
-EXPORT__QMAKE_STASH_ = 
+EXPORT__QMAKE_STASH_ = /Users/evanblanchard/Downloads/Spring 2024/CS 3505/FinalProject/cs3505-assignment9-J-Sandhu/build-sand-Desktop_arm_darwin_generic_mach_o_64bit-Debug/.qmake.stash
 EXPORT_VALID_ARCHS = x86_64 arm64
 EXPORT_DEFAULT_ARCHS = arm64
 EXPORT_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(if $(ARCHS), $(ARCHS), $(if $(EXPORT_DEFAULT_ARCHS), $(EXPORT_DEFAULT_ARCHS), $(EXPORT_VALID_ARCHS))))
@@ -400,6 +405,7 @@ Makefile: ../foOscars/sand.pro /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/qt_config.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-clang/qmake.conf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/exclusive_builds.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/mac/sdk.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/toolchain.prf \
@@ -569,6 +575,7 @@ Makefile: ../foOscars/sand.pro /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-
 /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/qt_config.prf:
 /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-clang/qmake.conf:
 /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/exclusive_builds.prf:
 /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/mac/sdk.prf:
 /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/toolchain.prf:
@@ -627,8 +634,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/client.h ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/server.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/client.cpp ../foOscars/gamestate.cpp ../foOscars/main.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/server.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/client.h ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/player.h ../foOscars/server.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/client.cpp ../foOscars/gamestate.cpp ../foOscars/main.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/player.cpp ../foOscars/server.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../foOscars/mainwindow.ui $(DISTDIR)/
 
 
@@ -639,6 +646,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r sand.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -699,6 +707,7 @@ moc_mainwindow.cpp: ../foOscars/mainwindow.h \
 		../foOscars/client.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qdialog.h \
+		../foOscars/model.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc
 	/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=15 -D__clang_minor__=0 -D__clang_patchlevel__=0 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-clang -I'/Users/evanblanchard/Downloads/Spring 2024/CS 3505/FinalProject/cs3505-assignment9-J-Sandhu/foOscars' -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include -F/Users/evanblanchard/Qt/6.6.2/macos/lib ../foOscars/mainwindow.h -o moc_mainwindow.cpp
 
@@ -720,6 +729,7 @@ moc_server.cpp: ../foOscars/server.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qmap.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qdialog.h \
+		../foOscars/model.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc
 	/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=15 -D__clang_minor__=0 -D__clang_patchlevel__=0 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-clang -I'/Users/evanblanchard/Downloads/Spring 2024/CS 3505/FinalProject/cs3505-assignment9-J-Sandhu/foOscars' -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include -F/Users/evanblanchard/Qt/6.6.2/macos/lib ../foOscars/server.h -o moc_server.cpp
 
@@ -789,6 +799,7 @@ main.o: ../foOscars/main.cpp ../foOscars/mainwindow.h \
 		../foOscars/client.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qdialog.h \
+		../foOscars/model.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QApplication \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../foOscars/main.cpp
@@ -812,6 +823,7 @@ mainwindow.o: ../foOscars/mainwindow.cpp ../foOscars/mainwindow.h \
 		../foOscars/client.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qdialog.h \
+		../foOscars/model.h \
 		ui_mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/QNetworkInterface \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/qnetworkinterface.h \
@@ -821,6 +833,13 @@ mainwindow.o: ../foOscars/mainwindow.cpp ../foOscars/mainwindow.h \
 
 model.o: ../foOscars/model.cpp ../foOscars/model.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o model.o ../foOscars/model.cpp
+
+player.o: ../foOscars/player.cpp ../foOscars/player.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qvector.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qstring.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o player.o ../foOscars/player.cpp
 
 server.o: ../foOscars/server.cpp ../foOscars/server.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMainWindow \
@@ -840,6 +859,7 @@ server.o: ../foOscars/server.cpp ../foOscars/server.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qmap.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qdialog.h \
+		../foOscars/model.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QtWidgets \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qtwidgetsglobal.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qabstractbutton.h \

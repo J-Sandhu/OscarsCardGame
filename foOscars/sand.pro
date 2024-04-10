@@ -15,6 +15,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     model.cpp \
+    player.cpp \
     server.cpp
 
 HEADERS += \
@@ -22,6 +23,7 @@ HEADERS += \
     gamestate.h \
     mainwindow.h \
     model.h \
+    player.h \
     server.h
 
 FORMS += \

@@ -38,6 +38,8 @@ Server::Server(QWidget *parent): QObject(parent)
     // connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
     connect(tcpServer, &QTcpServer::newConnection, this, &Server::newConnection);
 
+
+
 }
 
 void Server::newConnection()
