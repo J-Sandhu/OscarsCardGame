@@ -11,13 +11,17 @@ CONFIG += c++17
 
 SOURCES += \
     client.cpp \
+    gamestate.cpp \
     main.cpp \
     mainwindow.cpp \
+    model.cpp \
     server.cpp
 
 HEADERS += \
     client.h \
+    gamestate.h \
     mainwindow.h \
+    model.h \
     server.h
 
 FORMS += \
