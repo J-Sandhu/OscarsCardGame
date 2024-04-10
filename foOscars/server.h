@@ -16,7 +16,7 @@ class Server: public QObject
 public:
     Server(QWidget *parent);
 
-    QTcpServer* server= nullptr;
+    QTcpServer* tcpServer= nullptr;
     QString ipAddress;
     int port;
     QSet<QTcpSocket*> players;

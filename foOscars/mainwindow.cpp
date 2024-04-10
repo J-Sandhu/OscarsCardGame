@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->hostButton, &QPushButton::clicked, this, &MainWindow::hostClicked);
     connect(ui->connectButton, &QPushButton::clicked, this, &MainWindow::connectClicked);
 
-    connect(clientSocket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
+    // connect(clientSocket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
 
 }
@@ -53,11 +53,11 @@ void MainWindow::hostClicked()
     ui->portLine->setText(QString::number(server->port));
 
     serverPort=server->port;
-    serverIpAddress= server->server->serverAddress();
+    serverIpAddress= server->tcpServer->serverAddress();
 
     connect(server, &Server::displayMessage, this, &MainWindow::displayMessageFromServer);
 
-    connectClicked();
+    // connectClicked();
 }
 
 void MainWindow::connectClicked()
@@ -67,8 +67,14 @@ void MainWindow::connectClicked()
 
 
     cout<<"state of the client socket: "<<clientSocket->socketDescriptor()<<endl;
-    clientSocket->connectToHost(serverIpAddress,serverPort);
+    clientSocket->connectToHost(ui->ipLine->text(), ui->portLine->text().toInt());
     cout<<"state of the client socket after attempting to connect to host: "<<clientSocket->socketDescriptor()<<endl;
+
+    if(clientSocket->waitForConnected())
+        cout<<"Connected to Server"<<endl;
+    else
+        cout<<tr("The following error occurred: %1.").arg(clientSocket->errorString()).toStdString()<<endl;
+
 }
 
 

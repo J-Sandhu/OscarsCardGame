@@ -8,14 +8,14 @@ using namespace std;
 Server::Server(QWidget *parent): QObject(parent)
 {
 
-    server = new QTcpServer(this);
-    cout<<"state of the server after construction: "<<server->socketDescriptor()<<endl;
-    if (!server->listen()) {
-        emit errorOccured(server->errorString());
-        server->close();
+    tcpServer = new QTcpServer(this);
+
+    if (!tcpServer->listen()) {
+        cout<<(tr("Fortune Server Unable to start the server: %1.").arg(tcpServer->errorString())).toStdString()<<endl;
+        tcpServer->close();
         return;
     }
-    cout<<"state of the server after listen: "<<server->socketDescriptor()<<endl;
+
 
     const QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
     // use the first non-localhost IPv4 address
@@ -25,20 +25,27 @@ Server::Server(QWidget *parent): QObject(parent)
             break;
         }
     }
+    // if we did not find one, use IPv4 localhost
+    if (ipAddress.isEmpty())
+    {
+        ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
+    }
 
-    port= server->serverPort();
+    cout<<tr("The server is running on IP: %1 and port: %2 ").arg(ipAddress).arg(tcpServer->serverPort()).toStdString()<<endl;
+    port=tcpServer->serverPort();
+
 
     // connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
-    connect(server, &QTcpServer::newConnection, this, &Server::newConnection);
+    connect(tcpServer, &QTcpServer::newConnection, this, &Server::newConnection);
 
 }
 
 void Server::newConnection()
 {
 
-    while (server->hasPendingConnections())
+    while (tcpServer->hasPendingConnections())
     {
-        QTcpSocket* socket = server->nextPendingConnection();
+        QTcpSocket* socket = tcpServer->nextPendingConnection();
         players.insert(socket);
 
         cout<<"connection!!"<<endl;
