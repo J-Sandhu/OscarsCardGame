@@ -12,6 +12,10 @@ Client::Client(QWidget *parent,QString ipAddress,int port): QObject(parent),ipAd
     connect(tcpSocket, &QIODevice::readyRead, this, &Client::testClientRead);
     connect(tcpSocket, &QAbstractSocket::errorOccurred,this, &Client::errorOccured);
     connect(tcpSocket, &QAbstractSocket::disconnected,  tcpSocket, &QObject::deleteLater);
+
+
+
+    //connect(ui->sendMessage, &QAbstractButton::clicked, this, &MainWindow::sendMessageClicked);
 }
 
 void Client::testJoin()

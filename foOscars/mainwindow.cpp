@@ -15,83 +15,96 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    server = new QTcpServer(this);
+   //enable the connection buttons and text
+    ui->connectButton->setEnabled(true);
+    ui->hostButton->setEnabled(true);
 
-    connect(ui->testClient, &QPushButton::clicked, this, &MainWindow::testClientClicked );
-    connect(server, &QTcpServer::newConnection, this, &MainWindow::onPlayerConnect);
-
-
-    if (!server->listen()) {
-        QMessageBox::critical(this, tr("Fortune Server"),
-                              tr("Unable to start the server: %1.")
-                                 .arg(server->errorString()));
-        close();
-        return;
-    }
-
-    const QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
-    // use the first non-localhost IPv4 address
-    for (const QHostAddress &entry : ipAddressesList) {
-        if (entry != QHostAddress::LocalHost && entry.toIPv4Address()) {
-            ipAddress = entry.toString();
-            break;
-        }
-    }
-
-    port=server->serverPort();
-    ui->hostPort->setText(QString::number(port));
-    ui->hostIP->setText(QString(ipAddress));
+    ui->ipLine->setEnabled(true);
+    ui->ipLine->setEnabled(true);
 
 
-     cout<<"Current Server's ipAddress : "<<ipAddress.toStdString() <<endl;
-     cout<<"Current Server's port: "<< server->serverPort() <<endl;
+    //connect the buttons to their respective actions
+    // connect(ui->hostButton, &QPushButton::clicked, server, &Server::createServer);
+    connect(ui->hostButton, &QPushButton::clicked, this, &MainWindow::hostClicked);
+    connect(ui->connectButton, &QPushButton::clicked, this, &MainWindow::connectClicked);
 
-
-   testClient = new Client(this,ipAddress, port);
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-
 }
 
-void MainWindow::onPlayerConnect()
+
+void MainWindow::hostClicked()
 {
+    //disable text entry for ip and port, and connect button
+    ui->connectButton->setEnabled(false);
+    ui->hostButton->setEnabled(false);
+    ui->ipLine->setEnabled(false);
+    ui->portLine->setEnabled(false);
 
-    players.insert(players.size()+1,server->nextPendingConnection());  //put newly connected player into vector
+    server= new Server(this);
+
+    ui->ipLine->setText(server->ipAddress);
+    ui->portLine->setText(QString::number(server->port));
+
+    serverPort=server->port;
+    serverIpAddress= server->server->serverAddress();
+
+    //give the "server client" the information about the server created on their computer
+
+    connect(server, &Server::displayMessage, this, &MainWindow::displayMessageFromServer);
+
+    connectClicked();
+}
+
+void MainWindow::connectClicked()
+{
+    cout<<"this is legal"<<endl;
+    clientSocket = new QTcpSocket(this);
+
+    connect(clientSocket, &QTcpSocket::readyRead, this, &MainWindow::readSocket);
+    connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
+
+    clientSocket->connectToHost(serverIpAddress,serverPort);
+}
 
 
-    cout<<"Accepting player with socket desriptor: "<< players[players.size()]->socketDescriptor()<<endl;
 
-    if(players.size()!=4)
+void MainWindow::displayMessageFromServer(QString newMessage)
+{
+    ui->receivedMessageText->append(newMessage);
+}
+
+void MainWindow::readSocket()
+{
+    QByteArray buffer;
+
+    QDataStream socketStream(clientSocket);
+    socketStream.setVersion(QDataStream::Qt_5_15);
+
+    socketStream.startTransaction();
+    socketStream >> buffer;
+
+    if(!socketStream.commitTransaction())
     {
-        server->close();
-
-        QByteArray block;
-        QDataStream out(&block, QIODevice::WriteOnly);
-        out.setVersion(QDataStream::Qt_6_5);
-
-        out<<QString("You Are Connected");
-
-        // for(QTcpSocket *playerSocket: players.values())
-        // {
-        //     cout<<"Writing to player with socket desriptor : "<< players[players.size()]->socketDescriptor()<<endl;
-        //     cout<<"Number of Bytes Written: "<<playerSocket->write(block)<<endl;
-        // }
-
-        cout<<"Number of Bytes Written to just Test Client, -1 if error occured: "<<testClient->tcpSocket->write(block)<<endl;
-
-        //can be used to force socket to be ready read
-        // emit testClient->testSocket->readyRead();
-
+        QString message = QString("%1 :: Waiting for more data to come..").arg(clientSocket->socketDescriptor());
+        emit newMessage(message);
+        return;
     }
 
+
+    QString message = QString("%1 :: %2").arg(clientSocket->socketDescriptor()).arg(QString::fromStdString(buffer.toStdString()));
+    emit newMessage(message);
+
+
 }
 
-void MainWindow::testClientClicked()
+void MainWindow::displayMessage(const QString& str)
 {
-    testClient->testJoin();
+    ui->receivedMessageText->append(str);
 }
+
 
