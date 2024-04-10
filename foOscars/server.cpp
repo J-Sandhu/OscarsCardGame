@@ -9,13 +9,13 @@ Server::Server(QWidget *parent): QObject(parent)
 {
 
     server = new QTcpServer(this);
-
+    cout<<"state of the server after construction: "<<server->socketDescriptor()<<endl;
     if (!server->listen()) {
         emit errorOccured(server->errorString());
         server->close();
         return;
     }
-
+    cout<<"state of the server after listen: "<<server->socketDescriptor()<<endl;
 
     const QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
     // use the first non-localhost IPv4 address

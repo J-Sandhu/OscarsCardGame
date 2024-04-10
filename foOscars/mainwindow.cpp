@@ -12,6 +12,7 @@ using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , clientSocket(new QTcpSocket(this))
 {
     ui->setupUi(this);
 
@@ -24,9 +25,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //connect the buttons to their respective actions
-    // connect(ui->hostButton, &QPushButton::clicked, server, &Server::createServer);
     connect(ui->hostButton, &QPushButton::clicked, this, &MainWindow::hostClicked);
     connect(ui->connectButton, &QPushButton::clicked, this, &MainWindow::connectClicked);
+
+    connect(clientSocket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
 
 }
@@ -53,8 +55,6 @@ void MainWindow::hostClicked()
     serverPort=server->port;
     serverIpAddress= server->server->serverAddress();
 
-
-    // connect(server->server, &QTcpServer::newConnection, server, &Server::newConnection);
     connect(server, &Server::displayMessage, this, &MainWindow::displayMessageFromServer);
 
     connectClicked();
@@ -62,16 +62,11 @@ void MainWindow::hostClicked()
 
 void MainWindow::connectClicked()
 {
-    cout<<"state of the server: "<<server->server->socketDescriptor()<<endl;
-
-
-    clientSocket = new QTcpSocket(this);
-
-
-    cout<<"state of the client socket: "<<clientSocket->socketDescriptor()<<endl;
     connect(clientSocket, &QTcpSocket::readyRead, this, &MainWindow::readSocket);
     connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
 
+
+    cout<<"state of the client socket: "<<clientSocket->socketDescriptor()<<endl;
     clientSocket->connectToHost(serverIpAddress,serverPort);
     cout<<"state of the client socket after attempting to connect to host: "<<clientSocket->socketDescriptor()<<endl;
 }
@@ -110,6 +105,11 @@ void MainWindow::readSocket()
 void MainWindow::displayMessage(const QString& str)
 {
     ui->receivedMessageText->append(str);
+}
+
+void MainWindow::displayError(QAbstractSocket::SocketError socketError)
+{
+    cout<<clientSocket->errorString().toStdString()<<endl;
 }
 
 

@@ -37,6 +37,7 @@ public slots:
     void connectClicked();
     void readSocket();
     void displayMessage(const QString& str);
+    void displayError(QAbstractSocket::SocketError socketError);
 signals:
     void newMessage(QString message);
 
