@@ -20,7 +20,7 @@
       <x>180</x>
       <y>330</y>
       <width>411</width>
-      <height>91</height>
+      <height>102</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="action_tableau">
@@ -178,10 +178,21 @@
     </property>
     <layout class="QHBoxLayout" name="connectionLayout">
      <item>
-      <widget class="QLineEdit" name="ipLine"/>
+      <widget class="QLineEdit" name="ipLine">
+       <property name="placeholderText">
+        <string>IP address</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="portLine"/>
+      <widget class="QLineEdit" name="portLine">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="placeholderText">
+        <string>Port</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="connectButton">
@@ -285,6 +296,19 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QLineEdit" name="playerNameLine">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>10</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>player</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

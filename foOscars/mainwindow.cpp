@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->hostButton, &QPushButton::clicked, this, &MainWindow::hostClicked);
     connect(ui->connectButton, &QPushButton::clicked, this, &MainWindow::connectClicked);
 
+    connect(ui->sendMessageButton, &QPushButton::clicked, this, &MainWindow::sendChatMessage);
+
     // connect(clientSocket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
 
@@ -44,8 +46,8 @@ void MainWindow::hostClicked()
 
     ui->connectButton->setEnabled(false);
     ui->hostButton->setEnabled(false);
-    ui->ipLine->setEnabled(false);
-    ui->portLine->setEnabled(false);
+    ui->ipLine->setReadOnly(true);
+    ui->portLine->setReadOnly(true);
 
     server= new Server(this);
 
@@ -57,7 +59,7 @@ void MainWindow::hostClicked()
 
     connect(server, &Server::displayMessage, this, &MainWindow::displayMessageFromServer);
 
-    // connectClicked();
+    connectClicked();
 }
 
 void MainWindow::connectClicked()
@@ -71,14 +73,20 @@ void MainWindow::connectClicked()
     cout<<"state of the client socket after attempting to connect to host: "<<clientSocket->socketDescriptor()<<endl;
 
     if(clientSocket->waitForConnected())
+    {
         cout<<"Connected to Server"<<endl;
+        ui->ipLine->setReadOnly(true);
+        ui->portLine->setReadOnly(true);
+        ui->playerNameLine->setReadOnly(true);
+        clientSendMessage("~pname:"+ui->playerNameLine->text().toStdString());            //we can figure out the protocol later
+    }
     else
         cout<<tr("The following error occurred: %1.").arg(clientSocket->errorString()).toStdString()<<endl;
 
 }
 
 
-
+//TODO: is this a client side exclusive
 void MainWindow::displayMessageFromServer(QString newMessage)
 {
     ui->receivedMessageText->append(newMessage);
@@ -118,4 +126,22 @@ void MainWindow::displayError(QAbstractSocket::SocketError socketError)
     cout<<clientSocket->errorString().toStdString()<<endl;
 }
 
+void MainWindow::sendChatMessage()
+{
+    clientSendMessage(ui->messageLine->text().toStdString());
+    ui->messageLine->clear();
 
+
+}
+
+void MainWindow::clientSendMessage(std::string message)
+{
+    QByteArray buffer;
+    buffer.append(message);
+
+    QDataStream socketStream(clientSocket);
+    socketStream.setVersion(QDataStream::Qt_5_15);
+
+    socketStream.startTransaction();
+    socketStream << buffer;
+}

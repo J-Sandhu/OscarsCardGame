@@ -46,11 +46,12 @@ void Server::newConnection()
     while (tcpServer->hasPendingConnections())
     {
         QTcpSocket* socket = tcpServer->nextPendingConnection();
-        players.insert(socket);
+
 
         cout<<"connection!!"<<endl;
         connect(socket, &QTcpSocket::readyRead, this, &Server::relayMessageToPlayers);
         connect(socket, &QTcpSocket::disconnected, this, &Server::discardSocket);
+         players.insert(socket);
         // connect(socket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
         emit displayMessage(QString("INFO :: Client with sockd:%1 has just entered the room").arg(socket->socketDescriptor()));
@@ -90,10 +91,20 @@ void Server::relayMessageToPlayers()
     }
 
     QString message = QString("%1 :: %2").arg(socket->socketDescriptor()).arg(QString::fromStdString(buffer.toStdString()));
+    std::string protocolNameMarker = "~pname:";
 
-    foreach (QTcpSocket* socket,players)
+    if (message.toStdString().rfind(protocolNameMarker)==0)
     {
-        sendMessage(socket,message);
+        //handle setting of name
+    }
+    else
+    {
+        //treat it as chat message
+        emit displayMessage(message);
+        foreach (QTcpSocket* socket,players)
+    {
+         sendMessage(socket,message);
+        }
     }
 
 }

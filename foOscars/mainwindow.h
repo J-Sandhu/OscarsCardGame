@@ -38,6 +38,7 @@ public slots:
     void readSocket();
     void displayMessage(const QString& str);
     void displayError(QAbstractSocket::SocketError socketError);
+    void sendChatMessage();
 signals:
     void newMessage(QString message);
 
@@ -46,6 +47,8 @@ signals:
 
 private:
     Ui::MainWindow *ui;
+    //for when client wants to send a message to the server
+    void clientSendMessage(std::string message);
 
 
 

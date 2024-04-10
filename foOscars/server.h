@@ -6,7 +6,7 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QMessageBox>
-
+#include "client.h"
 
 
 class Server: public QObject
