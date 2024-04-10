@@ -7,7 +7,6 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QMap>
-#include "client.h"
 #include "server.h"
 
 QT_BEGIN_NAMESPACE

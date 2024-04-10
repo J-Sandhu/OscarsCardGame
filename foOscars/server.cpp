@@ -9,7 +9,6 @@ Server::Server(QWidget *parent): QObject(parent)
 {
 
     server = new QTcpServer(this);
-    connect(server, &QTcpServer::newConnection, this, &Server::newConnection);
 
     if (!server->listen()) {
         emit errorOccured(server->errorString());
@@ -30,8 +29,7 @@ Server::Server(QWidget *parent): QObject(parent)
     port= server->serverPort();
 
     // connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
-
-
+    connect(server, &QTcpServer::newConnection, this, &Server::newConnection);
 
 }
 

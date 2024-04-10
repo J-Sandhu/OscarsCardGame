@@ -39,7 +39,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::hostClicked()
 {
-    //disable text entry for ip and port, and connect button
+
     ui->connectButton->setEnabled(false);
     ui->hostButton->setEnabled(false);
     ui->ipLine->setEnabled(false);
@@ -53,8 +53,8 @@ void MainWindow::hostClicked()
     serverPort=server->port;
     serverIpAddress= server->server->serverAddress();
 
-    //give the "server client" the information about the server created on their computer
 
+    // connect(server->server, &QTcpServer::newConnection, server, &Server::newConnection);
     connect(server, &Server::displayMessage, this, &MainWindow::displayMessageFromServer);
 
     connectClicked();
@@ -62,13 +62,18 @@ void MainWindow::hostClicked()
 
 void MainWindow::connectClicked()
 {
-    cout<<"this is legal"<<endl;
+    cout<<"state of the server: "<<server->server->socketDescriptor()<<endl;
+
+
     clientSocket = new QTcpSocket(this);
 
+
+    cout<<"state of the client socket: "<<clientSocket->socketDescriptor()<<endl;
     connect(clientSocket, &QTcpSocket::readyRead, this, &MainWindow::readSocket);
     connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
 
     clientSocket->connectToHost(serverIpAddress,serverPort);
+    cout<<"state of the client socket after attempting to connect to host: "<<clientSocket->socketDescriptor()<<endl;
 }
 
 
