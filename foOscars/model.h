@@ -16,7 +16,10 @@ public:
     /// \brief Method used for testing model functionality.
     ///
     void modelTestMethod();
-
+    void HandleChatMessage(long long id, QString message);
+    void HandleTableauSelection(long long id, QString message);
+    void HandleActionSelection(long long id, QString message);
+    void HandlePlayerName(long long id, QString message);
 private:
 
     ///

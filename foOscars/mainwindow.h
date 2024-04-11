@@ -66,6 +66,14 @@ private:
     /// and eventually the images for all player cards
     ///
     void loadResources();
+    //protocol header for sending player's name
+    std::string protocolName;
+    //protocol header for sending a chat message
+    std::string protocolChat;
+    //protocol header for sending index of played card in hand vector
+    std::string protocolAction;
+    //protocol header for sending index of selected card in tableau
+    std::string protocolTableau;
 
 
 

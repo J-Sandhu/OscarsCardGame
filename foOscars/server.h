@@ -44,6 +44,11 @@ public slots:
     void discardSocket();
     void relayMessageToPlayers();
 
+private:
+    std::string protocolName;
+    std::string protocolChat;
+    std::string protocolAction;
+    std::string protocolTableau;
 
 };
 

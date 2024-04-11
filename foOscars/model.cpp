@@ -13,7 +13,23 @@ Model::Model() {
     // CardFunction funcTuple(1,1,1,addPointsFromActionCard);
     // actionMap.insert(std::pair<int, CardFunction>(0,funcTuple));
 }
+//IGNORE THIS ONE, JAI'S GOT IT ;)
+void Model::HandlePlayerName(long long id, QString message)
+{
 
+}
+void Model::HandleChatMessage(long long id, QString message)
+{
+
+}
+void Model::HandleTableauSelection(long long id, QString message)
+{
+
+}
+void Model::HandleActionSelection(long long id, QString message)
+{
+
+}
 void Model::addPointsFromActionCard(int scoreModification, int unused1, int unused2)
 {
     std::cout << "modifying score by : " << scoreModification << std::endl;
