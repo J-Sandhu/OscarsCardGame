@@ -2,6 +2,7 @@
 #define MODEL_H
 #include <iostream>
 #include <map>
+#include "cardfunction.h"
 
 class Model
 {
@@ -25,7 +26,7 @@ private:
     /// functions must be of the type actionCardFuncPtr to match
     /// parameters
     ///
-    std::map<int, actionCardFuncPtr> actionMap;
+    std::map<int, CardFunction> actionMap;
 
     ///
     /// \brief Method that will modify players score modifier(Chase's idea)
@@ -33,7 +34,7 @@ private:
     /// \param scoreModification
     /// \param unused paramter
     ///
-    void addPointsFromActionCard(int scoreModification, int unused1, int unused2);
+    static void addPointsFromActionCard(int scoreModification, int unused1, int unused2);
 
 
     ///
@@ -52,6 +53,8 @@ private:
     /// \param unused1
     ///
     void decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModification, int unused1);
+
+
 
 };
 

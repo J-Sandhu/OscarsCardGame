@@ -40,6 +40,7 @@ Server::Server(QWidget *parent): QObject(parent)
 
 
 
+
 }
 
 void Server::newConnection()

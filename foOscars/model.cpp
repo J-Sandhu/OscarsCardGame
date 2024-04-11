@@ -1,6 +1,11 @@
 #include "model.h"
 
-Model::Model() {}
+Model::Model() {
+    std::cout <<"getting into model constructor " <<std::endl;
+    //
+    CardFunction funcTuple(1,1,1,addPointsFromActionCard);
+    actionMap.insert(std::pair<int, CardFunction>(0,funcTuple));
+}
 
 void Model::addPointsFromActionCard(int scoreModification, int unused1, int unused2)
 {
@@ -19,6 +24,12 @@ void Model::decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModificati
 
 void Model::modelTestMethod()
 {
-//     auto func = actionMap.at(0);
-//     func;
+    std::cout << "getting into modelTest MEthod " << std::endl;
+    int* params = actionMap.at(0).parameters;
+    std::cout << " getting past parameter cast " << std::endl;
+    auto func = actionMap.at(0).function;
+
+    func(params[0], params[1], params[2]);
 }
+
+

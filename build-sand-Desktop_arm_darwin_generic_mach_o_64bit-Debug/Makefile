@@ -52,7 +52,8 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../foOscars/client.cpp \
+SOURCES       = ../foOscars/cardfunction.cpp \
+		../foOscars/client.cpp \
 		../foOscars/gamestate.cpp \
 		../foOscars/main.cpp \
 		../foOscars/mainwindow.cpp \
@@ -61,7 +62,8 @@ SOURCES       = ../foOscars/client.cpp \
 		../foOscars/server.cpp moc_client.cpp \
 		moc_mainwindow.cpp \
 		moc_server.cpp
-OBJECTS       = client.o \
+OBJECTS       = cardfunction.o \
+		client.o \
 		gamestate.o \
 		main.o \
 		mainwindow.o \
@@ -235,12 +237,14 @@ DIST          = /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_pre.pr
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/exceptions.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/yacc.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/lex.prf \
-		../foOscars/sand.pro ../foOscars/client.h \
+		../foOscars/sand.pro ../foOscars/cardfunction.h \
+		../foOscars/client.h \
 		../foOscars/gamestate.h \
 		../foOscars/mainwindow.h \
 		../foOscars/model.h \
 		../foOscars/player.h \
-		../foOscars/server.h ../foOscars/client.cpp \
+		../foOscars/server.h ../foOscars/cardfunction.cpp \
+		../foOscars/client.cpp \
 		../foOscars/gamestate.cpp \
 		../foOscars/main.cpp \
 		../foOscars/mainwindow.cpp \
@@ -634,8 +638,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/client.h ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/player.h ../foOscars/server.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/client.cpp ../foOscars/gamestate.cpp ../foOscars/main.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/player.cpp ../foOscars/server.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/cardfunction.h ../foOscars/client.h ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/player.h ../foOscars/server.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/cardfunction.cpp ../foOscars/client.cpp ../foOscars/gamestate.cpp ../foOscars/main.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/player.cpp ../foOscars/server.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../foOscars/mainwindow.ui $(DISTDIR)/
 
 
@@ -755,6 +759,9 @@ compiler_lex_clean:
 compiler_clean: compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
+
+cardfunction.o: ../foOscars/cardfunction.cpp ../foOscars/cardfunction.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cardfunction.o ../foOscars/cardfunction.cpp
 
 client.o: ../foOscars/client.cpp ../foOscars/client.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMainWindow \

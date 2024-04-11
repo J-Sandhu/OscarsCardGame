@@ -4,5 +4,5 @@ Player::Player() {}
 
 void recalculateScore()
 {
-    score = score +
+    //score = score +
 }
