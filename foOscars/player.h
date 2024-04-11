@@ -9,6 +9,7 @@ public:
     Player();
     std::vector<int>playerActionPile;
     std::vector<std::vector<int>>playerPeoplePile;
+    long long id;
     int score;
     int selectedActionIndex;
     QString name;

@@ -1,8 +1,14 @@
 #include "player.h"
+#include <QVector>
 
 Player::Player() {}
 
 void recalculateScore()
 {
-    //score = score +
+   
+}
+
+std::vector<int> calulatePeopleSums()
+{
+    //foreach(std::vector col)
 }

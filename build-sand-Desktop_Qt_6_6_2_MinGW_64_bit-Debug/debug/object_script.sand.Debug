@@ -1,0 +1,10 @@
+debug/client.o
+debug/gamestate.o
+debug/main.o
+debug/mainwindow.o
+debug/model.o
+debug/player.o
+debug/server.o
+debug/moc_client.o
+debug/moc_mainwindow.o
+debug/moc_server.o

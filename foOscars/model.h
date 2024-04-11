@@ -3,11 +3,13 @@
 #include <iostream>
 #include <map>
 #include "cardfunction.h"
+#include "gamestate.h"
 
 class Model
 {
 public:
     Model();
+    GameState gameState;
 
     ///
     /// \brief Method used for testing model functionality.
