@@ -7,19 +7,20 @@ class Player
 {
 public:
     Player();
-    std::vector<int>playerActionPile;
-    std::vector<std::vector<int>>playerPeoplePile;
-    int score;
-    int selectedActionIndex;
+
     QString name;
-    int scoreManipulators[5];
-    int purpleCardSum;
-    int redCardSum;
-    int blueCardSum;
-    int greenCardSum;
+
+    QVector<int> actionPile;
+    int selectedActionIndex;
+
+    QVector<QVector<int>> peoplePile;
+    QVector<int> scoreManipulators;
+    int score;
 
 
     void recalculateScore();
+    QVector<int> calulatePeopleSums();
+
 };
 
 #endif // PLAYER_H
