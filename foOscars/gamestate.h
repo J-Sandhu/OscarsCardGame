@@ -1,12 +1,16 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include <iostream>
+#include <vector>
+#include "player.h"
 
+#include <iostream>
+using namespace std;
 class GameState
 {
 public:
     GameState();
+    vector<Player> players;
 
     /*NEEDS:
      * data to represent which player's turn

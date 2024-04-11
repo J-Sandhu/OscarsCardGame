@@ -1,0 +1,10 @@
+release/client.o
+release/gamestate.o
+release/main.o
+release/mainwindow.o
+release/model.o
+release/player.o
+release/server.o
+release/moc_client.o
+release/moc_mainwindow.o
+release/moc_server.o

@@ -1,7 +1,5 @@
 #include "server.h"
-#include <QtWidgets>
-#include <QtNetwork>
-#include <QtCore>
+
 #include <iostream>
 using namespace std;
 
@@ -92,19 +90,39 @@ void Server::relayMessageToPlayers()
         return;
     }
 
-    QString message = QString("%1 :: %2").arg(socket->socketDescriptor()).arg(QString::fromStdString(buffer.toStdString()));
-    std::string protocolNameMarker = "~pname:";
+    //QString message = QString("%1 :: %2").arg(socket->socketDescriptor()).arg(QString::fromStdString(buffer.toStdString()));
 
+    //potential change of message to not have the socket included in the text
+    QString message = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
+
+    //the following code SHOULD move to move to model, server shouldn't really care about what is in the message
+    std::string protocolNameMarker = "~pname:";
     if (message.toStdString().rfind(protocolNameMarker)==0)
     {
-        //handle setting of name
+        message.remove(0,protocolNameMarker.length());
+        if (message.toStdString()=="player")
+        {
+            message.append(to_string(socket->socketDescriptor()));
+        }
+        Player p;
+        p.id=socket->socketDescriptor();
+        p.name= message;
+        model.gameState.players.push_back(p);
+
+        message.append(" joined the game!");
+        foreach (QTcpSocket* socket,players)
+        {
+            sendMessage(socket,message);
+        }
+
+
     }
     else
     {
         //treat it as chat message
         emit displayMessage(message);
         foreach (QTcpSocket* socket,players)
-    {
+        {
          sendMessage(socket,message);
         }
     }
