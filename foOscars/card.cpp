@@ -1,4 +1,4 @@
-#include "cardfunction.h"
+#include "card.h"
 
 Card::Card(int param1, int param2, int param3, cardFuncPtr func, bool isPerson) : isPerson(isPerson)
 {

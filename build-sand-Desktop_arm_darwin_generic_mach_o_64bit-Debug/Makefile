@@ -52,17 +52,18 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../foOscars/cardfunction.cpp \
+SOURCES       = ../foOscars/card.cpp \
 		../foOscars/client.cpp \
 		../foOscars/gamestate.cpp \
 		../foOscars/mainwindow.cpp \
 		../foOscars/model.cpp \
 		../foOscars/player.cpp \
 		../foOscars/server.cpp \
-		../foOscars/main.cpp moc_client.cpp \
+		../foOscars/main.cpp qrc_resources.cpp \
+		moc_client.cpp \
 		moc_mainwindow.cpp \
 		moc_server.cpp
-OBJECTS       = cardfunction.o \
+OBJECTS       = card.o \
 		client.o \
 		gamestate.o \
 		mainwindow.o \
@@ -70,6 +71,7 @@ OBJECTS       = cardfunction.o \
 		player.o \
 		server.o \
 		main.o \
+		qrc_resources.o \
 		moc_client.o \
 		moc_mainwindow.o \
 		moc_server.o
@@ -237,13 +239,13 @@ DIST          = /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_pre.pr
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/exceptions.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/yacc.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/lex.prf \
-		../foOscars/sand.pro ../foOscars/cardfunction.h \
+		../foOscars/sand.pro ../foOscars/card.h \
 		../foOscars/client.h \
 		../foOscars/gamestate.h \
 		../foOscars/mainwindow.h \
 		../foOscars/model.h \
 		../foOscars/player.h \
-		../foOscars/server.h ../foOscars/cardfunction.cpp \
+		../foOscars/server.h ../foOscars/card.cpp \
 		../foOscars/client.cpp \
 		../foOscars/gamestate.cpp \
 		../foOscars/mainwindow.cpp \
@@ -440,6 +442,7 @@ Makefile: ../foOscars/sand.pro /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/yacc.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/lex.prf \
 		../foOscars/sand.pro \
+		../foOscars/resources.qrc \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Resources/QtWidgets.prl \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Resources/QtGui.prl \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Resources/QtNetwork.prl \
@@ -610,6 +613,7 @@ Makefile: ../foOscars/sand.pro /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-
 /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/yacc.prf:
 /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/lex.prf:
 ../foOscars/sand.pro:
+../foOscars/resources.qrc:
 /Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Resources/QtWidgets.prl:
 /Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Resources/QtGui.prl:
 /Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Resources/QtNetwork.prl:
@@ -638,8 +642,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/cardfunction.h ../foOscars/client.h ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/player.h ../foOscars/server.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/cardfunction.cpp ../foOscars/client.cpp ../foOscars/gamestate.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/player.cpp ../foOscars/server.cpp ../foOscars/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/resources.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/card.h ../foOscars/client.h ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/player.h ../foOscars/server.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/card.cpp ../foOscars/client.cpp ../foOscars/gamestate.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/player.cpp ../foOscars/server.cpp ../foOscars/main.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../foOscars/mainwindow.ui $(DISTDIR)/
 
 
@@ -667,8 +672,62 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_resources.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_resources.cpp
+qrc_resources.cpp: ../foOscars/resources.qrc \
+		/Users/evanblanchard/Qt/6.6.2/macos/libexec/rcc \
+		../foOscars/48.png \
+		../foOscars/2.png \
+		../foOscars/11.png \
+		../foOscars/28.png \
+		../foOscars/17.png \
+		../foOscars/29.png \
+		../foOscars/3.png \
+		../foOscars/23.png \
+		../foOscars/35.png \
+		../foOscars/4.png \
+		../foOscars/44.png \
+		../foOscars/7.png \
+		../foOscars/33.png \
+		../foOscars/39.png \
+		../foOscars/6.png \
+		../foOscars/14.png \
+		../foOscars/30.png \
+		../foOscars/1.png \
+		../foOscars/45.png \
+		../foOscars/43.png \
+		../foOscars/24.png \
+		../foOscars/36.png \
+		../foOscars/25.png \
+		../foOscars/41.png \
+		../foOscars/13.png \
+		../foOscars/16.png \
+		../foOscars/8.png \
+		../foOscars/10.png \
+		../foOscars/27.png \
+		../foOscars/22.png \
+		../foOscars/15.png \
+		../foOscars/46.png \
+		../foOscars/5.png \
+		../foOscars/34.png \
+		../foOscars/20.png \
+		../foOscars/42.png \
+		../foOscars/26.png \
+		../foOscars/0.png \
+		../foOscars/31.png \
+		../foOscars/32.png \
+		../foOscars/47.png \
+		../foOscars/18.png \
+		../foOscars/12.png \
+		../foOscars/Template.png \
+		../foOscars/9.png \
+		../foOscars/40.png \
+		../foOscars/21.png \
+		../foOscars/19.png \
+		../foOscars/38.png
+	/Users/evanblanchard/Qt/6.6.2/macos/libexec/rcc -name resources --no-zstd ../foOscars/resources.qrc -o qrc_resources.cpp
+
 compiler_moc_header_make_all: moc_client.cpp moc_mainwindow.cpp moc_server.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_client.cpp moc_mainwindow.cpp moc_server.cpp
@@ -705,6 +764,8 @@ moc_mainwindow.cpp: ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/qhostaddress.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QMap \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qmap.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/QImage \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/qimage.h \
 		../foOscars/server.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMessageBox \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
@@ -1098,7 +1159,7 @@ moc_mainwindow.cpp: ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qxmlstream.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qxpfunctional.h \
 		../foOscars/model.h \
-		../foOscars/cardfunction.h \
+		../foOscars/card.h \
 		../foOscars/gamestate.h \
 		../foOscars/player.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
@@ -1508,7 +1569,7 @@ moc_server.cpp: ../foOscars/server.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qxmlstream.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qxpfunctional.h \
 		../foOscars/model.h \
-		../foOscars/cardfunction.h \
+		../foOscars/card.h \
 		../foOscars/gamestate.h \
 		../foOscars/player.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
@@ -1535,12 +1596,12 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
-cardfunction.o: ../foOscars/cardfunction.cpp ../foOscars/cardfunction.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cardfunction.o ../foOscars/cardfunction.cpp
+card.o: ../foOscars/card.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o card.o ../foOscars/card.cpp
 
 client.o: ../foOscars/client.cpp ../foOscars/client.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMainWindow \
@@ -1584,6 +1645,8 @@ mainwindow.o: ../foOscars/mainwindow.cpp ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/qhostaddress.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QMap \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qmap.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/QImage \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/qimage.h \
 		../foOscars/server.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMessageBox \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
@@ -1977,7 +2040,7 @@ mainwindow.o: ../foOscars/mainwindow.cpp ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qxmlstream.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qxpfunctional.h \
 		../foOscars/model.h \
-		../foOscars/cardfunction.h \
+		../foOscars/card.h \
 		../foOscars/gamestate.h \
 		../foOscars/player.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
@@ -1986,7 +2049,7 @@ mainwindow.o: ../foOscars/mainwindow.cpp ../foOscars/mainwindow.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../foOscars/mainwindow.cpp
 
 model.o: ../foOscars/model.cpp ../foOscars/model.h \
-		../foOscars/cardfunction.h \
+		../foOscars/card.h \
 		../foOscars/gamestate.h \
 		../foOscars/player.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
@@ -2405,7 +2468,7 @@ server.o: ../foOscars/server.cpp ../foOscars/server.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qxmlstream.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qxpfunctional.h \
 		../foOscars/model.h \
-		../foOscars/cardfunction.h \
+		../foOscars/card.h \
 		../foOscars/gamestate.h \
 		../foOscars/player.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
@@ -2425,6 +2488,8 @@ main.o: ../foOscars/main.cpp ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/qhostaddress.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QMap \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qmap.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/QImage \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/qimage.h \
 		../foOscars/server.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMessageBox \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
@@ -2818,12 +2883,15 @@ main.o: ../foOscars/main.cpp ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qxmlstream.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qxpfunctional.h \
 		../foOscars/model.h \
-		../foOscars/cardfunction.h \
+		../foOscars/card.h \
 		../foOscars/gamestate.h \
 		../foOscars/player.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../foOscars/main.cpp
+
+qrc_resources.o: qrc_resources.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
 
 moc_client.o: moc_client.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_client.o moc_client.cpp

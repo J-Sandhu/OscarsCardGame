@@ -15,6 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // load all of the pictures so we don't have to do it at every turn
+    //loadResources();
+
     //enable the connection buttons and text
     ui->connectButton->setEnabled(true);
     ui->hostButton->setEnabled(true);
@@ -148,14 +151,156 @@ void MainWindow::clientSendMessage(std::string message)
 // How does a client know what player it is?
 void MainWindow::cardPlayed()
 {
-
+    // Send message via jai's communication method.
 }
 void MainWindow::nextActionClicked()
 {
+    selectedActionCardIndex++;
+    updateActionHand(getActionCardHand());
 
 }
 void MainWindow::PreviousActionClicked()
 {
+    selectedActionCardIndex--;
+    updateActionHand(getActionCardHand());
+}
 
+std::vector<QImage> MainWindow::getActionCardHand()
+{
+    std::vector<QImage> previewFrames;
+
+    /// Grab jai's code to get the index of interest
+    /// replace the zero
+    QVector<int> pileOfInterest = gameState.players.at(0).actionPile;
+
+    // create a blank image to fill empty frame preview slots
+    QImage blankImage;
+    QColor transparent(255,255,255,255);
+    blankImage.fill(transparent);
+
+    // handles selected frame and frames to the left
+    // if there are less than 2 frames to the left
+    if(selectedActionCardIndex < 2)
+    {
+        // if there is 1 frame to the left
+        if(selectedActionCardIndex == 1)
+        {
+            // push back a blank Qimage, then the image at 0, then the preview frame
+            //std::cout << "finding 1 frame to the left " <<std::endl;
+
+            // right now this pushes back an integer, we need it to push back
+            // an image with the filename of the specified.
+
+
+
+            previewFrames.push_back(blankImage);
+
+            //QImage image1(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex-1)));
+            previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex-1)));
+
+            //QImage image2(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex)));
+            previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex)));
+        }
+        if(selectedActionCardIndex == 0)
+        {
+            //std::cout <<"finding no frames to the left" << std::endl;
+            // push back 2 blank Qimages, then the selected frame
+            previewFrames.push_back(blankImage);
+            previewFrames.push_back(blankImage);
+            previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex)));
+        }
+    }
+    // if there are at least two frames to the left
+    else
+    {
+        // push the 2 frames before and the current frame
+        // std::cout << "finding 2 frames to the left" <<std::endl;
+        // previewFrames.push_back(animationFrames.at(currentFrame-2).imageData);
+        // previewFrames.push_back(animationFrames.at(currentFrame-1).imageData);
+
+        //QImage image1(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex-2)));
+        previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex-2)));
+
+        //QImage image2(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex-1)));
+        previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex-1)));
+
+        //QImage image3(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex)));
+        previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex)));
+
+        //previewFrames.push_back(animationFrames.at(currentFrame).imageData);
+    }
+
+    // handles frames to the right
+    // if there are less than two frames to the right
+    if(pileOfInterest.size() - selectedActionCardIndex < 3)
+    {
+        // there is only 1 frame to the right
+        if(pileOfInterest.size()-selectedActionCardIndex == 2)
+        {
+            // push back the next frame then 1 empty frame
+            // std::cout <<"finding 1 frame to right" << std::endl;
+            //QImage image(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex+1)));
+            previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex+1)));
+            //previewFrames.push_back(animationFrames.at(currentFrame+1).imageData);
+            previewFrames.push_back(blankImage);
+        }
+        // if there are no frames to the right
+        // the same as the selected frame being the last frame
+        if(selectedActionCardIndex == pileOfInterest.size()-1)
+        {
+            // push back two empty frames
+            //std::cout <<"No frames to the right" << std::endl;
+            previewFrames.push_back(blankImage);
+            previewFrames.push_back(blankImage);
+        }
+    }
+    // if there are at least two frames to the right
+    else
+    {
+        //std::cout << "finding at least two frames to the right" << std::endl;
+        //push back the two frames to the right
+
+        //QImage image1(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex+1)));
+        previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex+1)));
+
+        //QImage image2(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex+2)));
+        previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex+2)));
+
+        // previewFrames.push_back(animationFrames.at(currentFrame+1).imageData);
+        // previewFrames.push_back(animationFrames.at(currentFrame+2).imageData);
+    }
+
+    return previewFrames;
+}
+
+// QString MainWindow::makeActionCardFilename(int actionCardID)
+// {
+//     QString filename = QString::number(actionCardID);
+//     filename.append(".png");
+//     filename.prepend(":/actions/");
+//     return filename;
+// }
+
+void MainWindow::updateActionHand(std::vector<QImage> images)
+{
+    int nonSelectedHeight = ui->ACardLabel1->geometry().height();
+    int selectedHeight = ui->SelectedACardLabel->geometry().height();
+    ui->ACardLabel1->setPixmap(QPixmap::fromImage(images.at(0)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+    ui->ACardLabel2->setPixmap(QPixmap::fromImage(images.at(1)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+    ui->SelectedACardLabel->setPixmap(QPixmap::fromImage(images.at(2)).scaledToHeight(selectedHeight,Qt::FastTransformation));
+    ui->ACardLabel4->setPixmap(QPixmap::fromImage(images.at(3)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+    ui->ACardLabel5->setPixmap(QPixmap::fromImage(images.at(4)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+}
+
+void MainWindow::loadResources()
+{
+    for(int i = 0; i<49 ; i++)
+    {
+        QString filename = QString::number(i);
+        filename.append(".png");
+        filename.prepend(":/actions/");
+        QImage assetImage(filename);
+        actionImages.push_back(assetImage);
+    }
 }
 

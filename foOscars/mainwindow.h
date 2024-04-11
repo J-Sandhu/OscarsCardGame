@@ -7,6 +7,7 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QMap>
+#include <QImage>
 #include "server.h"
 #include "gamestate.h"
 
@@ -29,6 +30,8 @@ public:
 
     QTcpSocket* clientSocket;
     GameState gameState;
+    int selectedActionCardIndex;
+    QVector<QImage> actionImages;
 
 
 
@@ -55,6 +58,14 @@ private:
     Ui::MainWindow *ui;
     //for when client wants to send a message to the server
     void clientSendMessage(std::string message);
+    std::vector<QImage> getActionCardHand();
+    //QString makeActionCardFilename(int actionCardID);
+    void updateActionHand(std::vector<QImage> images);
+    ///
+    /// \brief Method that will load the images for all action cards
+    /// and eventually the images for all player cards
+    ///
+    void loadResources();
 
 
 

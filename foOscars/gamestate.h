@@ -12,6 +12,17 @@ public:
     GameState();
     vector<Player> players;
     int currentPlayerIndex;
+    
+    // 48+ 4
+    // 2,3,4,8
+    QVector<int> actionCardStack;
+
+    //40 + 6
+    // 2*2, 11*2, 12*4, 29*2
+    QVector<int> personCardStack;
+    QVector<int> tableau;
+    
+    
 
     /*NEEDS:
      * data to represent which player's turn

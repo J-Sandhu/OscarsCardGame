@@ -4,6 +4,7 @@
 #include <map>
 #include "card.h"
 #include "gamestate.h"
+#include <QRandomGenerator>
 
 class Model
 {
@@ -72,6 +73,24 @@ private:
     /// \param unused3
     ///
     void newTableau(int unused1, int unused2, int unused3);
+
+    ///
+    /// \brief fills the game state with the required card ids
+    ///
+    void populateGameState();
+
+    ///
+    /// \brief creates a random tableau and puts it into the game state
+    ///  requires that game has been populated
+    ///
+    void generateRandomTableau();
+
+    ///
+    /// \brief populates all player's hands with random action cards
+    /// may need to modify this if we allow for less than 4 player to play
+    /// for now this is a good test
+    ///
+    void generateRandomHands();
 
 
 

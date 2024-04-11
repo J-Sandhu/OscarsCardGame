@@ -6,9 +6,9 @@
 int main(int argc, char *argv[])
 {
     // //TODO: remove this test code
-    // std::cout << "creating a model" << std::endl;
-    // Model model;
-    // model.modelTestMethod();
+    std::cout << "creating a model" << std::endl;
+    Model model;
+    //model.modelTestMethod();
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
