@@ -2,11 +2,14 @@
 #define MODEL_H
 #include <iostream>
 #include <map>
+#include "cardfunction.h"
+#include "gamestate.h"
 
 class Model
 {
 public:
     Model();
+    GameState gameState;
 
     ///
     /// \brief Method used for testing model functionality.
@@ -14,6 +17,7 @@ public:
     void modelTestMethod();
 
 private:
+
     ///
     /// Function pointer type for action cards, takes 3 generic integer parameters
     /// which are to be defined later
@@ -25,33 +29,52 @@ private:
     /// functions must be of the type actionCardFuncPtr to match
     /// parameters
     ///
-    std::map<int, actionCardFuncPtr> actionMap;
+    std::map<int, CardFunction> actionMap;
 
     ///
-    /// \brief Method that will modify players score modifier(Chase's idea)
+    /// \brief Adds additional points to the current players score calculator
     /// \param victimPlayerID
     /// \param scoreModification
     /// \param unused paramter
     ///
     void addPointsFromActionCard(int scoreModification, int unused1, int unused2);
 
-
     ///
-    /// \brief method that will modify players color multiplier/ adder
+    /// \brief Modifies color multiplier of the current players score calculator
     /// \param index of color that will be modified
     /// \param scoreModification the amount the point values of that color are modified
     /// \param unused parameter
     ///
     void addPointsForColor(int color, int scoreModification, int unused1);
 
-
     ///
-    /// \brief decrease the points of a victim player of your choosing
+    /// \brief modifies the specified player's score calculator.
     /// \param index of player to be sabotaged
     /// \param scoreModification the amount the victim's score will be affected by
-    /// \param unused1
+    /// \param unused parameter
     ///
     void decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModification, int unused1);
+
+    ///
+    /// \brief modifies the position of the specified card within the tableau
+    /// this method will not be hard coded into the game because it will need to receive
+    /// parameters from the client. I.E. it doesn't have the exact same effect every time
+    /// \param indexInTableau index of the selected card within the tableau
+    /// \param positionModification number of positions the card is being used
+    /// \param unused parameter
+    ///
+    void movementCardPlayed(int requiredColor, int unused1, int unused2);
+
+    ///
+    /// \brief This method will replace the line
+    /// \param unused1
+    /// \param unused2
+    /// \param unused3
+    ///
+    void newTableau(int unused1, int unused2, int unused3);
+
+
+
 
 };
 

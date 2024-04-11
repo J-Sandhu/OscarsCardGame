@@ -10,15 +10,17 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    cardfunction.cpp \
     client.cpp \
     gamestate.cpp \
-    main.cpp \
     mainwindow.cpp \
     model.cpp \
     player.cpp \
-    server.cpp
+    server.cpp \
+    main.cpp
 
 HEADERS += \
+    cardfunction.h \
     client.h \
     gamestate.h \
     mainwindow.h \
@@ -33,3 +35,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc

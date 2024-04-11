@@ -6,10 +6,16 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QMessageBox>
-#include "client.h"
+#include <QtWidgets>
+#include <QtNetwork>
+#include <QtCore>
 #include "model.h"
+#include "gamestate.h"
 
-
+///
+/// \brief Server class represents the "Controller" for this project
+/// according to MVC architecture
+///
 class Server: public QObject
 {
     Q_OBJECT
@@ -21,6 +27,7 @@ public:
     QString ipAddress;
     int port;
     QSet<QTcpSocket*> players;
+    Model model;
 
     void sendMessage(QTcpSocket* socket, QString message);
 

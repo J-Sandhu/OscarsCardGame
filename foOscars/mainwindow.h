@@ -8,6 +8,7 @@
 #include <QHostAddress>
 #include <QMap>
 #include "server.h"
+#include "gamestate.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,6 +28,7 @@ public:
     int serverPort;
 
     QTcpSocket* clientSocket;
+    GameState gameState;
 
 
 
@@ -39,6 +41,10 @@ public slots:
     void displayMessage(const QString& str);
     void displayError(QAbstractSocket::SocketError socketError);
     void sendChatMessage();
+    void cardPlayed();
+    void nextActionClicked();
+    void PreviousActionClicked();
+
 signals:
     void newMessage(QString message);
 

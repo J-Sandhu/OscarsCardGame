@@ -7,7 +7,6 @@ class Player
 {
 public:
     Player();
-
     QString name;
 
     QVector<int> actionPile;
