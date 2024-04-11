@@ -31,7 +31,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     // connect(clientSocket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
-
+    protocolName = "~pname:";
+    protocolChat = "~chat:";
+    protocolAction= "~action:";
+    protocolTableau="~tableau";
 }
 
 MainWindow::~MainWindow()

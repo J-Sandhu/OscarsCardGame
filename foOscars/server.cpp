@@ -36,7 +36,10 @@ Server::Server(QWidget *parent): QObject(parent)
 
     // connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
     connect(tcpServer, &QTcpServer::newConnection, this, &Server::newConnection);
-
+    protocolName = "~pname:";
+    protocolChat = "~chat:";
+    protocolAction= "~action:";
+    protocolTableau="~tableau";
 
 
 }
@@ -97,10 +100,9 @@ void Server::relayMessageToPlayers()
     QString message = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
 
     //the following code SHOULD move to move to model, server shouldn't really care about what is in the message
-    std::string protocolNameMarker = "~pname:";
-    if (message.toStdString().rfind(protocolNameMarker)==0)
+    if (message.toStdString().rfind(protocolName)==0)
     {
-        message.remove(0,protocolNameMarker.length());
+        message.remove(0,protocolName.length());
         if (message.toStdString()=="player")
         {
             message.append(to_string(socket->socketDescriptor()));
