@@ -12,7 +12,11 @@ public:
     QVector<int> actionPile;
     int selectedActionIndex;
 
-    QVector<QVector<int>> peoplePile;
+    QVector<int> bluePeoplePile;
+    QVector<int> redPeoplePile;
+    QVector<int> purplePeoplePile;
+    QVector<int> greenPeoplePile;
+
     QVector<int> scoreManipulators;
     int score;
     long long id;

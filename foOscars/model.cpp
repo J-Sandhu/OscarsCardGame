@@ -7,6 +7,8 @@ Model::Model() {
 
     populateGameState();
 
+    std::cout << gameState.serialize().toStdString() << std::endl;
+
     // this is one possible format for adding cards core logic.
     // I might turn these into a file that can be read in, but
     // for now this is fine.

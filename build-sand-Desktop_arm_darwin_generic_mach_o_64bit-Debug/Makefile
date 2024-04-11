@@ -60,7 +60,6 @@ SOURCES       = ../foOscars/card.cpp \
 		../foOscars/player.cpp \
 		../foOscars/server.cpp \
 		../foOscars/main.cpp qrc_resources.cpp \
-		moc_client.cpp \
 		moc_mainwindow.cpp \
 		moc_server.cpp
 OBJECTS       = card.o \
@@ -72,7 +71,6 @@ OBJECTS       = card.o \
 		server.o \
 		main.o \
 		qrc_resources.o \
-		moc_client.o \
 		moc_mainwindow.o \
 		moc_server.o
 DIST          = /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_pre.prf \
@@ -728,29 +726,9 @@ qrc_resources.cpp: ../foOscars/resources.qrc \
 		../foOscars/38.png
 	/Users/evanblanchard/Qt/6.6.2/macos/libexec/rcc -name resources --no-zstd ../foOscars/resources.qrc -o qrc_resources.cpp
 
-compiler_moc_header_make_all: moc_client.cpp moc_mainwindow.cpp moc_server.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_server.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_client.cpp moc_mainwindow.cpp moc_server.cpp
-moc_client.cpp: ../foOscars/client.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMainWindow \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qvector.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/QTcpServer \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/qtcpserver.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/QTcpSocket \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/qtcpsocket.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/QHostAddress \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/qhostaddress.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QMap \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qmap.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QDialog \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qdialog.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMessageBox \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc
-	/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=15 -D__clang_minor__=0 -D__clang_patchlevel__=0 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-clang -I'/Users/evanblanchard/Downloads/Spring 2024/CS 3505/FinalProject/cs3505-assignment9-J-Sandhu/foOscars' -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include -F/Users/evanblanchard/Qt/6.6.2/macos/lib ../foOscars/client.h -o moc_client.cpp
-
+	-$(DEL_FILE) moc_mainwindow.cpp moc_server.cpp
 moc_mainwindow.cpp: ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
@@ -1163,6 +1141,15 @@ moc_mainwindow.cpp: ../foOscars/mainwindow.h \
 		../foOscars/gamestate.h \
 		../foOscars/player.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonObject \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QByteArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonValue \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonDocument \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QDebug \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QLatin1String \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QRandomGenerator \
 		/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc
 	/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=15 -D__clang_minor__=0 -D__clang_patchlevel__=0 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-clang -I'/Users/evanblanchard/Downloads/Spring 2024/CS 3505/FinalProject/cs3505-assignment9-J-Sandhu/foOscars' -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include -F/Users/evanblanchard/Qt/6.6.2/macos/lib ../foOscars/mainwindow.h -o moc_mainwindow.cpp
 
@@ -1574,6 +1561,15 @@ moc_server.cpp: ../foOscars/server.h \
 		../foOscars/player.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonObject \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QByteArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonValue \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonDocument \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QDebug \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QLatin1String \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QRandomGenerator \
 		/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc
 	/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=15 -D__clang_minor__=0 -D__clang_patchlevel__=0 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-clang -I'/Users/evanblanchard/Downloads/Spring 2024/CS 3505/FinalProject/cs3505-assignment9-J-Sandhu/foOscars' -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include -F/Users/evanblanchard/Qt/6.6.2/macos/lib ../foOscars/server.h -o moc_server.cpp
 
@@ -1600,28 +1596,10 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-card.o: ../foOscars/card.cpp 
+card.o: ../foOscars/card.cpp ../foOscars/card.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o card.o ../foOscars/card.cpp
 
-client.o: ../foOscars/client.cpp ../foOscars/client.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMainWindow \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qvector.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/QTcpServer \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/qtcpserver.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/QTcpSocket \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/qtcpsocket.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/QHostAddress \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/qhostaddress.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QMap \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qmap.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QDialog \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qdialog.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMessageBox \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QWidget \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qwidget.h
+client.o: ../foOscars/client.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o client.o ../foOscars/client.cpp
 
 gamestate.o: ../foOscars/gamestate.cpp ../foOscars/gamestate.h \
@@ -1629,7 +1607,23 @@ gamestate.o: ../foOscars/gamestate.cpp ../foOscars/gamestate.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qvector.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qstring.h
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qstring.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonObject \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsonobject.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QByteArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qbytearray.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsonarray.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonValue \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsonvalue.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonDocument \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsondocument.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QDebug \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qdebug.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QLatin1String \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qlatin1stringview.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamestate.o ../foOscars/gamestate.cpp
 
 mainwindow.o: ../foOscars/mainwindow.cpp ../foOscars/mainwindow.h \
@@ -2044,6 +2038,15 @@ mainwindow.o: ../foOscars/mainwindow.cpp ../foOscars/mainwindow.h \
 		../foOscars/gamestate.h \
 		../foOscars/player.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonObject \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QByteArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonValue \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonDocument \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QDebug \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QLatin1String \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QRandomGenerator \
 		ui_mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/QNetworkInterface
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../foOscars/mainwindow.cpp
@@ -2055,7 +2058,25 @@ model.o: ../foOscars/model.cpp ../foOscars/model.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qvector.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qstring.h
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qstring.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonObject \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsonobject.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QByteArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qbytearray.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsonarray.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonValue \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsonvalue.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonDocument \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsondocument.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QDebug \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qdebug.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QLatin1String \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qlatin1stringview.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QRandomGenerator \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qrandom.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o model.o ../foOscars/model.cpp
 
 player.o: ../foOscars/player.cpp ../foOscars/player.h \
@@ -2472,7 +2493,16 @@ server.o: ../foOscars/server.cpp ../foOscars/server.h \
 		../foOscars/gamestate.h \
 		../foOscars/player.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonObject \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QByteArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonValue \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonDocument \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QDebug \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QLatin1String \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QRandomGenerator
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server.o ../foOscars/server.cpp
 
 main.o: ../foOscars/main.cpp ../foOscars/mainwindow.h \
@@ -2887,14 +2917,20 @@ main.o: ../foOscars/main.cpp ../foOscars/mainwindow.h \
 		../foOscars/gamestate.h \
 		../foOscars/player.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonObject \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QByteArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonArray \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonValue \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonDocument \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QDebug \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QLatin1String \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QRandomGenerator \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../foOscars/main.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
-
-moc_client.o: moc_client.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_client.o moc_client.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
