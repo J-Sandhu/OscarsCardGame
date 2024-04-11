@@ -11,6 +11,7 @@ class GameState
 public:
     GameState();
     vector<Player> players;
+    int currentPlayerIndex;
 
     /*NEEDS:
      * data to represent which player's turn

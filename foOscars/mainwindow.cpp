@@ -8,7 +8,6 @@
 
 using namespace std;
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -16,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-   //enable the connection buttons and text
+    //enable the connection buttons and text
     ui->connectButton->setEnabled(true);
     ui->hostButton->setEnabled(true);
 
@@ -145,3 +144,18 @@ void MainWindow::clientSendMessage(std::string message)
     socketStream.startTransaction();
     socketStream << buffer;
 }
+
+// How does a client know what player it is?
+void MainWindow::cardPlayed()
+{
+
+}
+void MainWindow::nextActionClicked()
+{
+
+}
+void MainWindow::PreviousActionClicked()
+{
+
+}
+
