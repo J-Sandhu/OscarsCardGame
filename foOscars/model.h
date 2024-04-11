@@ -2,7 +2,7 @@
 #define MODEL_H
 #include <iostream>
 #include <map>
-#include "cardfunction.h"
+#include "card.h"
 #include "gamestate.h"
 
 class Model
@@ -29,7 +29,7 @@ private:
     /// functions must be of the type actionCardFuncPtr to match
     /// parameters
     ///
-    std::map<int, CardFunction> actionMap;
+    std::map<int, Card> actionMap;
 
     ///
     /// \brief Adds additional points to the current players score calculator
