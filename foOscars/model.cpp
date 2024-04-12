@@ -7,6 +7,12 @@ Model::Model() {
 
     populateGameState();
 
+    std::cout << "########## OLD GAME STATE ############" << std::endl;
+    std::cout << gameState.serialize().toStdString() << std::endl;
+
+
+    gameState.deserialize(gameState.serialize());
+    std::cout << "############### NEW GAME STATE ################" << std::endl;
     std::cout << gameState.serialize().toStdString() << std::endl;
 
     // this is one possible format for adding cards core logic.
