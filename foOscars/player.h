@@ -15,7 +15,7 @@ public:
     QVector<QVector<int>> peoplePile;
     QVector<int> scoreManipulators;
     int score;
-
+    long long id;
 
     void recalculateScore();
     QVector<int> calulatePeopleSums();

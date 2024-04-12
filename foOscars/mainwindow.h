@@ -63,6 +63,7 @@ private:
     std::string protocolAction;
     //protocol header for sending index of selected card in tableau
     std::string protocolTableau;
+    QString pc;
 
 
 

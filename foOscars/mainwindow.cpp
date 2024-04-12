@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     protocolChat = "~chat:";
     protocolAction= "~action:";
     protocolTableau="~tableau";
+    pc = QString("~chat:");
 }
 
 MainWindow::~MainWindow()
@@ -96,25 +97,53 @@ void MainWindow::displayMessageFromServer(QString newMessage)
 
 void MainWindow::readSocket()
 {
+    QTcpSocket* socket = reinterpret_cast<QTcpSocket*>(sender());
+
     QByteArray buffer;
 
-    QDataStream socketStream(clientSocket);
+    QDataStream socketStream(socket);
     socketStream.setVersion(QDataStream::Qt_5_15);
 
     socketStream.startTransaction();
     socketStream >> buffer;
-
     if(!socketStream.commitTransaction())
     {
-        QString message = QString("%1 :: Waiting for more data to come..").arg(clientSocket->socketDescriptor());
-        emit newMessage(message);
+        QString message = QString("%1 :: Waiting for more data to come..").arg(socket->socketDescriptor());
+        emit displayMessage(message);
         return;
     }
 
-
-    QString message = QString("%1 :: %2").arg(clientSocket->socketDescriptor()).arg(QString::fromStdString(buffer.toStdString()));
-    emit newMessage(message);
-
+    string s = buffer.toStdString();
+    // for(int i =0; i<s.length(); i++)
+    // {
+    //     if (s.at(i)=='')
+    //         s.erase(i);
+    // }
+    cout<<"raw string size: "<<s.length();
+    QString message = QString::fromStdString(s);     //get message
+    //message.remove(QChar(""));
+    cout<<message.toStdString()<<endl;
+    cout<<"Size on receive: "<<message.toStdString().length()<<endl;
+    //if message starts with chat tag
+    cout<<"check "<<message.toStdString()<<" & "<<protocolChat<<endl;
+    cout<<protocolChat<<" has size "<<protocolChat.length()<<endl;
+    for(int i=0; i<protocolChat.length(); i++)
+    {
+        cout<<"comparing: '"<<message.toStdString().at(i)<<"' '"<<protocolChat.at(i)<<"'"<<endl;
+        if (message.toStdString().at(i) == protocolChat.at(i))
+            cout<<message.toStdString().at(i)<<" matches!"<<endl;
+        else cout<<message.toStdString().at(i)<<" doesn't match!!"<<endl;
+    }
+    cout<<"match: "<<message.toStdString().rfind(protocolChat,0)<<endl;
+    cout<<"match2: "<<message.startsWith(pc)<<endl;
+//    if (message.toStdString().rfind(protocolChat,0)==0)
+//    if(message.startsWith(pc))
+    {
+        cout<<"receiving chat"<<endl;
+        message.remove(0,protocolChat.length());
+        cout<<message.toStdString()<<endl;
+        emit newMessage(message);
+    }
 
 }
 

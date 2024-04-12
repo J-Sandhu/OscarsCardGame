@@ -4,12 +4,15 @@
 #include <map>
 #include "card.h"
 #include "gamestate.h"
+#include <QObject>
 
-class Model
+class Model : public QObject
 {
+    Q_OBJECT
 public:
-    Model();
     GameState gameState;
+
+    explicit Model(QObject *parent = nullptr);
 
     ///
     /// \brief Method used for testing model functionality.
@@ -19,6 +22,8 @@ public:
     void HandleTableauSelection(long long id, QString message);
     void HandleActionSelection(long long id, QString message);
     void HandlePlayerName(long long id, QString message);
+signals:
+    void sendChatToPlayers(QString);
 private:
 
     ///

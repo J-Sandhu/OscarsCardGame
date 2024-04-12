@@ -32,9 +32,9 @@ Server::Server(QWidget *parent): QObject(parent)
     cout<<tr("The server is running on IP: %1 and port: %2 ").arg(ipAddress).arg(tcpServer->serverPort()).toStdString()<<endl;
     port=tcpServer->serverPort();
 
-
-
+    model = new Model(this);
     // connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
+    connect(model,&Model::sendChatToPlayers,this,&Server::sendChat);
     connect(tcpServer, &QTcpServer::newConnection, this, &Server::newConnection);
     protocolName = "~pname:";
     protocolChat = "~chat:";
@@ -53,12 +53,12 @@ void Server::newConnection()
 
 
         cout<<"connection!!"<<endl;
-        connect(socket, &QTcpSocket::readyRead, this, &Server::relayMessageToPlayers);
+        connect(socket, &QTcpSocket::readyRead, this, &Server::readSocket);
         connect(socket, &QTcpSocket::disconnected, this, &Server::discardSocket);
          players.insert(socket);
         // connect(socket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
-        emit displayMessage(QString("INFO :: Client with sockd:%1 has just entered the room").arg(socket->socketDescriptor()));
+        //emit displayMessage(QString("INFO :: Client with sockd:%1 has just entered the room").arg(socket->socketDescriptor()));
     }
 
 }
@@ -75,7 +75,7 @@ void Server::discardSocket()
 }
 
 
-void Server::relayMessageToPlayers()
+void Server::readSocket()
 {
     QTcpSocket* socket = reinterpret_cast<QTcpSocket*>(sender());
 
@@ -94,45 +94,26 @@ void Server::relayMessageToPlayers()
         return;
     }
 
-    //QString message = QString("%1 :: %2").arg(socket->socketDescriptor()).arg(QString::fromStdString(buffer.toStdString()));
+    string message = buffer.toStdString();
 
-    //potential change of message to not have the socket included in the text
-    QString message = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
-
-    //the following code SHOULD move to move to model, server shouldn't really care about what is in the message
-    if (message.toStdString().rfind(protocolName)==0)
+    if (message.rfind(protocolName,0)==0)
     {
-        message.remove(0,protocolName.length());
-        if (message.toStdString()=="player")
-        {
-            message.append(to_string(socket->socketDescriptor()));
-        }
-        Player p;
-        p.id=socket->socketDescriptor();
-        p.name= message;
-        model.gameState.players.push_back(p);
-
-        message.append(" joined the game!");
-        foreach (QTcpSocket* socket,players)
-        {
-            sendMessage(socket,message);
-        }
-
-
+        QString m = QString::fromStdString(message.substr(protocolName.length()));
+        model->HandlePlayerName(socket->socketDescriptor(),m);
     }
-    else
+    else if (message.rfind(protocolChat,0)==0)
     {
-        //treat it as chat message
-        emit displayMessage(message);
-        foreach (QTcpSocket* socket,players)
-        {
-         sendMessage(socket,message);
-        }
+        QString m= QString::fromStdString(message.substr(protocolChat.length()));
+        model->HandleChatMessage(socket->socketDescriptor(), m);
+        // foreach (QTcpSocket* socket,players)
+        // {
+        //  sendMessage(socket,message);
+        // }
     }
 
 }
 
-void Server::sendMessage(QTcpSocket* socket, QString message)
+void Server::sendMessage(QTcpSocket* socket, string message)
 {
     if(socket)
     {
@@ -140,13 +121,14 @@ void Server::sendMessage(QTcpSocket* socket, QString message)
         {
 
             QByteArray block;
+            block.append(message);
             QDataStream out(&block, QIODevice::WriteOnly);
             out.setVersion(QDataStream::Qt_6_5);
             out.setDevice(socket);
 
-            out<<message;
+            out<<block;
 
-            socket->write(block);
+            //socket->write(block);
         }
         else
             emit displayMessage("Socket doesn't seem to be opened");
@@ -154,8 +136,16 @@ void Server::sendMessage(QTcpSocket* socket, QString message)
     else
         emit displayMessage("QTCP server not connected");
 }
-
-
-
+//this one is ONLY for when the model wants to send something in chat
+void Server::sendChat(QString message)
+{
+    message.prepend(protocolChat);
+    cout<<message.toStdString()<<endl;
+    cout<<"size before sending: "<<message.toStdString().length()<<endl;
+    foreach(QTcpSocket* s, players)
+    {
+        sendMessage(s,message.toStdString());
+    }
+}
 
 
