@@ -1,7 +1,5 @@
 #include "model.h"
-
-Model::Model() {
-    std::cout <<"getting into model constructor " <<std::endl;
+Model::Model(QObject *parent) : QObject(parent){
 
 
 
@@ -24,11 +22,27 @@ Model::Model() {
 //IGNORE THIS ONE, JAI'S GOT IT ;)
 void Model::HandlePlayerName(long long id, QString message)
 {
+    if (message.toStdString()=="player")
+    {
+        message.append(to_string(id));
+        cout<<message.toStdString()<<endl;
+    }
+    Player p;
+    p.id=id;
+    p.name= message;
+    gameState.players.push_back(p);
+
+    message.append(" joined the game!");
+    emit sendChatToPlayers(message);
 
 }
 void Model::HandleChatMessage(long long id, QString message)
 {
-
+    cout<<"Handling incoming chat"<<endl;
+    string sender = to_string(id)+":";
+    foreach (Player p, gameState.players)
+        if (p.id==id)
+            emit sendChatToPlayers(message.prepend(sender));
 }
 void Model::HandleTableauSelection(long long id, QString message)
 {

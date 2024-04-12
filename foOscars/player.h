@@ -21,7 +21,6 @@ public:
     int score;
     long long id;
 
-
     void recalculateScore();
     QVector<int> calulatePeopleSums();
 

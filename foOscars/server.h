@@ -27,9 +27,9 @@ public:
     QString ipAddress;
     int port;
     QSet<QTcpSocket*> players;
-    Model model;
+    Model* model;
 
-    void sendMessage(QTcpSocket* socket, QString message);
+    void sendMessage(QTcpSocket* socket, string message);
 
 
 
@@ -42,7 +42,8 @@ public slots:
 
     void newConnection();
     void discardSocket();
-    void relayMessageToPlayers();
+    void readSocket();
+    void sendChat(QString message);
 
 private:
     std::string protocolName;
