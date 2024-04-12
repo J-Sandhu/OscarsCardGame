@@ -50,11 +50,13 @@ constexpr auto qt_meta_stringdata_CLASSServerENDCLASS = QtMocHelpers::stringData
     "newMessage",
     "newConnection",
     "discardSocket",
-    "relayMessageToPlayers"
+    "readSocket",
+    "sendChat",
+    "message"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSServerENDCLASS_t {
-    uint offsetsAndSizes[18];
+    uint offsetsAndSizes[22];
     char stringdata0[7];
     char stringdata1[13];
     char stringdata2[1];
@@ -63,7 +65,9 @@ struct qt_meta_stringdata_CLASSServerENDCLASS_t {
     char stringdata5[11];
     char stringdata6[14];
     char stringdata7[14];
-    char stringdata8[22];
+    char stringdata8[11];
+    char stringdata9[9];
+    char stringdata10[8];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSServerENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -77,7 +81,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSServerENDCLASS_t qt_meta_string
         QT_MOC_LITERAL(42, 10),  // "newMessage"
         QT_MOC_LITERAL(53, 13),  // "newConnection"
         QT_MOC_LITERAL(67, 13),  // "discardSocket"
-        QT_MOC_LITERAL(81, 21)   // "relayMessageToPlayers"
+        QT_MOC_LITERAL(81, 10),  // "readSocket"
+        QT_MOC_LITERAL(92, 8),  // "sendChat"
+        QT_MOC_LITERAL(101, 7)   // "message"
     },
     "Server",
     "errorOccured",
@@ -87,7 +93,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSServerENDCLASS_t qt_meta_string
     "newMessage",
     "newConnection",
     "discardSocket",
-    "relayMessageToPlayers"
+    "readSocket",
+    "sendChat",
+    "message"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -99,7 +107,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSServerENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -107,13 +115,14 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSServerENDCLASS[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   44,    2, 0x06,    1 /* Public */,
-       4,    1,   47,    2, 0x06,    3 /* Public */,
+       1,    1,   50,    2, 0x06,    1 /* Public */,
+       4,    1,   53,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       6,    0,   50,    2, 0x0a,    5 /* Public */,
-       7,    0,   51,    2, 0x0a,    6 /* Public */,
-       8,    0,   52,    2, 0x0a,    7 /* Public */,
+       6,    0,   56,    2, 0x0a,    5 /* Public */,
+       7,    0,   57,    2, 0x0a,    6 /* Public */,
+       8,    0,   58,    2, 0x0a,    7 /* Public */,
+       9,    1,   59,    2, 0x0a,    8 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -123,6 +132,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSServerENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   10,
 
        0        // eod
 };
@@ -146,8 +156,11 @@ Q_CONSTINIT const QMetaObject Server::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'discardSocket'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'relayMessageToPlayers'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        // method 'readSocket'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'sendChat'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>
     >,
     nullptr
 } };
@@ -162,7 +175,8 @@ void Server::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 1: _t->displayMessage((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 2: _t->newConnection(); break;
         case 3: _t->discardSocket(); break;
-        case 4: _t->relayMessageToPlayers(); break;
+        case 4: _t->readSocket(); break;
+        case 5: _t->sendChat((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -203,13 +217,13 @@ int Server::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 6)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }

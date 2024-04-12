@@ -25,7 +25,6 @@
         <file>22.png</file>
         <file>23.png</file>
         <file>24.png</file>
-        <file>Template.png</file>
         <file>25.png</file>
         <file>26.png</file>
         <file>27.png</file>
@@ -49,6 +48,48 @@
         <file>46.png</file>
         <file>47.png</file>
         <file>48.png</file>
+        <file>37.png</file>
     </qresource>
-    <qresource prefix="/people"/>
+    <qresource prefix="/people">
+        <file>0p.png</file>
+        <file>1p.png</file>
+        <file>2p.png</file>
+        <file>3p.png</file>
+        <file>4p.png</file>
+        <file>5p.png</file>
+        <file>6p.png</file>
+        <file>7p.png</file>
+        <file>8p.png</file>
+        <file>9p.png</file>
+        <file>10p.png</file>
+        <file>11p.png</file>
+        <file>12p.png</file>
+        <file>13p.png</file>
+        <file>14p.png</file>
+        <file>15p.png</file>
+        <file>16p.png</file>
+        <file>17p.png</file>
+        <file>18p.png</file>
+        <file>19p.png</file>
+        <file>20p.png</file>
+        <file>21p.png</file>
+        <file>22p.png</file>
+        <file>23p.png</file>
+        <file>24p.png</file>
+        <file>25p.png</file>
+        <file>26p.png</file>
+        <file>27p.png</file>
+        <file>28p.png</file>
+        <file>29p.png</file>
+        <file>30p.png</file>
+        <file>31p.png</file>
+        <file>32p.png</file>
+        <file>33p.png</file>
+        <file>34p.png</file>
+        <file>35p.png</file>
+        <file>36p.png</file>
+        <file>37p.png</file>
+        <file>38p.png</file>
+        <file>40p.png</file>
+    </qresource>
 </RCC>
