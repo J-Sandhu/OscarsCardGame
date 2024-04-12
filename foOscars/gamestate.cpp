@@ -5,13 +5,15 @@ GameState::GameState() {}
 
 void GameState::deserialize(QByteArray serializedGameState)
 {
-    std::cout <<"calling deserialize" << std::endl;
+    //std::cout <<"calling deserialize" << std::endl;
     resetGameState();
-    std::cout << "getting past resetting the game state" << std::endl;
+    //std::cout << "getting past resetting the game state" << std::endl;
 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(serializedGameState);
 
     QJsonObject jsonObj = jsonDoc.object();
+
+    //std::cout << "length of tableau: " << jsonObj["Tableau"].toArray().size() << std::endl;
 
     QJsonArray jsonPlayerArr= jsonObj["Players"].toArray();
 
@@ -78,9 +80,10 @@ void GameState::deserialize(QByteArray serializedGameState)
 
     QJsonArray tableauArr = jsonObj["Tableau"].toArray();
     //std::copy (tableau.begin(), tableau.end(), std::back_inserter(tableauArr));
-    for (auto person : tableau){
+    for (auto person : tableauArr){
         //qDebug() << i;
-        tableauArr.append(person);
+        //std::cout <<"finding in tableau: "<< person << std::endl;
+        tableau.append(person.toInt());
     }
 }
 
