@@ -7,7 +7,6 @@ debug/player.o
 debug/server.o
 debug/main.o
 debug/qrc_resources.o
-debug/moc_client.o
 debug/moc_mainwindow.o
 debug/moc_model.o
 debug/moc_server.o

@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     protocolChat = "~chat:";
     protocolAction= "~action:";
     protocolTableau="~tableau";
-    pc = QString("~chat:");
+    protocolGameState="~gstate:";
 }
 
 MainWindow::~MainWindow()
@@ -115,36 +115,12 @@ void MainWindow::readSocket()
         emit displayMessage(message);
         return;
     }
+    QString message = QString::fromStdString(buffer.toStdString());     //get message
 
-    string s = buffer.toStdString();
-    // for(int i =0; i<s.length(); i++)
-    // {
-    //     if (s.at(i)=='')
-    //         s.erase(i);
-    // }
-    cout<<"raw string size: "<<s.length();
-    QString message = QString::fromStdString(s);     //get message
-    //message.remove(QChar(""));
-    cout<<message.toStdString()<<endl;
-    cout<<"Size on receive: "<<message.toStdString().length()<<endl;
     //if message starts with chat tag
-    cout<<"check "<<message.toStdString()<<" & "<<protocolChat<<endl;
-    cout<<protocolChat<<" has size "<<protocolChat.length()<<endl;
-    for(int i=0; i<protocolChat.length(); i++)
+    if (message.toStdString().rfind(protocolChat,0)==0)
     {
-        cout<<"comparing: '"<<message.toStdString().at(i)<<"' '"<<protocolChat.at(i)<<"'"<<endl;
-        if (message.toStdString().at(i) == protocolChat.at(i))
-            cout<<message.toStdString().at(i)<<" matches!"<<endl;
-        else cout<<message.toStdString().at(i)<<" doesn't match!!"<<endl;
-    }
-    cout<<"match: "<<message.toStdString().rfind(protocolChat,0)<<endl;
-    cout<<"match2: "<<message.startsWith(pc)<<endl;
-//    if (message.toStdString().rfind(protocolChat,0)==0)
-//    if(message.startsWith(pc))
-    {
-        cout<<"receiving chat"<<endl;
         message.remove(0,protocolChat.length());
-        cout<<message.toStdString()<<endl;
         emit newMessage(message);
     }
 

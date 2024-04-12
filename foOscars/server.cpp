@@ -40,6 +40,7 @@ Server::Server(QWidget *parent): QObject(parent)
     protocolChat = "~chat:";
     protocolAction= "~action:";
     protocolTableau="~tableau";
+    protocolGameState="~gstate:";
 
 
 }

@@ -74,7 +74,8 @@ private:
     std::string protocolAction;
     //protocol header for sending index of selected card in tableau
     std::string protocolTableau;
-    QString pc;
+    //protocol header for receiving game state from the server
+    std::string protocolGameState;
 
 
 

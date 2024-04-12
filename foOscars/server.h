@@ -50,6 +50,7 @@ private:
     std::string protocolChat;
     std::string protocolAction;
     std::string protocolTableau;
+    std::string protocolGameState;
 
 };
 
