@@ -1,7 +1,7 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include <vector>
+#include <QVector>
 #include "player.h"
 #include <QJsonObject>
 #include <QByteArray>
@@ -12,6 +12,7 @@
 #include <QString>
 #include <QDebug>
 #include <QLatin1String>
+#include <iterator>
 
 #include <iostream>
 using namespace std;

@@ -1,4 +1,5 @@
 #include "gamestate.h"
+#include <QDebug>
 
 GameState::GameState() {}
 
@@ -44,7 +45,7 @@ void GameState::deserialize(QByteArray serializedGameState)
         // std::copy (purpleGroup.begin(), purpleGroup.end(), std::back_inserter(newPlayer.purplePeoplePile));
 
         for (int i = 0; i< actionPileArray.size(); i++)
-            actionPileVector.append(actionPileArray.at(i));
+            actionPileVector.append(actionPileArray.at(i).toInt());
 
         // players.push_back(newPlayer);
 
@@ -54,13 +55,26 @@ void GameState::deserialize(QByteArray serializedGameState)
     currentPlayerIndex = jsonObj["Current_Player_Index"].toInt();
 
     QJsonArray actionCardStackArr = jsonObj["Action_Card_Stack"].toArray();
-    std::copy (actionCardStackArr.begin(), actionCardStackArr.end(), std::back_inserter(actionCardStack));
+    //std::copy (actionCardStackArr.begin(), actionCardStackArr.end(), std::back_inserter(actionCardStack));
+
+    for (auto i : actionCardStackArr){
+        //qDebug() << i.toString();
+        actionCardStack.append(i.toInt());
+    }
 
     QJsonArray personCardStackArr = jsonObj["People_Card_Stack"].toArray();
-    std::copy (personCardStackArr.begin(), personCardStackArr.end(), std::back_inserter(personCardStack));
+    // std::copy (personCardStackArr.begin(), personCardStackArr.end(), std::back_inserter(personCardStack));
+    for (auto i : personCardStackArr){
+        //qDebug() << i.toString();
+        personCardStack.append(i.toInt());
+    }
 
     QJsonArray tableauArr = jsonObj["Tableau"].toArray();
-    std::copy (tableau.begin(), tableau.end(), std::back_inserter(tableauArr));
+     std::copy (tableau.begin(), tableau.end(), std::back_inserter(tableauArr));
+    for (auto i : tableau){
+        //qDebug() << i;
+        tableauArr.append(i);
+    }
 }
 
 QByteArray GameState::serialize()
