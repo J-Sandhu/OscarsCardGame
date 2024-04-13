@@ -4,6 +4,7 @@
 #include <QNetworkInterface>
 #include <QMessageBox>
 #include<QString>
+#include "otherplayerhands.h"
 
 
 using namespace std;
@@ -36,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent, Model* model)
     connect(this, &MainWindow::startGame, model, &Model::startGameSlot);
 
     connect(model, &Model::gameInitializedSignal, this, &MainWindow::showCardsOnTableau);
+
+    connect(model, &Model::gameInitializedSignal, this, &MainWindow::updateOtherPlayersHandsBox);
 
     // connect(clientSocket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
@@ -404,4 +407,24 @@ void MainWindow::showCardsOnTableau()
         QPixmap pixmap(QString::fromStdString(fileName));
         currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
     }
+}
+
+void MainWindow::updateOtherPlayersHandsBox(){
+    //at this point, we know how many players are currently in the game
+    for(int i = 0; i < model->gameState.players.size(); i++){
+        ui->otherPlayersHandsButton->addItem(model->gameState.players.at(i).name);
+    }
+    //connect to popup window
+    connect(ui->otherPlayersHandsButton, &QComboBox::currentIndexChanged, this, &MainWindow::displayPopUp);
+
+}
+
+void MainWindow::displayPopUp(int index)
+{
+    //get chosen player
+    Player* p = &model->gameState.players.at(index);
+
+    //constuct pop up window
+    otherPlayerHands* otherPlayersWindow = new otherPlayerHands(nullptr, p);
+    otherPlayersWindow->show();
 }

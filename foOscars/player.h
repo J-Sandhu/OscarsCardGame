@@ -7,7 +7,9 @@ class Player
 {
 public:
     Player();
-    QString name;
+
+    //right now hard coded as player, but we can change it later
+    QString name = "player";
 
     QVector<int> actionPile;
     int selectedActionIndex;

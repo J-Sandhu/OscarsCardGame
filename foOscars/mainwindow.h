@@ -54,6 +54,8 @@ public slots:
     void actionCardFromPersonalPileSelected(int cardID, Card actionCard);
     void onStartClicked();
     void showCardsOnTableau();
+    void updateOtherPlayersHandsBox();
+    void displayPopUp(int index);
 
 signals:
     void newMessage(QString message);
