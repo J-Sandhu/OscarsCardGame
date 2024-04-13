@@ -13,9 +13,9 @@ class Model : public QObject
 public:
     GameState gameState;
 
-    std::map <int, Card> personMap;
+    std::map <int, Card*> personMap;
 
-    Card selectedActionCardFromPersonalPile;
+    int selectedActionCardIDFromPersonalPile;
 
     explicit Model(QObject *parent = nullptr);
 
@@ -37,7 +37,6 @@ signals:
     void updateTableauAfterActionCardSelect();
 
 private:
-
     ///
     /// Function pointer type for action cards, takes 3 generic integer parameters
     /// which are to be defined later

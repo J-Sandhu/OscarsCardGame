@@ -8,10 +8,11 @@
 
 using namespace std;
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent, Model* model)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , clientSocket(new QTcpSocket(this))
+    , model(model)
 {
     ui->setupUi(this);
 
@@ -338,8 +339,8 @@ void MainWindow::actionCardFromPersonalPileSelected(int cardID, Card actionCard)
         case Card::ActionCardTypes::generalLineMovement:
             //find out which cards in tableau to make clickable
             for (int i = 0; i < currentCardsInTableau.size(); i++){
-                int personCardID = Model.gameState.tableau[i];
-                if(Model.personMap[personCardID].colorType == actionCard.colorType){
+                int personCardID = model->gameState.tableau[i];
+                if(model->personMap[personCardID]->colorType == actionCard.colorType){
                     currentCardsInTableau[i]->setEnabled(true);
                 }
             }
@@ -376,7 +377,7 @@ void MainWindow::updateTableauAfterActionCardSelectSlot(){
     for(int i = 0; i < gameState.tableau.size(); i++){
         int personCardID = gameState.tableau[i];
 
-        std::string fileName = std::to_string(personCardID) + "p.png";
+        std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
         //pixmap??
         QPixmap pixmap(QString::fromStdString(fileName));
         currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));

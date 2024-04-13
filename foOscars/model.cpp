@@ -44,22 +44,23 @@ void Model::HandleChatMessage(long long id, QString message)
         if (p.id==id)
             emit sendChatToPlayers(message.prepend(sender));
 }
-void Model::HandleTableauSelection(long long id, QString message)
-{
-    int selectedPersonCardInTableau = message.toInt();
-    // int personCardID = gameState.tableau[selectedPersonCardInTableau];
+// void Model::HandleTableauSelection(long long id, QString message)
+// {
+//     int selectedPersonCardInTableau = message.toInt();
+//     // int personCardID = gameState.tableau[selectedPersonCardInTableau];
 
-    selectedActionCardFromPersonalPile.function(&gameState, selectedPersonCardInTableau);
-    emit updateTableauAfterActionCardSelect();
-}
+//     actionMap[selectedActionCardIDFromPersonalPile]->function(&gameState, selectedPersonCardInTableau);
+//     emit updateTableauAfterActionCardSelect();
+// }
 void Model::HandleActionSelection(long long id, QString message)
 {
     int actionCardIndexInPlayerHand = message.toInt();
     int actionCardID= gameState.players.at(gameState.currentPlayerIndex).actionPile[actionCardIndexInPlayerHand];
 
-    Card selectedActionCard = actionMap[actionCardID];
-    selectedActionCardFromPersonalPile = selectedActionCard;
-    emit actionCardSelectedFromPersonalPile(selectedActionCard);
+    // Card selectedActionCard = actionMap[actionCardID];
+
+    selectedActionCardIDFromPersonalPile = actionCardID;
+    // emit actionCardSelectedFromPersonalPile(selectedActionCard);
 
 }
 void Model::addPointsFromActionCard(int scoreModification, int unused1, int unused2)
@@ -92,7 +93,7 @@ void Model::modelTestMethod()
     std::cout << " getting past parameter cast " << std::endl;
     auto func = actionMap.at(0).function;
 
-    func(params[0], params[1], params[2]);
+    // func(params[0], params[1], params[2]);
 }
 
 void Model::movementCardPlayed(int indexInTableau, int positionModification, int unused1)

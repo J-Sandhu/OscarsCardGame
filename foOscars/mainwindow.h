@@ -10,6 +10,8 @@
 #include <QImage>
 #include "server.h"
 #include "gamestate.h"
+#include "model.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,7 +24,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr, Model* model = nullptr);
+    Model* model;
     ~MainWindow();
     Server* server;
     QHostAddress serverIpAddress;
@@ -48,6 +51,7 @@ public slots:
     void nextActionClicked();
     void PreviousActionClicked();
     void updateTableauAfterActionCardSelectSlot();
+    void actionCardFromPersonalPileSelected(int cardID, Card actionCard);
 
 signals:
     void newMessage(QString message);
