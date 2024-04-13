@@ -32,7 +32,7 @@ public:
     GameState gameState;
     int selectedActionCardIndex;
     QVector<QImage> actionImages;
-
+    QVector<QLabel*> currentCardsInTableau;
 
 
 public slots:
@@ -47,6 +47,7 @@ public slots:
     void cardPlayed();
     void nextActionClicked();
     void PreviousActionClicked();
+    void updateTableauAfterActionCardSelectSlot();
 
 signals:
     void newMessage(QString message);
@@ -76,8 +77,6 @@ private:
     std::string protocolTableau;
     //protocol header for receiving game state from the server
     std::string protocolGameState;
-
-
 
 };
 #endif // MAINWINDOW_H

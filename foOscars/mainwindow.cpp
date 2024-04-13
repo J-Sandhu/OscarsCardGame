@@ -39,6 +39,24 @@ MainWindow::MainWindow(QWidget *parent)
     protocolAction= "~action:";
     protocolTableau="~tableau";
     protocolGameState="~gstate:";
+
+    //add to tableau vector
+    currentCardsInTableau.push_back(ui->person0);
+    currentCardsInTableau.push_back(ui->person1);
+    currentCardsInTableau.push_back(ui->person2);
+    currentCardsInTableau.push_back(ui->person3);
+    currentCardsInTableau.push_back(ui->person4);
+    currentCardsInTableau.push_back(ui->person5);
+    currentCardsInTableau.push_back(ui->person6);
+    currentCardsInTableau.push_back(ui->person7);
+    currentCardsInTableau.push_back(ui->person8);
+    currentCardsInTableau.push_back(ui->person9);
+    currentCardsInTableau.push_back(ui->person10);
+    currentCardsInTableau.push_back(ui->person11);
+    currentCardsInTableau.push_back(ui->person12);
+    currentCardsInTableau.push_back(ui->person13);
+    currentCardsInTableau.push_back(ui->person14);
+
 }
 
 MainWindow::~MainWindow()
@@ -312,3 +330,55 @@ void MainWindow::loadResources()
     }
 }
 
+void MainWindow::actionCardFromPersonalPileSelected(int cardID, Card actionCard){
+    clientSendMessage(protocolAction + std::to_string(cardID));
+
+    //get selected action card info
+    switch(actionCard.cardType){
+        case Card::ActionCardTypes::generalLineMovement:
+            //find out which cards in tableau to make clickable
+            for (int i = 0; i < currentCardsInTableau.size(); i++){
+                int personCardID = Model.gameState.tableau[i];
+                if(Model.personMap[personCardID].colorType == actionCard.colorType){
+                    currentCardsInTableau[i]->setEnabled(true);
+                }
+            }
+            break;
+
+        case Card::ActionCardTypes::lineOrder:
+            //enable all cards in tableau
+            for (auto i : currentCardsInTableau){
+                i->setEnabled(true);
+            }
+            break;
+
+        case Card::ActionCardTypes::addToLine:
+
+            // currentCurrentInTableau.add();
+            break;
+
+        case Card::ActionCardTypes::scorePile:
+            //some stuff
+            break;
+
+        case Card::ActionCardTypes::specificNoble:
+            //some stuff
+            break;
+
+        case Card::ActionCardTypes::actionCardManipulation:
+            //some stuff
+            break;
+        }
+}
+
+void MainWindow::updateTableauAfterActionCardSelectSlot(){
+    //redraw
+    for(int i = 0; i < gameState.tableau.size(); i++){
+        int personCardID = gameState.tableau[i];
+
+        std::string fileName = std::to_string(personCardID) + "p.png";
+        //pixmap??
+        QPixmap pixmap(QString::fromStdString(fileName));
+        currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
+    }
+}
