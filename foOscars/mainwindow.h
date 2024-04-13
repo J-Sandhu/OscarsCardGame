@@ -32,7 +32,7 @@ public:
     int serverPort;
 
     QTcpSocket* clientSocket;
-    GameState gameState;
+    //GameState gameState;
     int selectedActionCardIndex;
     QVector<QImage> actionImages;
     QVector<QLabel*> currentCardsInTableau;
@@ -52,10 +52,12 @@ public slots:
     void PreviousActionClicked();
     void updateTableauAfterActionCardSelectSlot();
     void actionCardFromPersonalPileSelected(int cardID, Card actionCard);
+    void onStartClicked();
+    void showCardsOnTableau();
 
 signals:
     void newMessage(QString message);
-
+    void startGame();
 
 
 

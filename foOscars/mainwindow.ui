@@ -168,6 +168,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="startbutton">
+       <property name="text">
+        <string>Start Game</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QLabel" name="label">
@@ -619,7 +626,7 @@
      <x>0</x>
      <y>0</y>
      <width>970</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>

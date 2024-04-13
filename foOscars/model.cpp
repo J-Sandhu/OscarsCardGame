@@ -3,7 +3,7 @@ Model::Model(QObject *parent) : QObject(parent){
 
 
 
-    populateGameState();
+    //populateGameState();
 
     std::cout << "########## OLD GAME STATE ############" << std::endl;
     std::cout << gameState.serialize().toStdString() << std::endl;
@@ -44,23 +44,23 @@ void Model::HandleChatMessage(long long id, QString message)
         if (p.id==id)
             emit sendChatToPlayers(message.prepend(sender));
 }
-// void Model::HandleTableauSelection(long long id, QString message)
-// {
-//     int selectedPersonCardInTableau = message.toInt();
-//     // int personCardID = gameState.tableau[selectedPersonCardInTableau];
+void Model::HandleTableauSelection(long long id, QString message)
+{
+    int selectedPersonCardInTableau = message.toInt();
+    // int personCardID = gameState.tableau[selectedPersonCardInTableau];
 
-//     actionMap[selectedActionCardIDFromPersonalPile]->function(&gameState, selectedPersonCardInTableau);
-//     emit updateTableauAfterActionCardSelect();
-// }
+    actionMap.at(selectedActionCardIDFromPersonalPile).function(&gameState, selectedPersonCardInTableau);
+    emit updateTableauAfterActionCardSelect();
+}
 void Model::HandleActionSelection(long long id, QString message)
 {
     int actionCardIndexInPlayerHand = message.toInt();
     int actionCardID= gameState.players.at(gameState.currentPlayerIndex).actionPile[actionCardIndexInPlayerHand];
 
-    // Card selectedActionCard = actionMap[actionCardID];
+    Card selectedActionCard = actionMap.at(actionCardID);
 
     selectedActionCardIDFromPersonalPile = actionCardID;
-    // emit actionCardSelectedFromPersonalPile(selectedActionCard);
+    emit actionCardSelectedFromPersonalPile(selectedActionCard);
 
 }
 void Model::addPointsFromActionCard(int scoreModification, int unused1, int unused2)
@@ -162,14 +162,14 @@ void Model::populateGameState()
         gameState.personCardStack.push_back(12);
 
 
-
     // generate a random tableau
     generateRandomTableau();
 
     // generate random hands
     generateRandomHands();
 
-
+    //emit signal that game has been initialized and notify mainwindow to upload card images
+    emit gameInitializedSignal();
 
 }
 
@@ -205,4 +205,10 @@ void Model::generateRandomHands()
     }
 }
 
+void Model::startGameSlot(){
+    //populate tableau
+    populateGameState();
+    std::cout << gameState.serialize().toStdString() << std::endl;
+
+}
 

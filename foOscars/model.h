@@ -13,7 +13,7 @@ class Model : public QObject
 public:
     GameState gameState;
 
-    std::map <int, Card*> personMap;
+    std::map <int, Card> personMap;
 
     int selectedActionCardIDFromPersonalPile;
 
@@ -29,12 +29,13 @@ public:
     void HandlePlayerName(long long id, QString message);
 
 public slots:
-
+    void startGameSlot();
 
 signals:
     void sendChatToPlayers(QString);
     void actionCardSelectedFromPersonalPile(Card selectedActionCard);
     void updateTableauAfterActionCardSelect();
+    void gameInitializedSignal();
 
 private:
     ///

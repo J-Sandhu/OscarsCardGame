@@ -30,8 +30,12 @@ MainWindow::MainWindow(QWidget *parent, Model* model)
     //connect the buttons to their respective actions
     connect(ui->hostButton, &QPushButton::clicked, this, &MainWindow::hostClicked);
     connect(ui->connectButton, &QPushButton::clicked, this, &MainWindow::connectClicked);
-
+    connect(ui->startbutton, &QPushButton::clicked, this, &MainWindow::onStartClicked);
     connect(ui->sendMessageButton, &QPushButton::clicked, this, &MainWindow::sendChatMessage);
+
+    connect(this, &MainWindow::startGame, model, &Model::startGameSlot);
+
+    connect(model, &Model::gameInitializedSignal, this, &MainWindow::showCardsOnTableau);
 
     // connect(clientSocket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
@@ -198,7 +202,7 @@ std::vector<QImage> MainWindow::getActionCardHand()
 
     /// Grab jai's code to get the index of interest
     /// replace the zero
-    QVector<int> pileOfInterest = gameState.players.at(0).actionPile;
+    QVector<int> pileOfInterest = model->gameState.players.at(0).actionPile;
 
     // create a blank image to fill empty frame preview slots
     QImage blankImage;
@@ -340,7 +344,7 @@ void MainWindow::actionCardFromPersonalPileSelected(int cardID, Card actionCard)
             //find out which cards in tableau to make clickable
             for (int i = 0; i < currentCardsInTableau.size(); i++){
                 int personCardID = model->gameState.tableau[i];
-                if(model->personMap[personCardID]->colorType == actionCard.colorType){
+                if(model->personMap.at(personCardID).colorType == actionCard.colorType){
                     currentCardsInTableau[i]->setEnabled(true);
                 }
             }
@@ -374,8 +378,26 @@ void MainWindow::actionCardFromPersonalPileSelected(int cardID, Card actionCard)
 
 void MainWindow::updateTableauAfterActionCardSelectSlot(){
     //redraw
-    for(int i = 0; i < gameState.tableau.size(); i++){
-        int personCardID = gameState.tableau[i];
+    for(int i = 0; i < model->gameState.tableau.size(); i++){
+        int personCardID = model->gameState.tableau[i];
+
+        std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
+        //pixmap??
+        QPixmap pixmap(QString::fromStdString(fileName));
+        currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
+    }
+}
+
+void MainWindow::onStartClicked()
+{
+    //emit signal to populate tabl
+    emit startGame();
+}
+
+void MainWindow::showCardsOnTableau()
+{
+    for(int i = 0; i < model->gameState.tableau.size(); i++){
+        int personCardID = model->gameState.tableau[i];
 
         std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
         //pixmap??
