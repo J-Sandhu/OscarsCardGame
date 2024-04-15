@@ -37,6 +37,13 @@ public:
     QVector<QImage> actionImages;
     QVector<QLabel*> currentCardsInTableau;
 
+    //create tableau layout
+    // this has to be done here because idk
+    QHBoxLayout* tableauLayout = new QHBoxLayout;
+    QWidget* tableauScrollWidget = new QWidget;
+    void showCardsOnTableau();
+    void updateOtherPlayersHandsBox();
+
 
 public slots:
 
@@ -53,9 +60,8 @@ public slots:
     void updateTableauAfterActionCardSelectSlot();
     void actionCardFromPersonalPileSelected(int cardID, Card actionCard);
     void onStartClicked();
-    void showCardsOnTableau();
-    void updateOtherPlayersHandsBox();
     void displayPopUp(int index);
+    void tableauCardClicked();
 
 signals:
     void newMessage(QString message);

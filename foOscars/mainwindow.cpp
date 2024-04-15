@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent, Model* model)
     ui->setupUi(this);
 
     // load all of the pictures so we don't have to do it at every turn
-    //loadResources();
+    loadResources();
 
     //enable the connection buttons and text
     ui->connectButton->setEnabled(true);
@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent, Model* model)
 
     connect(model, &Model::gameInitializedSignal, this, &MainWindow::showCardsOnTableau);
 
-    connect(model, &Model::gameInitializedSignal, this, &MainWindow::updateOtherPlayersHandsBox);
+    //connect(model, &Model::gameInitializedSignal, this, &MainWindow::updateOtherPlayersHandsBox);
 
     // connect(clientSocket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
@@ -49,27 +49,30 @@ MainWindow::MainWindow(QWidget *parent, Model* model)
     protocolGameState="~gstate:";
 
     //add to tableau vector
-    currentCardsInTableau.push_back(ui->person0);
-    currentCardsInTableau.push_back(ui->person1);
-    currentCardsInTableau.push_back(ui->person2);
-    currentCardsInTableau.push_back(ui->person3);
-    currentCardsInTableau.push_back(ui->person4);
-    currentCardsInTableau.push_back(ui->person5);
-    currentCardsInTableau.push_back(ui->person6);
-    currentCardsInTableau.push_back(ui->person7);
-    currentCardsInTableau.push_back(ui->person8);
-    currentCardsInTableau.push_back(ui->person9);
-    currentCardsInTableau.push_back(ui->person10);
-    currentCardsInTableau.push_back(ui->person11);
-    currentCardsInTableau.push_back(ui->person12);
-    currentCardsInTableau.push_back(ui->person13);
-    currentCardsInTableau.push_back(ui->person14);
+    // currentCardsInTableau.push_back(ui->person0);
+    // currentCardsInTableau.push_back(ui->person1);
+    // currentCardsInTableau.push_back(ui->person2);
+    // currentCardsInTableau.push_back(ui->person3);
+    // currentCardsInTableau.push_back(ui->person4);
+    // currentCardsInTableau.push_back(ui->person5);
+    // currentCardsInTableau.push_back(ui->person6);
+    // currentCardsInTableau.push_back(ui->person7);
+    // currentCardsInTableau.push_back(ui->person8);
+    // currentCardsInTableau.push_back(ui->person9);
+    // currentCardsInTableau.push_back(ui->person10);
+    // currentCardsInTableau.push_back(ui->person11);
+    // currentCardsInTableau.push_back(ui->person12);
+    // currentCardsInTableau.push_back(ui->person13);
+    // currentCardsInTableau.push_back(ui->person14);
+
+
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete tableauLayout;
 }
 
 
@@ -399,14 +402,52 @@ void MainWindow::onStartClicked()
 
 void MainWindow::showCardsOnTableau()
 {
+    //tableauLayout->setHorizontalSpacing(0);
+
     for(int i = 0; i < model->gameState.tableau.size(); i++){
         int personCardID = model->gameState.tableau[i];
 
         std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
         //pixmap??
         QPixmap pixmap(QString::fromStdString(fileName));
-        currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
+
+        //currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
+
+        //ui->tableauHLayout->addWidget
+        //create QLabels
+
+        QPushButton* button = new QPushButton(this);
+        QLabel* label = new QLabel(button);
+        button->setGeometry(0,0,300,420);
+        button->setBaseSize(300,420);
+        button->setFixedSize(300,420);
+
+        //button->setText("");
+
+        button->setStyleSheet("border: none; color: palette(window-text); background: transparent;");
+
+        label->setGeometry(0, 0, 300, 420);
+        label->setPixmap(pixmap.scaledToHeight(label->geometry().height(), Qt::FastTransformation));
+        //label->setText("<l>Label</>");
+
+
+
+        //label->setText("<b>Button</b> Test");
+        connect(button, &QPushButton::clicked, this, &MainWindow::tableauCardClicked);
+        //ui->tableauLayout->addWidget(label);
+        tableauLayout->addWidget(button);
+
+
+        //std::cout <<" adding labelbutton at: " << tableauLayout->indexOf(button) << std::endl;
+
+
+        // It's important to read that a QScrollArea has a function called QScrollArea::setWidget.
+        // Attempting to just call QWidget::setLayout will not work for a QScrollArea's intended usage.
+        // You just need an intermediate QWidget parent that holds the layout, but is then also assigned to the QScrollArea.
     }
+
+    tableauScrollWidget->setLayout(tableauLayout);
+    ui->tableauScrollArea->setWidget(tableauScrollWidget);
 }
 
 void MainWindow::updateOtherPlayersHandsBox(){
@@ -428,3 +469,26 @@ void MainWindow::displayPopUp(int index)
     otherPlayerHands* otherPlayersWindow = new otherPlayerHands(nullptr, p);
     otherPlayersWindow->show();
 }
+
+void MainWindow::tableauCardClicked()
+{
+
+    //std::cout << "******************************getting into tableau card clicked" << std::endl;
+
+    // e.g. check with member variable _foobarButton
+    //QObject* obj = sender();
+
+    // e.g. casting to the class you know its connected with
+    QPushButton* button = qobject_cast<QPushButton*>(sender());
+
+
+
+    int cardIndex = tableauLayout->indexOf(button);
+
+
+
+    std::cout << "you clicked the card at: " << cardIndex << std::endl;
+
+}
+
+

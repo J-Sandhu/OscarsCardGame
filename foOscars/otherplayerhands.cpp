@@ -17,7 +17,7 @@ otherPlayerHands::otherPlayerHands(QWidget *parent, Player* player)
         label->setGeometry(0, 0, 100, 80);
         std::string fileName = ":/actions/" + std::to_string(player->actionPile.at(i)) + ".png";
         QPixmap pixmap(QString::fromStdString(fileName));
-        label->setPixmap(pixmap.scaledToHeight(label->geometry().height(),Qt::FastTransformation));
+        label->setPixmap(pixmap.scaledToHeight(label->geometry().height(), Qt::FastTransformation));
 
         //add to grid layout
         ui->gridLayout->addWidget(label, 0, i);
