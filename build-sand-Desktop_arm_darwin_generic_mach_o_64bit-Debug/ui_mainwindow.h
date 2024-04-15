@@ -204,13 +204,14 @@ public:
         otherPlayersHandsButton->setGeometry(QRect(770, 30, 103, 32));
         tableauScrollArea = new QScrollArea(centralwidget);
         tableauScrollArea->setObjectName("tableauScrollArea");
-        tableauScrollArea->setGeometry(QRect(180, 100, 571, 420));
+        tableauScrollArea->setGeometry(QRect(180, 79, 571, 441));
         tableauScrollArea->setMouseTracking(true);
+        tableauScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         tableauScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         tableauScrollArea->setWidgetResizable(true);
         scrollAreaContents = new QWidget();
         scrollAreaContents->setObjectName("scrollAreaContents");
-        scrollAreaContents->setGeometry(QRect(0, 0, 569, 402));
+        scrollAreaContents->setGeometry(QRect(0, 0, 569, 423));
         QSizePolicy sizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Minimum);
         sizePolicy.setHorizontalStretch(1);
         sizePolicy.setVerticalStretch(0);

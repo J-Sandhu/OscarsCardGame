@@ -291,13 +291,16 @@
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>100</y>
+      <y>79</y>
       <width>571</width>
-      <height>420</height>
+      <height>441</height>
      </rect>
     </property>
     <property name="mouseTracking">
      <bool>true</bool>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
     <property name="horizontalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -311,7 +314,7 @@
        <x>0</x>
        <y>0</y>
        <width>569</width>
-       <height>402</height>
+       <height>423</height>
       </rect>
      </property>
      <property name="sizePolicy">
