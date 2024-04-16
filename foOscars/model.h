@@ -29,6 +29,10 @@ public:
     void HandlePlayerName(long long id, QString message);
     void HandleStartGame(long long id);
 
+
+    //chase's stuff
+    void movementCardComplete(int indexInTab);
+
 // public slots:
 //     void startGameSlot();
 
@@ -38,6 +42,11 @@ signals:
     void actionCardSelectedFromPersonalPile(Card selectedActionCard);
     void updateTableauAfterActionCardSelect();
     void gameInitializedSignal();
+
+    //view signals
+    void lineSelection(int colorIndex);
+    void requestFromPeoplePile(int numberOfCards);
+    void requestForPlayerSelection();
 
 private:
     ///

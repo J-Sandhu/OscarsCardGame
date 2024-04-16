@@ -1,8 +1,6 @@
 #include "model.h"
 Model::Model(QObject *parent) : QObject(parent){
 
-
-
     //populateGameState();
     gameIsStarted=false;
     std::cout << "########## OLD GAME STATE ############" << std::endl;
@@ -18,6 +16,8 @@ Model::Model(QObject *parent) : QObject(parent){
     // for now this is fine.
     // CardFunction funcTuple(1,1,1,addPointsFromActionCard);
     // actionMap.insert(std::pair<int, CardFunction>(0,funcTuple));
+
+
 
 }
 void Model::HandlePlayerName(long long id, QString message)
@@ -109,8 +109,11 @@ void Model::modelTestMethod()
     // func(params[0], params[1], params[2]);
 }
 
-void Model::movementCardPlayed(int indexInTableau, int positionModification, int unused1)
+void Model::movementCardPlayed(int colorIndex, int unused, int unused1)
 {
+
+    emit lineSelection(colorIndex);
+
     std::cout << "getting into move person card emission function" << std::endl;
     /*
      * This method and other ones like it may be kind of weird.
@@ -129,6 +132,13 @@ void Model::movementCardPlayed(int indexInTableau, int positionModification, int
      * 6. This signal is caught by the server which calls a gameUpdate method
      */
 }
+
+void Model::movementCardComplete(int indexInTab)
+{
+    gameState.tableau.move(indexInTab, indexInTab- actionMap.at(selectedActionCardIDFromPersonalPile).parameters[1]);
+}
+
+
 
 void newTableau(int unused1, int unused2, int unused3)
 {
