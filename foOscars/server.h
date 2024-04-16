@@ -44,6 +44,7 @@ public slots:
     void discardSocket();
     void readSocket();
     void sendChat(QString message);
+    void sendState(QByteArray buffer);
 
 private:
     std::string protocolName;
@@ -51,6 +52,7 @@ private:
     std::string protocolAction;
     std::string protocolTableau;
     std::string protocolGameState;
+    std::string protocolStartGame;
 
 };
 

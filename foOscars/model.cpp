@@ -4,7 +4,7 @@ Model::Model(QObject *parent) : QObject(parent){
 
 
     //populateGameState();
-
+    gameIsStarted=false;
     std::cout << "########## OLD GAME STATE ############" << std::endl;
     std::cout << gameState.serialize().toStdString() << std::endl;
 
@@ -18,8 +18,8 @@ Model::Model(QObject *parent) : QObject(parent){
     // for now this is fine.
     // CardFunction funcTuple(1,1,1,addPointsFromActionCard);
     // actionMap.insert(std::pair<int, CardFunction>(0,funcTuple));
+
 }
-//IGNORE THIS ONE, JAI'S GOT IT ;)
 void Model::HandlePlayerName(long long id, QString message)
 {
     if (message.toStdString()=="player")
@@ -61,6 +61,19 @@ void Model::HandleActionSelection(long long id, QString message)
 
     selectedActionCardIDFromPersonalPile = actionCardID;
     emit actionCardSelectedFromPersonalPile(selectedActionCard);
+
+}
+void Model::HandleStartGame(long long id)
+{
+    if (gameIsStarted)
+        return;
+    if (id==gameState.players[0].id)
+    {
+        //populate tableau
+        populateGameState();
+        std::cout << gameState.serialize().toStdString() << std::endl;
+
+    }
 
 }
 void Model::addPointsFromActionCard(int scoreModification, int unused1, int unused2)
@@ -169,7 +182,8 @@ void Model::populateGameState()
     generateRandomHands();
 
     //emit signal that game has been initialized and notify mainwindow to upload card images
-    emit gameInitializedSignal();
+    //emit gameInitializedSignal();
+    emit sendStateToPlayers(gameState.serialize());
 
 }
 
@@ -205,10 +219,4 @@ void Model::generateRandomHands()
     }
 }
 
-void Model::startGameSlot(){
-    //populate tableau
-    populateGameState();
-    std::cout << gameState.serialize().toStdString() << std::endl;
-
-}
 

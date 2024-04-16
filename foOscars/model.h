@@ -16,7 +16,7 @@ public:
     std::map <int, Card> personMap;
 
     int selectedActionCardIDFromPersonalPile;
-
+    bool gameIsStarted;
     explicit Model(QObject *parent = nullptr);
 
     ///
@@ -27,12 +27,14 @@ public:
     void HandleTableauSelection(long long id, QString message);
     void HandleActionSelection(long long id, QString message);
     void HandlePlayerName(long long id, QString message);
+    void HandleStartGame(long long id);
 
-public slots:
-    void startGameSlot();
+// public slots:
+//     void startGameSlot();
 
 signals:
     void sendChatToPlayers(QString);
+    void sendStateToPlayers(QByteArray);
     void actionCardSelectedFromPersonalPile(Card selectedActionCard);
     void updateTableauAfterActionCardSelect();
     void gameInitializedSignal();

@@ -32,7 +32,7 @@ public:
     int serverPort;
 
     QTcpSocket* clientSocket;
-    //GameState gameState;
+    GameState gameState;
     int selectedActionCardIndex;
     QVector<QImage> actionImages;
     QVector<QLabel*> currentCardsInTableau;
@@ -43,6 +43,7 @@ public:
     QWidget* tableauScrollWidget = new QWidget;
     void showCardsOnTableau();
     void updateOtherPlayersHandsBox();
+    void updateView();
 
 
 public slots:
@@ -65,7 +66,7 @@ public slots:
 
 signals:
     void newMessage(QString message);
-    void startGame();
+    //void startGame();
 
 
 
@@ -91,6 +92,8 @@ private:
     std::string protocolTableau;
     //protocol header for receiving game state from the server
     std::string protocolGameState;
+    //protocol header for host to start game
+    std::string protocolStartGame;
 
 };
 #endif // MAINWINDOW_H

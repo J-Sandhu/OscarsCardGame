@@ -35,12 +35,14 @@ Server::Server(QWidget *parent): QObject(parent)
     model = new Model(this);
     // connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
     connect(model,&Model::sendChatToPlayers,this,&Server::sendChat);
+    connect(model,&Model::sendStateToPlayers,this,&Server::sendState);
     connect(tcpServer, &QTcpServer::newConnection, this, &Server::newConnection);
     protocolName = "~pname:";
     protocolChat = "~chat:";
     protocolAction= "~action:";
     protocolTableau="~tableau";
     protocolGameState="~gstate:";
+    protocolStartGame="~startgame:";
 
 
 }
@@ -106,12 +108,25 @@ void Server::readSocket()
     {
         QString m= QString::fromStdString(message.substr(protocolChat.length()));
         model->HandleChatMessage(socket->socketDescriptor(), m);
-        // foreach (QTcpSocket* socket,players)
-        // {
-        //  sendMessage(socket,message);
-        // }
     }
-
+    else if (message.rfind(protocolAction,0)==0)
+    {
+        QString m= QString::fromStdString(message.substr(protocolAction.length()));
+        model->HandleActionSelection(socket->socketDescriptor(),m);
+    }
+    else if (message.rfind(protocolTableau,0)==0)
+    {
+        QString m= QString::fromStdString(message.substr(protocolTableau.length()));
+        model->HandleTableauSelection(socket->socketDescriptor(),m);
+    }
+    else if (message.rfind(protocolStartGame,0)==0)
+    {
+        model->HandleStartGame(socket->socketDescriptor());
+    }
+    else
+    {
+        cout<<"Invalid message from client:"<<socket->socketDescriptor()<<"'"<<message<<"'"<<endl;
+    }
 }
 
 void Server::sendMessage(QTcpSocket* socket, string message)
@@ -146,6 +161,15 @@ void Server::sendChat(QString message)
     foreach(QTcpSocket* s, players)
     {
         sendMessage(s,message.toStdString());
+    }
+}
+void Server::sendState(QByteArray buffer)
+{
+    buffer.prepend(protocolGameState);
+    cout<<"sending gameState to players"<<endl;
+    foreach(QTcpSocket* s, players)
+    {
+        sendMessage(s,buffer.toStdString());
     }
 }
 

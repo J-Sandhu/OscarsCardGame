@@ -34,9 +34,9 @@ MainWindow::MainWindow(QWidget *parent, Model* model)
     connect(ui->startbutton, &QPushButton::clicked, this, &MainWindow::onStartClicked);
     connect(ui->sendMessageButton, &QPushButton::clicked, this, &MainWindow::sendChatMessage);
 
-    connect(this, &MainWindow::startGame, model, &Model::startGameSlot);
+    //connect(this, &MainWindow::startGame, model, &Model::startGameSlot);
 
-    connect(model, &Model::gameInitializedSignal, this, &MainWindow::showCardsOnTableau);
+    //connect(model, &Model::gameInitializedSignal, this, &MainWindow::showCardsOnTableau);
 
     //connect(model, &Model::gameInitializedSignal, this, &MainWindow::updateOtherPlayersHandsBox);
 
@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent, Model* model)
     protocolAction= "~action:";
     protocolTableau="~tableau";
     protocolGameState="~gstate:";
+    protocolStartGame="~startgame:";
 
     //add to tableau vector
     // currentCardsInTableau.push_back(ui->person0);
@@ -152,6 +153,15 @@ void MainWindow::readSocket()
         message.remove(0,protocolChat.length());
         emit newMessage(message);
     }
+    else if(message.toStdString().rfind(protocolGameState,0)==0)
+    {
+        cout<<"receiving gameState"<<endl;
+        buffer.remove(0,protocolGameState.length());
+        gameState.deserialize(buffer);
+        cout<<buffer.toStdString()<<endl;
+        cout<<"gamestate tableau size: "<<gameState.tableau.size()<<endl;
+        updateView();
+    }
 
 }
 
@@ -208,7 +218,7 @@ std::vector<QImage> MainWindow::getActionCardHand()
 
     /// Grab jai's code to get the index of interest
     /// replace the zero
-    QVector<int> pileOfInterest = model->gameState.players.at(0).actionPile;
+    QVector<int> pileOfInterest = gameState.players.at(0).actionPile;
 
     // create a blank image to fill empty frame preview slots
     QImage blankImage;
@@ -384,8 +394,8 @@ void MainWindow::actionCardFromPersonalPileSelected(int cardID, Card actionCard)
 
 void MainWindow::updateTableauAfterActionCardSelectSlot(){
     //redraw
-    for(int i = 0; i < model->gameState.tableau.size(); i++){
-        int personCardID = model->gameState.tableau[i];
+    for(int i = 0; i < gameState.tableau.size(); i++){
+        int personCardID = gameState.tableau[i];
 
         std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
         //pixmap??
@@ -396,16 +406,18 @@ void MainWindow::updateTableauAfterActionCardSelectSlot(){
 
 void MainWindow::onStartClicked()
 {
-    //emit signal to populate tabl
-    emit startGame();
+    //emit signal to populate tableau
+    clientSendMessage(protocolStartGame);
+    cout<<"start clicked, sending message to server"<<endl;
+    //emit startGame();
 }
 
 void MainWindow::showCardsOnTableau()
 {
     //tableauLayout->setHorizontalSpacing(0);
 
-    for(int i = 0; i < model->gameState.tableau.size(); i++){
-        int personCardID = model->gameState.tableau[i];
+    for(int i = 0; i < gameState.tableau.size(); i++){
+        int personCardID = gameState.tableau[i];
 
         std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
         //pixmap??
@@ -452,8 +464,8 @@ void MainWindow::showCardsOnTableau()
 
 void MainWindow::updateOtherPlayersHandsBox(){
     //at this point, we know how many players are currently in the game
-    for(int i = 0; i < model->gameState.players.size(); i++){
-        ui->otherPlayersHandsButton->addItem(model->gameState.players.at(i).name);
+    for(int i = 0; i < gameState.players.size(); i++){
+        ui->otherPlayersHandsButton->addItem(gameState.players.at(i).name);
     }
     //connect to popup window
     connect(ui->otherPlayersHandsButton, &QComboBox::currentIndexChanged, this, &MainWindow::displayPopUp);
@@ -491,4 +503,7 @@ void MainWindow::tableauCardClicked()
 
 }
 
-
+void MainWindow::updateView()
+{
+    showCardsOnTableau();
+}
