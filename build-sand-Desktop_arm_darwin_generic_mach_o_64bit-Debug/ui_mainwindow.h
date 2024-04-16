@@ -50,6 +50,7 @@ public:
     QLabel *nomineeCountLabel;
     QScrollArea *handScrollArea;
     QWidget *scrollAreaWidgetContents;
+    QLabel *handLabel;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -103,6 +104,7 @@ public:
         label->setFrameShape(QFrame::Panel);
         label->setTextFormat(Qt::AutoText);
         label->setScaledContents(false);
+        label->setAlignment(Qt::AlignCenter);
         verticalLayoutWidget = new QWidget(centralwidget);
         verticalLayoutWidget->setObjectName("verticalLayoutWidget");
         verticalLayoutWidget->setGeometry(QRect(20, 100, 141, 321));
@@ -148,11 +150,12 @@ public:
         tableauScrollArea->setWidget(scrollAreaContents);
         nomineeCountLabel = new QLabel(centralwidget);
         nomineeCountLabel->setObjectName("nomineeCountLabel");
-        nomineeCountLabel->setEnabled(false);
-        nomineeCountLabel->setGeometry(QRect(340, 110, 261, 31));
+        nomineeCountLabel->setEnabled(true);
+        nomineeCountLabel->setGeometry(QRect(340, 120, 261, 31));
         QFont font1;
         font1.setPointSize(24);
         nomineeCountLabel->setFont(font1);
+        nomineeCountLabel->setAlignment(Qt::AlignCenter);
         handScrollArea = new QScrollArea(centralwidget);
         handScrollArea->setObjectName("handScrollArea");
         handScrollArea->setGeometry(QRect(760, 160, 350, 490));
@@ -163,6 +166,12 @@ public:
         scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
         scrollAreaWidgetContents->setGeometry(QRect(0, 0, 348, 472));
         handScrollArea->setWidget(scrollAreaWidgetContents);
+        handLabel = new QLabel(centralwidget);
+        handLabel->setObjectName("handLabel");
+        handLabel->setEnabled(true);
+        handLabel->setGeometry(QRect(840, 120, 191, 31));
+        handLabel->setFont(font1);
+        handLabel->setAlignment(Qt::AlignCenter);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -190,6 +199,7 @@ public:
         sendMessageButton->setText(QCoreApplication::translate("MainWindow", "Send Message", nullptr));
         playerNameLine->setText(QCoreApplication::translate("MainWindow", "player", nullptr));
         nomineeCountLabel->setText(QString());
+        handLabel->setText(QCoreApplication::translate("MainWindow", "Hand:", nullptr));
     } // retranslateUi
 
 };

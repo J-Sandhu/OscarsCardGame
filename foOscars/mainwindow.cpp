@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    this->setWindowTitle("FoOscars");
+
     // load all of the pictures so we don't have to do it at every turn
     loadResources();
 
