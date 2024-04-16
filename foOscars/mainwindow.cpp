@@ -170,16 +170,16 @@ void MainWindow::cardPlayed()
     // Send message via jai's communication method.
 }
 
-// void MainWindow::updateActionHand(std::vector<QImage> images)
-// {
-//     // int nonSelectedHeight = ui->ACardLabel1->geometry().height();
-//     // int selectedHeight = ui->SelectedACardLabel->geometry().height();
-//     // ui->ACardLabel1->setPixmap(QPixmap::fromImage(images.at(0)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
-//     // ui->ACardLabel2->setPixmap(QPixmap::fromImage(images.at(1)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
-//     // ui->SelectedACardLabel->setPixmap(QPixmap::fromImage(images.at(2)).scaledToHeight(selectedHeight,Qt::FastTransformation));
-//     // ui->ACardLabel4->setPixmap(QPixmap::fromImage(images.at(3)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
-//     // ui->ACardLabel5->setPixmap(QPixmap::fromImage(images.at(4)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
-//}
+void MainWindow::updateActionHand(std::vector<QImage> images)
+{
+    // int nonSelectedHeight = ui->ACardLabel1->geometry().height();
+    // int selectedHeight = ui->SelectedACardLabel->geometry().height();
+    // ui->ACardLabel1->setPixmap(QPixmap::fromImage(images.at(0)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+    // ui->ACardLabel2->setPixmap(QPixmap::fromImage(images.at(1)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+    // ui->SelectedACardLabel->setPixmap(QPixmap::fromImage(images.at(2)).scaledToHeight(selectedHeight,Qt::FastTransformation));
+    // ui->ACardLabel4->setPixmap(QPixmap::fromImage(images.at(3)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+    // ui->ACardLabel5->setPixmap(QPixmap::fromImage(images.at(4)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+}
 
 void MainWindow::loadResources()
 {

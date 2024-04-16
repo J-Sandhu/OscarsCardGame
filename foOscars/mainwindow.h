@@ -54,6 +54,7 @@ public:
     void updateView();
 
 
+
 public slots:
 
     void hostClicked();
@@ -65,12 +66,12 @@ public slots:
     void sendChatMessage();
     void cardPlayed();
     void updateTableauAfterActionCardSelectSlot();
-    void actionCardFromPersonalPileSelected(int cardID, Card actionCard);
     void onStartClicked();
     void displayPopUp(int index);
     void tableauCardClicked();
     void actionCardClicked();
     void anotherPlayerPersonCardClicked();
+    void updateActionHand(std::vector<QImage> images);
 
 signals:
     void newMessage(QString message);
