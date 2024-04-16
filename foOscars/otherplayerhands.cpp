@@ -10,9 +10,21 @@ otherPlayerHands::otherPlayerHands(QWidget *parent, Player* player, QVector<QPix
 {
     ui->setupUi(this);
 
+<<<<<<< HEAD
+    //display action cards
+    for (int i = 0; i < player->actionPile.size(); i++){
+        //create QLabels
+        QLabel* label = new QLabel(this);
+        //can adjust height later
+        label->setGeometry(0, 0, 100, 80);
+        std::string fileName = ":/people/" + std::to_string(player->actionPile.at(i)) + "p.png";
+        QPixmap pixmap(QString::fromStdString(fileName));
+        label->setPixmap(pixmap.scaledToHeight(label->geometry().height(), Qt::FastTransformation));
+=======
     // add blue people to scroll view
     for(int i = 0; i < player->bluePeoplePile.size(); i++){
         int personCardID = player->bluePeoplePile.at(i);
+>>>>>>> ee107636488a5ce8a161deaf05b2f9c399e64477
 
         QPushButton* button = new QPushButton(this);
         QLabel* label = new QLabel(button);
