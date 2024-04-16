@@ -82,6 +82,7 @@ void MainWindow::hostClicked()
 
     ui->connectButton->setEnabled(false);
     ui->hostButton->setEnabled(false);
+    ui->startbutton->setEnabled(true);
     ui->ipLine->setReadOnly(true);
     ui->portLine->setReadOnly(true);
 
@@ -155,11 +156,8 @@ void MainWindow::readSocket()
     }
     else if(message.toStdString().rfind(protocolGameState,0)==0)
     {
-        cout<<"receiving gameState"<<endl;
         buffer.remove(0,protocolGameState.length());
         gameState.deserialize(buffer);
-        cout<<buffer.toStdString()<<endl;
-        cout<<"gamestate tableau size: "<<gameState.tableau.size()<<endl;
         updateView();
     }
 
@@ -177,7 +175,7 @@ void MainWindow::displayError(QAbstractSocket::SocketError socketError)
 
 void MainWindow::sendChatMessage()
 {
-    clientSendMessage(ui->messageLine->text().toStdString());
+    clientSendMessage(protocolChat + ui->messageLine->text().toStdString());
     ui->messageLine->clear();
 
 

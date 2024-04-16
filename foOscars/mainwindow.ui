@@ -170,6 +170,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="startbutton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Start Game</string>
        </property>
@@ -314,7 +317,7 @@
        <x>0</x>
        <y>0</y>
        <width>569</width>
-       <height>423</height>
+       <height>429</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -332,7 +335,7 @@
      <x>0</x>
      <y>0</y>
      <width>970</width>
-     <height>22</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>

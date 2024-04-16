@@ -38,11 +38,13 @@ void Model::HandlePlayerName(long long id, QString message)
 }
 void Model::HandleChatMessage(long long id, QString message)
 {
-    cout<<"Handling incoming chat"<<endl;
-    string sender = to_string(id)+":";
+    string sender;
     foreach (Player p, gameState.players)
         if (p.id==id)
-            emit sendChatToPlayers(message.prepend(sender));
+            sender = p.name.toStdString()+": ";
+    message.prepend(sender);
+    foreach (Player p, gameState.players)
+        sendChatToPlayers(message);
 }
 void Model::HandleTableauSelection(long long id, QString message)
 {
