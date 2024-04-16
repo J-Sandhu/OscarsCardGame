@@ -13,8 +13,6 @@ class Model : public QObject
 public:
     GameState gameState;
 
-    std::map <int, Card> personMap;
-
     int selectedActionCardIDFromPersonalPile;
     bool gameIsStarted;
     explicit Model(QObject *parent = nullptr);
@@ -32,6 +30,18 @@ public:
 
     //chase's stuff
     void movementCardComplete(int indexInTab);
+    void HandleCallBack(long long id, QString message);
+    //card Tuple containns model's ptr function and callback
+    typedef std::tuple<void(Model::*)(int, int, int), int*, void(Model::*)(int)> cardTuple; //function, array of params, callback (reference lines below)
+    typedef void (Model::* cardFunction)(int, int, int);
+    typedef void (Model::* cardCallBack)(int);
+    int currentAID;
+
+    typedef std::tuple<int, int, void (Model::*)(int)> peopleTuple;
+    std::map <int,peopleTuple> peopleMap; //int = id person, cardTuple = correpsonding info (value, color, special func)
+    std::map <int,cardTuple> actionMap;
+
+
 
 // public slots:
 //     void startGameSlot();
@@ -44,9 +54,9 @@ signals:
     void gameInitializedSignal();
 
     //view signals
-    void lineSelection(int colorIndex);
-    void requestFromPeoplePile(int numberOfCards);
-    void requestForPlayerSelection();
+    // void lineSelection(int colorIndex);
+    // void requestFromPeoplePile(int numberOfCards);
+    // void requestForPlayerSelection();
 
 private:
     ///
@@ -60,7 +70,6 @@ private:
     /// functions must be of the type actionCardFuncPtr to match
     /// parameters
     ///
-    std::map<int, Card> actionMap;
 
     ///
     /// \brief Adds additional points to the current players score calculator
