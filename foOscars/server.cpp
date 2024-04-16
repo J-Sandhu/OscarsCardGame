@@ -125,7 +125,7 @@ void Server::readSocket()
     }
     else
     {
-        cout<<"Invalid message from client:"<<socket->socketDescriptor()<<"'"<<message<<"'"<<endl;
+        cout<<"Invalid message from client:"<<socket->socketDescriptor()<<" '"<<message<<"'"<<endl;
     }
 }
 
