@@ -7,6 +7,10 @@ Server::Server(QWidget *parent): QObject(parent)
 {
 
     tcpServer = new QTcpServer(this);
+    // construct the model right after the server.
+    // TODO: this will likely be converted to a static class, but for now this will make
+    // continued testing possible.
+    model = new Model(this);
 
 
     if (!tcpServer->listen()) {

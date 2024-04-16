@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    this->setWindowTitle("FoOscars");
+
     // load all of the pictures so we don't have to do it at every turn
     loadResources();
 
@@ -28,6 +30,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->ipLine->setEnabled(true);
     ui->ipLine->setEnabled(true);
 
+    //display scoreBox with default value
+    ui->scoreBox->setText("Score: 0");
+    // ui->scoreBox->setText("Score: " + Model.gameState.
+
+    //read only for msg box
+    ui->receivedMessageText->setReadOnly(true);
 
     //connect the buttons to their respective actions
     connect(ui->hostButton, &QPushButton::clicked, this, &MainWindow::hostClicked);
@@ -56,7 +64,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::hostClicked()
 {
-
     ui->connectButton->setEnabled(false);
     ui->hostButton->setEnabled(false);
     ui->startbutton->setEnabled(true);
@@ -73,6 +80,7 @@ void MainWindow::hostClicked()
 
     connect(server, &Server::displayMessage, this, &MainWindow::displayMessageFromServer);
 
+    clientIndexInPlayerArray = 0;
     connectClicked();
 }
 
@@ -82,20 +90,31 @@ void MainWindow::connectClicked()
     connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
 
 
-    cout<<"state of the client socket: "<<clientSocket->socketDescriptor()<<endl;
+    //cout<<"state of the client socket: "<<clientSocket->socketDescriptor()<<endl;
+    ui->receivedMessageText->setTextColor(Qt::green);
+    ui->receivedMessageText->append(tr("state of the client socket: " + clientSocket->socketDescriptor()));
     clientSocket->connectToHost(ui->ipLine->text(), ui->portLine->text().toInt());
-    cout<<"state of the client socket after attempting to connect to host: "<<clientSocket->socketDescriptor()<<endl;
+    //cout<<"state of the client socket after attempting to connect to host: "<<clientSocket->socketDescriptor()<<endl;
+    ui->receivedMessageText->append(tr("state of the client socket after attempting to connect to host: " + clientSocket->socketDescriptor()));
 
     if(clientSocket->waitForConnected())
     {
-        cout<<"Connected to Server"<<endl;
+        //cout<<"Connected to Server"<<endl;
+        ui->receivedMessageText->setTextColor(Qt::blue);
+        ui->receivedMessageText->append(("Connected to server! YAY! :)"));
         ui->ipLine->setReadOnly(true);
         ui->portLine->setReadOnly(true);
         ui->playerNameLine->setReadOnly(true);
         clientSendMessage("~pname:"+ui->playerNameLine->text().toStdString());            //we can figure out the protocol later
     }
     else
-        cout<<tr("The following error occurred: %1.").arg(clientSocket->errorString()).toStdString()<<endl;
+        //cout<<tr("The following error occurred: %1.").arg(clientSocket->errorString()).toStdString()<<endl;
+        ui->receivedMessageText->setTextColor(Qt::red);
+        QString errorMessage = clientSocket->errorString();
+        ui->receivedMessageText->textCursor().insertText("The following error occurred: " + errorMessage);
+
+        // Move the cursor to the end to ensure new text is displayed properly
+        ui->receivedMessageText->append(tr("The following error occurred: %1.").arg(clientSocket->errorString()));
 
 }
 
@@ -153,6 +172,8 @@ void MainWindow::displayError(QAbstractSocket::SocketError socketError)
 void MainWindow::sendChatMessage()
 {
     clientSendMessage(protocolChat + ui->messageLine->text().toStdString());
+    ui->receivedMessageText->setTextColor(Qt::black);
+    ui->receivedMessageText->append(ui->messageLine->text());
     ui->messageLine->clear();
 }
 
@@ -257,10 +278,15 @@ void MainWindow::updateTableauAfterActionCardSelectSlot(){
         int personCardID = gameState.tableau[i];
 
         std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
-        //pixmap??
         QPixmap pixmap(QString::fromStdString(fileName));
         currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
     }
+
+    //     std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
+    //     //pixmap??
+    //     QPixmap pixmap(QString::fromStdString(fileName));
+    //     currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
+    // }
 }
 
 void MainWindow::onStartClicked()
@@ -273,35 +299,34 @@ void MainWindow::onStartClicked()
 
 void MainWindow::showCardsOnTableau()
 {
-    //tableauLayout->setHorizontalSpacing(0);
+    // before we show the new cards in the tableau
+    // we need to remove all of the buttons from the horizontal
+    // layout
+    qDeleteAll(tableauScrollWidget->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+
+    // update nominees remaining label
+    QString nomineeCount("Nominees Remaining: ");
+    nomineeCount.append(QString::number(gameState.tableau.size()));
+    ui->nomineeCountLabel->setText(nomineeCount);
+    // for(int i =0; i<tableauLayout->count(); i++)
+    // {
+    //     //tableauLayout->
+    // }
 
     for(int i = 0; i < gameState.tableau.size(); i++){
         int personCardID = gameState.tableau.at(i);
 
-        //std::cout <<"looking for person card of id: " << personCardID << std::endl;
-
-
-
-        //std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
-        //pixmap??
-        //QPixmap pixmap(QString::fromStdString(fileName));
-
-        //currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
-
-        //ui->tableauHLayout->addWidget
-        //create QLabels
-
         QPushButton* button = new QPushButton(this);
         QLabel* label = new QLabel(button);
-        button->setGeometry(0,0,300,420);
-        button->setBaseSize(300,420);
-        button->setFixedSize(300,420);
+        button->setGeometry(0,0,350,490);
+        button->setBaseSize(350,490);
+        button->setFixedSize(350,490);
 
         //button->setText("");
 
         button->setStyleSheet("border: none; color: palette(window-text); background: transparent;");
 
-        label->setGeometry(0, 0, 300, 420);
+        label->setGeometry(0, 0, 350, 490);
         label->setPixmap(peopleImages.at(personCardID).scaledToHeight(label->geometry().height(), Qt::FastTransformation));
         //label->setText("<l>Label</>");
 
@@ -325,7 +350,62 @@ void MainWindow::showCardsOnTableau()
     ui->tableauScrollArea->setWidget(tableauScrollWidget);
 }
 
+void MainWindow::showCardsInHand()
+{
+    // before we show the new cards in the tableau
+    // we need to remove all of the buttons from the horizontal
+    // layout
+    qDeleteAll(handScrollWidget->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+
+    // update nominees remaining label
+    // for(int i =0; i<tableauLayout->count(); i++)
+    // {
+    //     //tableauLayout->
+    // }
+
+    //TODO: look at how we are planning to identify which player we are.
+    // for now I'm only showing player 0's hand which will ALWAYS be the server
+    for(int i = 0; i < gameState.players.at(0).actionPile.size(); i++){
+        int actionCardID = gameState.players.at(0).actionPile.at(i);
+
+        QPushButton* button = new QPushButton(this);
+        QLabel* label = new QLabel(button);
+        button->setGeometry(0,0,350,490);
+        button->setBaseSize(350,490);
+        button->setFixedSize(350,490);
+
+        //button->setText("");
+
+        button->setStyleSheet("border: none; color: palette(window-text); background: transparent;");
+
+        label->setGeometry(0, 0, 350, 490);
+        label->setPixmap(actionImages.at(actionCardID).scaledToHeight(label->geometry().height(), Qt::FastTransformation));
+        //label->setText("<l>Label</>");
+
+
+
+        //label->setText("<b>Button</b> Test");
+        connect(button, &QPushButton::clicked, this, &MainWindow::actionCardClicked);
+        //ui->tableauLayout->addWidget(label);
+        handLayout->addWidget(button);
+
+
+        //std::cout <<" adding labelbutton at: " << tableauLayout->indexOf(button) << std::endl;
+
+
+        // It's important to read that a QScrollArea has a function called QScrollArea::setWidget.
+        // Attempting to just call QWidget::setLayout will not work for a QScrollArea's intended usage.
+        // You just need an intermediate QWidget parent that holds the layout, but is then also assigned to the QScrollArea.
+    }
+
+    handScrollWidget->setLayout(handLayout);
+    ui->handScrollArea->setWidget(handScrollWidget);
+}
+
 void MainWindow::updateOtherPlayersHandsBox(){
+    //enable combo box
+    ui->otherPlayersHandsButton->setEnabled(true);
+
     //at this point, we know how many players are currently in the game
     for(int i = 0; i < gameState.players.size(); i++){
 
@@ -343,7 +423,7 @@ void MainWindow::displayPopUp(int index)
     Player* p = &gameState.players.at(index);
 
     //constuct pop up window
-    otherPlayerHands* otherPlayersWindow = new otherPlayerHands(nullptr, p);
+    otherPlayerHands* otherPlayersWindow = new otherPlayerHands(nullptr, p, &peopleImages);
     otherPlayersWindow->show();
 }
 
@@ -362,11 +442,27 @@ void MainWindow::tableauCardClicked()
 
 }
 
+void MainWindow::actionCardClicked()
+{
+    QPushButton* button = qobject_cast<QPushButton*>(sender());
+
+    int actionCardIndex = handLayout->indexOf(button);
+
+    std::cout << "you clicked the action card at: " << actionCardIndex << std::endl;
+
+}
+
 void MainWindow::updateView()
 {
     showCardsOnTableau();
 
     connect(ui->testPush, &QPushButton::clicked, this, &MainWindow::tabSelected);
+    showCardsInHand();
+}
+
+void MainWindow::anotherPlayerPersonCardClicked()
+{
+    std::cout <<"you clicked someone else's person card" << std::endl;
 }
 
 

@@ -31,6 +31,7 @@ public:
     Server* server;
     QHostAddress serverIpAddress;
     int serverPort;
+    int clientIndexInPlayerArray;
 
     QTcpSocket* clientSocket;
     GameState gameState;
@@ -43,7 +44,12 @@ public:
     // this has to be done here because idk
     QHBoxLayout* tableauLayout = new QHBoxLayout;
     QWidget* tableauScrollWidget = new QWidget;
+
+    QHBoxLayout* handLayout = new QHBoxLayout;
+    QWidget* handScrollWidget = new QWidget;
+
     void showCardsOnTableau();
+    void showCardsInHand();
     void updateOtherPlayersHandsBox();
     void updateView();
 
@@ -64,6 +70,8 @@ public slots:
     void onStartClicked();
     void displayPopUp(int index);
     void tableauCardClicked();
+    void actionCardClicked();
+    void anotherPlayerPersonCardClicked();
 
 
     void actionCardPlayed();

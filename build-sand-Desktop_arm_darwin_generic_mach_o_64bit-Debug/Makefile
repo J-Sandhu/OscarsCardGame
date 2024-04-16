@@ -53,7 +53,6 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../foOscars/card.cpp \
-		../foOscars/client.cpp \
 		../foOscars/gamestate.cpp \
 		../foOscars/mainwindow.cpp \
 		../foOscars/model.cpp \
@@ -66,7 +65,6 @@ SOURCES       = ../foOscars/card.cpp \
 		moc_otherplayerhands.cpp \
 		moc_server.cpp
 OBJECTS       = card.o \
-		client.o \
 		gamestate.o \
 		mainwindow.o \
 		model.o \
@@ -244,14 +242,12 @@ DIST          = /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_pre.pr
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/yacc.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/lex.prf \
 		../foOscars/sand.pro ../foOscars/card.h \
-		../foOscars/client.h \
 		../foOscars/gamestate.h \
 		../foOscars/mainwindow.h \
 		../foOscars/model.h \
 		../foOscars/otherplayerhands.h \
 		../foOscars/player.h \
 		../foOscars/server.h ../foOscars/card.cpp \
-		../foOscars/client.cpp \
 		../foOscars/gamestate.cpp \
 		../foOscars/mainwindow.cpp \
 		../foOscars/model.cpp \
@@ -649,8 +645,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../foOscars/resources.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/card.h ../foOscars/client.h ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/otherplayerhands.h ../foOscars/player.h ../foOscars/server.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/card.cpp ../foOscars/client.cpp ../foOscars/gamestate.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/otherplayerhands.cpp ../foOscars/player.cpp ../foOscars/server.cpp ../foOscars/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/card.h ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/otherplayerhands.h ../foOscars/player.h ../foOscars/server.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/card.cpp ../foOscars/gamestate.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/otherplayerhands.cpp ../foOscars/player.cpp ../foOscars/server.cpp ../foOscars/main.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../foOscars/mainwindow.ui ../foOscars/otherPlayerHands.ui $(DISTDIR)/
 
 
@@ -749,6 +745,7 @@ qrc_resources.cpp: ../foOscars/resources.qrc \
 		../foOscars/36p.png \
 		../foOscars/9p.png \
 		../foOscars/30p.png \
+		../foOscars/39p.png \
 		../foOscars/37p.png \
 		../foOscars/15p.png \
 		../foOscars/10p.png \
@@ -1719,9 +1716,6 @@ card.o: ../foOscars/card.cpp ../foOscars/card.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qlatin1stringview.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o card.o ../foOscars/card.cpp
 
-client.o: ../foOscars/client.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o client.o ../foOscars/client.cpp
-
 gamestate.o: ../foOscars/gamestate.cpp ../foOscars/gamestate.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qvector.h \
@@ -2214,6 +2208,7 @@ otherplayerhands.o: ../foOscars/otherplayerhands.cpp ../foOscars/otherplayerhand
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qstring.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qdialog.h \
+		ui_otherplayerhands.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QLabel \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qlabel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o otherplayerhands.o ../foOscars/otherplayerhands.cpp
