@@ -70,6 +70,7 @@ public slots:
     void displayPopUp(int index);
     void tableauCardClicked();
     void actionCardClicked();
+    void anotherPlayerPersonCardClicked();
 
 signals:
     void newMessage(QString message);

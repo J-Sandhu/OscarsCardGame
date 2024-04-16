@@ -389,7 +389,7 @@ void MainWindow::displayPopUp(int index)
     Player* p = &gameState.players.at(index);
 
     //constuct pop up window
-    otherPlayerHands* otherPlayersWindow = new otherPlayerHands(nullptr, p);
+    otherPlayerHands* otherPlayersWindow = new otherPlayerHands(nullptr, p, &peopleImages);
     otherPlayersWindow->show();
 }
 
@@ -419,4 +419,9 @@ void MainWindow::updateView()
 {
     showCardsOnTableau();
     showCardsInHand();
+}
+
+void MainWindow::anotherPlayerPersonCardClicked()
+{
+    std::cout <<"you clicked someone else's person card" << std::endl;
 }
