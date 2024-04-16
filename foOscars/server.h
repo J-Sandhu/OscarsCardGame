@@ -29,6 +29,8 @@ public:
     QSet<QTcpSocket*> players;
     Model* model;
 
+
+
     void sendMessage(QTcpSocket* socket, string message);
 
 
@@ -44,7 +46,8 @@ public slots:
     void discardSocket();
     void readSocket();
     void sendChat(QString message);
-    void sendState(QByteArray buffer);
+    void sendStates(QByteArray buffer);
+    void sendState(QByteArray buffer,long long id);
 
 private:
     std::string protocolName;
@@ -53,6 +56,7 @@ private:
     std::string protocolTableau;
     std::string protocolGameState;
     std::string protocolStartGame;
+    std::string protocolCallBack;
 
 };
 

@@ -11,8 +11,8 @@ using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
     , clientSocket(new QTcpSocket(this))
+    , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -35,9 +35,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->startbutton, &QPushButton::clicked, this, &MainWindow::onStartClicked);
     connect(ui->sendMessageButton, &QPushButton::clicked, this, &MainWindow::sendChatMessage);
 
+    //test for action cards -chase
+    connect(ui->testActionCard, &QPushButton::clicked, this, &MainWindow::actionCardPlayed);
+
     protocolName = "~pname:";
     protocolChat = "~chat:";
     protocolAction= "~action:";
+    protocolCallBack = "~callback";
     protocolTableau="~tableau";
     protocolGameState="~gstate:";
     protocolStartGame="~startgame:";
@@ -143,7 +147,7 @@ void MainWindow::displayMessage(const QString& str)
 
 void MainWindow::displayError(QAbstractSocket::SocketError socketError)
 {
-    cout<<clientSocket->errorString().toStdString()<<endl;
+    cout<< socketError <<endl;
 }
 
 void MainWindow::sendChatMessage()
@@ -324,7 +328,9 @@ void MainWindow::showCardsOnTableau()
 void MainWindow::updateOtherPlayersHandsBox(){
     //at this point, we know how many players are currently in the game
     for(int i = 0; i < gameState.players.size(); i++){
+
         ui->otherPlayersHandsButton->addItem(gameState.players.at(i).name);
+
     }
     //connect to popup window
     connect(ui->otherPlayersHandsButton, &QComboBox::currentIndexChanged, this, &MainWindow::displayPopUp);
@@ -349,6 +355,9 @@ void MainWindow::tableauCardClicked()
 
     int cardIndex = tableauLayout->indexOf(button);
 
+    //Chase's tab
+    ui->selectedTab->setText(QString::number(cardIndex));
+
     //std::cout << "you clicked the card at: " << cardIndex << std::endl;
 
 }
@@ -356,4 +365,22 @@ void MainWindow::tableauCardClicked()
 void MainWindow::updateView()
 {
     showCardsOnTableau();
+
+    connect(ui->testPush, &QPushButton::clicked, this, &MainWindow::tabSelected);
 }
+
+
+//evan doesnt have his magic scroll view on the actions yet, so hard coding what index that card was.
+void MainWindow::actionCardPlayed()
+{
+    //hardcoding the first card as played
+    clientSendMessage(protocolAction + "0");
+}
+
+void MainWindow::tabSelected()
+{
+   clientSendMessage(protocolCallBack + ui->selectedTab->text().toStdString());
+}
+
+
+

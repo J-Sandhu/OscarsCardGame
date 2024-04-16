@@ -8,6 +8,7 @@ Server::Server(QWidget *parent): QObject(parent)
 
     tcpServer = new QTcpServer(this);
 
+
     if (!tcpServer->listen()) {
         cout<<(tr("Fortune Server Unable to start the server: %1.").arg(tcpServer->errorString())).toStdString()<<endl;
         tcpServer->close();
@@ -35,7 +36,8 @@ Server::Server(QWidget *parent): QObject(parent)
     model = new Model(this);
     // connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
     connect(model,&Model::sendChatToPlayers,this,&Server::sendChat);
-    connect(model,&Model::sendStateToPlayers,this,&Server::sendState);
+    connect(model,&Model::sendStateToPlayers,this,&Server::sendStates);
+    connect(model,&Model::sendStateToPlayer,this,&Server::sendState);
     connect(tcpServer, &QTcpServer::newConnection, this, &Server::newConnection);
     protocolName = "~pname:";
     protocolChat = "~chat:";
@@ -43,6 +45,8 @@ Server::Server(QWidget *parent): QObject(parent)
     protocolTableau="~tableau";
     protocolGameState="~gstate:";
     protocolStartGame="~startgame:";
+    protocolCallBack = "~callback";
+
 
 
 }
@@ -58,7 +62,7 @@ void Server::newConnection()
         cout<<"connection!!"<<endl;
         connect(socket, &QTcpSocket::readyRead, this, &Server::readSocket);
         connect(socket, &QTcpSocket::disconnected, this, &Server::discardSocket);
-         players.insert(socket);
+        players.insert(socket);
         // connect(socket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
         //emit displayMessage(QString("INFO :: Client with sockd:%1 has just entered the room").arg(socket->socketDescriptor()));
@@ -123,6 +127,11 @@ void Server::readSocket()
     {
         model->HandleStartGame(socket->socketDescriptor());
     }
+    else if(message.rfind(protocolCallBack,0)==0)
+    {
+        QString m= QString::fromStdString(message.substr(protocolTableau.length()));
+        model->HandleCallBack(socket->socketDescriptor(),m);
+    }
     else
     {
         cout<<"Invalid message from client:"<<socket->socketDescriptor()<<" '"<<message<<"'"<<endl;
@@ -163,13 +172,29 @@ void Server::sendChat(QString message)
         sendMessage(s,message.toStdString());
     }
 }
-void Server::sendState(QByteArray buffer)
+
+
+void Server::sendStates(QByteArray buffer)
 {
     buffer.prepend(protocolGameState);
     cout<<"sending gameState to players"<<endl;
     foreach(QTcpSocket* s, players)
     {
         sendMessage(s,buffer.toStdString());
+    }
+}
+
+void Server::sendState(QByteArray buffer, long long id)
+{
+    buffer.prepend(protocolGameState);
+    cout<<"sending gameState to player: "<< id<<endl;
+
+    foreach(QTcpSocket* s, players)
+    {
+        if(s->socketDescriptor()==id)
+        {
+            sendMessage(s,buffer.toStdString());
+        }
     }
 }
 

@@ -15,10 +15,12 @@ public:
 
     std::map <int, Card> personMap;
 
-    int selectedActionCardIDFromPersonalPile;
+    int currentAID;
     bool gameIsStarted;
     explicit Model(QObject *parent = nullptr);
 
+
+    long long currentPlayerId;
     ///
     /// \brief Method used for testing model functionality.
     ///
@@ -28,20 +30,25 @@ public:
     void HandleActionSelection(long long id, QString message);
     void HandlePlayerName(long long id, QString message);
     void HandleStartGame(long long id);
+    void HandleCallBack(long long id, QString message);;
 
 
     //chase's stuff
-    void movementCardComplete(int indexInTab);
+    static void movementCardComplete(int indexInTab);
 
-// public slots:
-//     void startGameSlot();
+
+public slots:
+
 
 signals:
     void sendChatToPlayers(QString);
     void sendStateToPlayers(QByteArray);
+    void sendStateToPlayer(QByteArray,long long id);
     void actionCardSelectedFromPersonalPile(Card selectedActionCard);
     void updateTableauAfterActionCardSelect();
     void gameInitializedSignal();
+
+
 
     //view signals
     void lineSelection(int colorIndex);
@@ -55,12 +62,17 @@ private:
     ///
     typedef void (*actionCardFuncPtr)(int param1, int param2, int param3);
 
+
+
     ///
     /// \brief map from card ID to function.
     /// functions must be of the type actionCardFuncPtr to match
     /// parameters
     ///
     std::map<int, Card> actionMap;
+
+
+
 
     ///
     /// \brief Adds additional points to the current players score calculator
@@ -94,7 +106,7 @@ private:
     /// \param positionModification number of positions the card is being used
     /// \param unused parameter
     ///
-    void movementCardPlayed(int requiredColor, int unused1, int unused2);
+    static void movementCardPlayed(int requiredColor, int unused1, int unused2);
 
     ///
     /// \brief This method will replace the line

@@ -48,6 +48,7 @@ public:
     void updateView();
 
 
+
 public slots:
 
     void hostClicked();
@@ -63,6 +64,10 @@ public slots:
     void onStartClicked();
     void displayPopUp(int index);
     void tableauCardClicked();
+
+
+    void actionCardPlayed();
+    void tabSelected();
 
 signals:
     void newMessage(QString message);
@@ -92,6 +97,8 @@ private:
     std::string protocolGameState;
     //protocol header for host to start game
     std::string protocolStartGame;
+
+    std::string protocolCallBack;
 
 };
 #endif // MAINWINDOW_H

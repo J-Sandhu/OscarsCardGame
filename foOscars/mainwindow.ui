@@ -328,6 +328,45 @@
      </property>
     </widget>
    </widget>
+   <widget class="QPushButton" name="testActionCard">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>390</y>
+      <width>80</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Test Action Card</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="selectedTab">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>430</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Current Selected in Tab</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="testPush">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>460</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PUSH THE PERSON!!</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

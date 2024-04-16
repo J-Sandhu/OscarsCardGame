@@ -17,7 +17,8 @@ Model::Model(QObject *parent) : QObject(parent){
     // CardFunction funcTuple(1,1,1,addPointsFromActionCard);
     // actionMap.insert(std::pair<int, CardFunction>(0,funcTuple));
 
-
+    //Card test(1,1,1,movementCardPlayed, movementCardComplete, false);
+    //actionMap.insert(std::pair<int, Card>(0,test));
 
 }
 void Model::HandlePlayerName(long long id, QString message)
@@ -51,18 +52,24 @@ void Model::HandleTableauSelection(long long id, QString message)
     int selectedPersonCardInTableau = message.toInt();
     // int personCardID = gameState.tableau[selectedPersonCardInTableau];
 
-    actionMap.at(selectedActionCardIDFromPersonalPile).function(&gameState, selectedPersonCardInTableau);
-    emit updateTableauAfterActionCardSelect();
+    // actionMap.at(currentAID).function(&gameState, selectedPersonCardInTableau);
+    // emit updateTableauAfterActionCardSelect();
 }
 void Model::HandleActionSelection(long long id, QString message)
 {
-    int actionCardIndexInPlayerHand = message.toInt();
-    int actionCardID= gameState.players.at(gameState.currentPlayerIndex).actionPile[actionCardIndexInPlayerHand];
 
-    Card selectedActionCard = actionMap.at(actionCardID);
+    currentPlayerId= id;
 
-    selectedActionCardIDFromPersonalPile = actionCardID;
-    emit actionCardSelectedFromPersonalPile(selectedActionCard);
+
+    int actionIndex = message.toInt();
+    currentAID = gameState.players.at(gameState.currentPlayerIndex).actionPile[actionIndex];
+
+     Card actionCard = actionMap.at(currentAID);
+     actionCard.function(actionCard.parameters[0],actionCard.parameters[1],actionCard.parameters[2]);
+
+
+
+    // emit actionCardSelectedFromPersonalPile(actionCard);
 
 }
 void Model::HandleStartGame(long long id)
@@ -76,6 +83,20 @@ void Model::HandleStartGame(long long id)
         std::cout << gameState.serialize().toStdString() << std::endl;
 
     }
+
+}
+void Model::HandleCallBack(long long id, QString message)
+{
+    // //as far as i know only one retrun param ever
+    // int returnedParam = message.toInt();
+
+    //  Card actionCard = actionMap.at(currentAID);
+
+    //  actionCard.callback(returnedParam);
+
+
+
+
 
 }
 void Model::addPointsFromActionCard(int scoreModification, int unused1, int unused2)
@@ -107,37 +128,44 @@ void Model::modelTestMethod()
     int* params = actionMap.at(0).parameters;
     std::cout << " getting past parameter cast " << std::endl;
     auto func = actionMap.at(0).function;
-
     // func(params[0], params[1], params[2]);
 }
 
-void Model::movementCardPlayed(int colorIndex, int unused, int unused1)
+void Model::movementCardPlayed(int spefiedColor, int unused, int unused1)
 {
 
-    emit lineSelection(colorIndex);
-
     std::cout << "getting into move person card emission function" << std::endl;
-    /*
-     * This method and other ones like it may be kind of weird.
-     * The series of events, will be as follows to avoid model logic in Client:
-     * 1. the user selects a card that moves a person card and clicks "use"
-     * 2. The server receives this input and emits something to enable the user to click cards
-     *    in the tableau.
-     *    - This signal will be emitted  by a CardFunction that will take a color parameter, all it does
-     *    is emit a signal to the server to alert the view of which card buttons to activate.
-     *    - if the Action card specifies a color of card to move, only those buttons will be enabled.
-     * 3. The client receives that signal, enables the card buttons/labels/widgets
-     *    - each button/label/widget whatever(card) will be connected to a unique slot for that button,
-     *    this enables lookup within the tableau based on ButtonSignal=>TableauIndex=>cardIndex
-     * 4. The player selects a card to move.
-     * 5. The client emits the signal for the selected card.
-     * 6. This signal is caught by the server which calls a gameUpdate method
-     */
+
+
+    // //-1 will be for if there is no spefied color chosing
+    // if(spefiedColor=!-1)
+    // {
+    //     for(int i =0; i<gameState.tableau.size();i++)
+    //     {
+    //         Card currentCard= personMap.at(gameState.tableau.at(i));
+    //         if(currentCard.colorType ==spefiedColor)
+    //         {
+    //             gameState.tableauEnableds[i]=true;
+    //         }
+    //     }
+    // }
+
+    // //tell view to re-update
+    // emit sendStateToPlayer(gameState.serialize(), currentPlayerId);
+
+
 }
 
 void Model::movementCardComplete(int indexInTab)
 {
-    gameState.tableau.move(indexInTab, indexInTab- actionMap.at(selectedActionCardIDFromPersonalPile).parameters[1]);
+
+    // cardTuple actionCard = actionMap.at(currentAID);
+    // auto [function, params, callback] = actionCard;
+    // int* parameters = params;
+
+    // gameState.tableau.move(indexInTab, indexInTab- parameters[1]);
+    // gameState.currentPlayerIndex +=1;
+    // emit sendStateToPlayers(gameState.serialize());
 }
 
 
@@ -211,6 +239,9 @@ void Model::generateRandomTableau()
         // remove the ID at that index so that the same Person won't be included twice(except duplicate cards)
         gameState.personCardStack.removeAt(randomPersonIndex);
 
+        //chase's test action
+        gameState.tableauEnableds.push_back(false);
+
     }
 }
 
@@ -230,5 +261,6 @@ void Model::generateRandomHands()
         }
     }
 }
+
 
 
