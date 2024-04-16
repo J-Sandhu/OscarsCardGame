@@ -749,6 +749,7 @@ qrc_resources.cpp: ../foOscars/resources.qrc \
 		../foOscars/36p.png \
 		../foOscars/9p.png \
 		../foOscars/30p.png \
+		../foOscars/39p.png \
 		../foOscars/37p.png \
 		../foOscars/15p.png \
 		../foOscars/10p.png \

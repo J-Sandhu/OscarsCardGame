@@ -69,6 +69,7 @@ void MainWindow::hostClicked()
 
     connect(server, &Server::displayMessage, this, &MainWindow::displayMessageFromServer);
 
+    clientIndexInPlayerArray = 0;
     connectClicked();
 }
 
@@ -249,14 +250,14 @@ void MainWindow::actionCardFromPersonalPileSelected(int cardID, Card actionCard)
 
 void MainWindow::updateTableauAfterActionCardSelectSlot(){
     //redraw
-    for(int i = 0; i < gameState.tableau.size(); i++){
-        int personCardID = gameState.tableau[i];
+    // for(int i = 0; i < gameState.tableau.size(); i++){
+    //     int personCardID = gameState.tableau[i];
 
-        std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
-        //pixmap??
-        QPixmap pixmap(QString::fromStdString(fileName));
-        currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
-    }
+    //     std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
+    //     //pixmap??
+    //     QPixmap pixmap(QString::fromStdString(fileName));
+    //     currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
+    // }
 }
 
 void MainWindow::onStartClicked()
@@ -269,23 +270,22 @@ void MainWindow::onStartClicked()
 
 void MainWindow::showCardsOnTableau()
 {
-    //tableauLayout->setHorizontalSpacing(0);
+    // before we show the new cards in the tableau
+    // we need to remove all of the buttons from the horizontal
+    // layout
+    qDeleteAll(tableauScrollWidget->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+
+    // update nominees remaining label
+    QString nomineeCount("Nominees Remaining: ");
+    nomineeCount.append(QString::number(gameState.tableau.size()));
+    ui->nomineeCountLabel->setText(nomineeCount);
+    // for(int i =0; i<tableauLayout->count(); i++)
+    // {
+    //     //tableauLayout->
+    // }
 
     for(int i = 0; i < gameState.tableau.size(); i++){
         int personCardID = gameState.tableau.at(i);
-
-        //std::cout <<"looking for person card of id: " << personCardID << std::endl;
-
-
-
-        //std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
-        //pixmap??
-        //QPixmap pixmap(QString::fromStdString(fileName));
-
-        //currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
-
-        //ui->tableauHLayout->addWidget
-        //create QLabels
 
         QPushButton* button = new QPushButton(this);
         QLabel* label = new QLabel(button);
@@ -321,6 +321,58 @@ void MainWindow::showCardsOnTableau()
     ui->tableauScrollArea->setWidget(tableauScrollWidget);
 }
 
+void MainWindow::showCardsInHand()
+{
+    // before we show the new cards in the tableau
+    // we need to remove all of the buttons from the horizontal
+    // layout
+    qDeleteAll(handScrollWidget->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+
+    // update nominees remaining label
+    // for(int i =0; i<tableauLayout->count(); i++)
+    // {
+    //     //tableauLayout->
+    // }
+
+    //TODO: look at how we are planning to identify which player we are.
+    // for now I'm only showing player 0's hand which will ALWAYS be the server
+    for(int i = 0; i < gameState.players.at(0).actionPile.size(); i++){
+        int actionCardID = gameState.players.at(0).actionPile.at(i);
+
+        QPushButton* button = new QPushButton(this);
+        QLabel* label = new QLabel(button);
+        button->setGeometry(0,0,300,420);
+        button->setBaseSize(300,420);
+        button->setFixedSize(300,420);
+
+        //button->setText("");
+
+        button->setStyleSheet("border: none; color: palette(window-text); background: transparent;");
+
+        label->setGeometry(0, 0, 300, 420);
+        label->setPixmap(actionImages.at(actionCardID).scaledToHeight(label->geometry().height(), Qt::FastTransformation));
+        //label->setText("<l>Label</>");
+
+
+
+        //label->setText("<b>Button</b> Test");
+        connect(button, &QPushButton::clicked, this, &MainWindow::actionCardClicked);
+        //ui->tableauLayout->addWidget(label);
+        handLayout->addWidget(button);
+
+
+        //std::cout <<" adding labelbutton at: " << tableauLayout->indexOf(button) << std::endl;
+
+
+        // It's important to read that a QScrollArea has a function called QScrollArea::setWidget.
+        // Attempting to just call QWidget::setLayout will not work for a QScrollArea's intended usage.
+        // You just need an intermediate QWidget parent that holds the layout, but is then also assigned to the QScrollArea.
+    }
+
+    handScrollWidget->setLayout(handLayout);
+    ui->handScrollArea->setWidget(handScrollWidget);
+}
+
 void MainWindow::updateOtherPlayersHandsBox(){
     //at this point, we know how many players are currently in the game
     for(int i = 0; i < gameState.players.size(); i++){
@@ -353,7 +405,18 @@ void MainWindow::tableauCardClicked()
 
 }
 
+void MainWindow::actionCardClicked()
+{
+    QPushButton* button = qobject_cast<QPushButton*>(sender());
+
+    int actionCardIndex = handLayout->indexOf(button);
+
+    std::cout << "you clicked the action card at: " << actionCardIndex << std::endl;
+
+}
+
 void MainWindow::updateView()
 {
     showCardsOnTableau();
+    showCardsInHand();
 }

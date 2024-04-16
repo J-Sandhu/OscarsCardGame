@@ -30,13 +30,6 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QWidget *horizontalLayoutWidget;
-    QHBoxLayout *hand;
-    QLabel *ACardLabel1;
-    QLabel *ACardLabel2;
-    QLabel *SelectedACardLabel;
-    QLabel *ACardLabel4;
-    QLabel *ACardLabel5;
     QWidget *horizontalLayoutWidget_2;
     QHBoxLayout *connectionLayout;
     QLineEdit *ipLine;
@@ -50,15 +43,13 @@ public:
     QTextEdit *receivedMessageText;
     QPushButton *sendMessageButton;
     QLineEdit *messageLine;
-    QWidget *verticalLayoutWidget_2;
-    QVBoxLayout *verticalLayout;
-    QPushButton *previousFrameButton;
-    QPushButton *newFrameButton;
-    QPushButton *nextFrameButton;
     QLineEdit *playerNameLine;
     QComboBox *otherPlayersHandsButton;
     QScrollArea *tableauScrollArea;
     QWidget *scrollAreaContents;
+    QLabel *nomineeCountLabel;
+    QScrollArea *handScrollArea;
+    QWidget *scrollAreaWidgetContents;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -66,52 +57,9 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(970, 718);
+        MainWindow->resize(1184, 718);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        horizontalLayoutWidget = new QWidget(centralwidget);
-        horizontalLayoutWidget->setObjectName("horizontalLayoutWidget");
-        horizontalLayoutWidget->setGeometry(QRect(260, 520, 461, 142));
-        hand = new QHBoxLayout(horizontalLayoutWidget);
-        hand->setSpacing(0);
-        hand->setObjectName("hand");
-        hand->setContentsMargins(0, 0, 0, 0);
-        ACardLabel1 = new QLabel(horizontalLayoutWidget);
-        ACardLabel1->setObjectName("ACardLabel1");
-        ACardLabel1->setMinimumSize(QSize(50, 70));
-        ACardLabel1->setMaximumSize(QSize(50, 70));
-
-        hand->addWidget(ACardLabel1);
-
-        ACardLabel2 = new QLabel(horizontalLayoutWidget);
-        ACardLabel2->setObjectName("ACardLabel2");
-        ACardLabel2->setMinimumSize(QSize(50, 70));
-        ACardLabel2->setMaximumSize(QSize(50, 70));
-
-        hand->addWidget(ACardLabel2);
-
-        SelectedACardLabel = new QLabel(horizontalLayoutWidget);
-        SelectedACardLabel->setObjectName("SelectedACardLabel");
-        SelectedACardLabel->setEnabled(true);
-        SelectedACardLabel->setMinimumSize(QSize(100, 140));
-        SelectedACardLabel->setMaximumSize(QSize(100, 100));
-
-        hand->addWidget(SelectedACardLabel);
-
-        ACardLabel4 = new QLabel(horizontalLayoutWidget);
-        ACardLabel4->setObjectName("ACardLabel4");
-        ACardLabel4->setMinimumSize(QSize(50, 70));
-        ACardLabel4->setMaximumSize(QSize(50, 70));
-
-        hand->addWidget(ACardLabel4);
-
-        ACardLabel5 = new QLabel(horizontalLayoutWidget);
-        ACardLabel5->setObjectName("ACardLabel5");
-        ACardLabel5->setMinimumSize(QSize(50, 70));
-        ACardLabel5->setMaximumSize(QSize(50, 70));
-
-        hand->addWidget(ACardLabel5);
-
         horizontalLayoutWidget_2 = new QWidget(centralwidget);
         horizontalLayoutWidget_2->setObjectName("horizontalLayoutWidget_2");
         horizontalLayoutWidget_2->setGeometry(QRect(180, 30, 461, 33));
@@ -140,6 +88,7 @@ public:
 
         startbutton = new QPushButton(horizontalLayoutWidget_2);
         startbutton->setObjectName("startbutton");
+        startbutton->setEnabled(false);
 
         connectionLayout->addWidget(startbutton);
 
@@ -175,27 +124,6 @@ public:
 
         chatLayout->addWidget(messageLine);
 
-        verticalLayoutWidget_2 = new QWidget(centralwidget);
-        verticalLayoutWidget_2->setObjectName("verticalLayoutWidget_2");
-        verticalLayoutWidget_2->setGeometry(QRect(740, 530, 116, 100));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget_2);
-        verticalLayout->setObjectName("verticalLayout");
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        previousFrameButton = new QPushButton(verticalLayoutWidget_2);
-        previousFrameButton->setObjectName("previousFrameButton");
-
-        verticalLayout->addWidget(previousFrameButton);
-
-        newFrameButton = new QPushButton(verticalLayoutWidget_2);
-        newFrameButton->setObjectName("newFrameButton");
-
-        verticalLayout->addWidget(newFrameButton);
-
-        nextFrameButton = new QPushButton(verticalLayoutWidget_2);
-        nextFrameButton->setObjectName("nextFrameButton");
-
-        verticalLayout->addWidget(nextFrameButton);
-
         playerNameLine = new QLineEdit(centralwidget);
         playerNameLine->setObjectName("playerNameLine");
         playerNameLine->setGeometry(QRect(180, 10, 141, 20));
@@ -204,7 +132,7 @@ public:
         otherPlayersHandsButton->setGeometry(QRect(770, 30, 103, 32));
         tableauScrollArea = new QScrollArea(centralwidget);
         tableauScrollArea->setObjectName("tableauScrollArea");
-        tableauScrollArea->setGeometry(QRect(180, 79, 571, 441));
+        tableauScrollArea->setGeometry(QRect(170, 180, 571, 441));
         tableauScrollArea->setMouseTracking(true);
         tableauScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         tableauScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -218,10 +146,27 @@ public:
         sizePolicy.setHeightForWidth(scrollAreaContents->sizePolicy().hasHeightForWidth());
         scrollAreaContents->setSizePolicy(sizePolicy);
         tableauScrollArea->setWidget(scrollAreaContents);
+        nomineeCountLabel = new QLabel(centralwidget);
+        nomineeCountLabel->setObjectName("nomineeCountLabel");
+        nomineeCountLabel->setEnabled(false);
+        nomineeCountLabel->setGeometry(QRect(340, 130, 261, 31));
+        QFont font1;
+        font1.setPointSize(24);
+        nomineeCountLabel->setFont(font1);
+        handScrollArea = new QScrollArea(centralwidget);
+        handScrollArea->setObjectName("handScrollArea");
+        handScrollArea->setGeometry(QRect(770, 190, 300, 420));
+        handScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        handScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        handScrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 298, 418));
+        handScrollArea->setWidget(scrollAreaWidgetContents);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 970, 22));
+        menubar->setGeometry(QRect(0, 0, 1184, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -235,11 +180,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        ACardLabel1->setText(QString());
-        ACardLabel2->setText(QString());
-        SelectedACardLabel->setText(QString());
-        ACardLabel4->setText(QString());
-        ACardLabel5->setText(QString());
         ipLine->setPlaceholderText(QCoreApplication::translate("MainWindow", "IP address", nullptr));
         portLine->setText(QString());
         portLine->setPlaceholderText(QCoreApplication::translate("MainWindow", "Port", nullptr));
@@ -248,10 +188,8 @@ public:
         startbutton->setText(QCoreApplication::translate("MainWindow", "Start Game", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "FoOscars", nullptr));
         sendMessageButton->setText(QCoreApplication::translate("MainWindow", "Send Message", nullptr));
-        previousFrameButton->setText(QCoreApplication::translate("MainWindow", "Previous Card", nullptr));
-        newFrameButton->setText(QCoreApplication::translate("MainWindow", "Use Card", nullptr));
-        nextFrameButton->setText(QCoreApplication::translate("MainWindow", "Next Card", nullptr));
         playerNameLine->setText(QCoreApplication::translate("MainWindow", "player", nullptr));
+        nomineeCountLabel->setText(QString());
     } // retranslateUi
 
 };
