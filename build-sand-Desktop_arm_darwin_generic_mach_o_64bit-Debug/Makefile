@@ -1199,6 +1199,8 @@ moc_mainwindow.cpp: ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QLatin1String \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QRandomGenerator \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/QPixmap \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/qpixmap.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc
 	/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=15 -D__clang_minor__=0 -D__clang_patchlevel__=0 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-clang -I'/Users/evanblanchard/Downloads/Spring 2024/CS 3505/FinalProject/cs3505-assignment9-J-Sandhu/foOscars' -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include -F/Users/evanblanchard/Qt/6.6.2/macos/lib ../foOscars/mainwindow.h -o moc_mainwindow.cpp
 
@@ -2166,6 +2168,8 @@ mainwindow.o: ../foOscars/mainwindow.cpp ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QLatin1String \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QRandomGenerator \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/QPixmap \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/qpixmap.h \
 		ui_mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/QNetworkInterface \
 		../foOscars/otherplayerhands.h \
@@ -2210,7 +2214,6 @@ otherplayerhands.o: ../foOscars/otherplayerhands.cpp ../foOscars/otherplayerhand
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qstring.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qdialog.h \
-		ui_otherplayerhands.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QLabel \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qlabel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o otherplayerhands.o ../foOscars/otherplayerhands.cpp
@@ -3064,6 +3067,8 @@ main.o: ../foOscars/main.cpp ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QLatin1String \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QRandomGenerator \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/QPixmap \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/qpixmap.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../foOscars/main.cpp
 

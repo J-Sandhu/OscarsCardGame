@@ -9,16 +9,17 @@
 
 using namespace std;
 
-MainWindow::MainWindow(QWidget *parent, Model* model)
+MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , clientSocket(new QTcpSocket(this))
-    , model(model)
 {
     ui->setupUi(this);
 
     // load all of the pictures so we don't have to do it at every turn
     loadResources();
+
+    //std::cout << "people images size: " << peopleImages.size() << std::endl;
 
     //enable the connection buttons and text
     ui->connectButton->setEnabled(true);
@@ -34,40 +35,12 @@ MainWindow::MainWindow(QWidget *parent, Model* model)
     connect(ui->startbutton, &QPushButton::clicked, this, &MainWindow::onStartClicked);
     connect(ui->sendMessageButton, &QPushButton::clicked, this, &MainWindow::sendChatMessage);
 
-    //connect(this, &MainWindow::startGame, model, &Model::startGameSlot);
-
-    //connect(model, &Model::gameInitializedSignal, this, &MainWindow::showCardsOnTableau);
-
-    //connect(model, &Model::gameInitializedSignal, this, &MainWindow::updateOtherPlayersHandsBox);
-
-    // connect(clientSocket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
-
     protocolName = "~pname:";
     protocolChat = "~chat:";
     protocolAction= "~action:";
     protocolTableau="~tableau";
     protocolGameState="~gstate:";
     protocolStartGame="~startgame:";
-
-    //add to tableau vector
-    // currentCardsInTableau.push_back(ui->person0);
-    // currentCardsInTableau.push_back(ui->person1);
-    // currentCardsInTableau.push_back(ui->person2);
-    // currentCardsInTableau.push_back(ui->person3);
-    // currentCardsInTableau.push_back(ui->person4);
-    // currentCardsInTableau.push_back(ui->person5);
-    // currentCardsInTableau.push_back(ui->person6);
-    // currentCardsInTableau.push_back(ui->person7);
-    // currentCardsInTableau.push_back(ui->person8);
-    // currentCardsInTableau.push_back(ui->person9);
-    // currentCardsInTableau.push_back(ui->person10);
-    // currentCardsInTableau.push_back(ui->person11);
-    // currentCardsInTableau.push_back(ui->person12);
-    // currentCardsInTableau.push_back(ui->person13);
-    // currentCardsInTableau.push_back(ui->person14);
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -177,8 +150,6 @@ void MainWindow::sendChatMessage()
 {
     clientSendMessage(protocolChat + ui->messageLine->text().toStdString());
     ui->messageLine->clear();
-
-
 }
 
 void MainWindow::clientSendMessage(std::string message)
@@ -198,144 +169,17 @@ void MainWindow::cardPlayed()
 {
     // Send message via jai's communication method.
 }
-void MainWindow::nextActionClicked()
-{
-    selectedActionCardIndex++;
-    updateActionHand(getActionCardHand());
 
-}
-void MainWindow::PreviousActionClicked()
-{
-    selectedActionCardIndex--;
-    updateActionHand(getActionCardHand());
-}
-
-std::vector<QImage> MainWindow::getActionCardHand()
-{
-    std::vector<QImage> previewFrames;
-
-    /// Grab jai's code to get the index of interest
-    /// replace the zero
-    QVector<int> pileOfInterest = gameState.players.at(0).actionPile;
-
-    // create a blank image to fill empty frame preview slots
-    QImage blankImage;
-    QColor transparent(255,255,255,255);
-    blankImage.fill(transparent);
-
-    // handles selected frame and frames to the left
-    // if there are less than 2 frames to the left
-    if(selectedActionCardIndex < 2)
-    {
-        // if there is 1 frame to the left
-        if(selectedActionCardIndex == 1)
-        {
-            // push back a blank Qimage, then the image at 0, then the preview frame
-            //std::cout << "finding 1 frame to the left " <<std::endl;
-
-            // right now this pushes back an integer, we need it to push back
-            // an image with the filename of the specified.
-
-
-
-            previewFrames.push_back(blankImage);
-
-            //QImage image1(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex-1)));
-            previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex-1)));
-
-            //QImage image2(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex)));
-            previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex)));
-        }
-        if(selectedActionCardIndex == 0)
-        {
-            //std::cout <<"finding no frames to the left" << std::endl;
-            // push back 2 blank Qimages, then the selected frame
-            previewFrames.push_back(blankImage);
-            previewFrames.push_back(blankImage);
-            previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex)));
-        }
-    }
-    // if there are at least two frames to the left
-    else
-    {
-        // push the 2 frames before and the current frame
-        // std::cout << "finding 2 frames to the left" <<std::endl;
-        // previewFrames.push_back(animationFrames.at(currentFrame-2).imageData);
-        // previewFrames.push_back(animationFrames.at(currentFrame-1).imageData);
-
-        //QImage image1(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex-2)));
-        previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex-2)));
-
-        //QImage image2(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex-1)));
-        previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex-1)));
-
-        //QImage image3(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex)));
-        previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex)));
-
-        //previewFrames.push_back(animationFrames.at(currentFrame).imageData);
-    }
-
-    // handles frames to the right
-    // if there are less than two frames to the right
-    if(pileOfInterest.size() - selectedActionCardIndex < 3)
-    {
-        // there is only 1 frame to the right
-        if(pileOfInterest.size()-selectedActionCardIndex == 2)
-        {
-            // push back the next frame then 1 empty frame
-            // std::cout <<"finding 1 frame to right" << std::endl;
-            //QImage image(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex+1)));
-            previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex+1)));
-            //previewFrames.push_back(animationFrames.at(currentFrame+1).imageData);
-            previewFrames.push_back(blankImage);
-        }
-        // if there are no frames to the right
-        // the same as the selected frame being the last frame
-        if(selectedActionCardIndex == pileOfInterest.size()-1)
-        {
-            // push back two empty frames
-            //std::cout <<"No frames to the right" << std::endl;
-            previewFrames.push_back(blankImage);
-            previewFrames.push_back(blankImage);
-        }
-    }
-    // if there are at least two frames to the right
-    else
-    {
-        //std::cout << "finding at least two frames to the right" << std::endl;
-        //push back the two frames to the right
-
-        //QImage image1(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex+1)));
-        previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex+1)));
-
-        //QImage image2(makeActionCardFilename(pileOfInterest.at(selectedActionCardIndex+2)));
-        previewFrames.push_back(actionImages.at(pileOfInterest.at(selectedActionCardIndex+2)));
-
-        // previewFrames.push_back(animationFrames.at(currentFrame+1).imageData);
-        // previewFrames.push_back(animationFrames.at(currentFrame+2).imageData);
-    }
-
-    return previewFrames;
-}
-
-// QString MainWindow::makeActionCardFilename(int actionCardID)
+// void MainWindow::updateActionHand(std::vector<QImage> images)
 // {
-//     QString filename = QString::number(actionCardID);
-//     filename.append(".png");
-//     filename.prepend(":/actions/");
-//     return filename;
-// }
-
-void MainWindow::updateActionHand(std::vector<QImage> images)
-{
-    int nonSelectedHeight = ui->ACardLabel1->geometry().height();
-    int selectedHeight = ui->SelectedACardLabel->geometry().height();
-    ui->ACardLabel1->setPixmap(QPixmap::fromImage(images.at(0)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
-    ui->ACardLabel2->setPixmap(QPixmap::fromImage(images.at(1)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
-    ui->SelectedACardLabel->setPixmap(QPixmap::fromImage(images.at(2)).scaledToHeight(selectedHeight,Qt::FastTransformation));
-    ui->ACardLabel4->setPixmap(QPixmap::fromImage(images.at(3)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
-    ui->ACardLabel5->setPixmap(QPixmap::fromImage(images.at(4)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
-}
+//     // int nonSelectedHeight = ui->ACardLabel1->geometry().height();
+//     // int selectedHeight = ui->SelectedACardLabel->geometry().height();
+//     // ui->ACardLabel1->setPixmap(QPixmap::fromImage(images.at(0)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+//     // ui->ACardLabel2->setPixmap(QPixmap::fromImage(images.at(1)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+//     // ui->SelectedACardLabel->setPixmap(QPixmap::fromImage(images.at(2)).scaledToHeight(selectedHeight,Qt::FastTransformation));
+//     // ui->ACardLabel4->setPixmap(QPixmap::fromImage(images.at(3)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+//     // ui->ACardLabel5->setPixmap(QPixmap::fromImage(images.at(4)).scaledToHeight(nonSelectedHeight,Qt::FastTransformation));
+//}
 
 void MainWindow::loadResources()
 {
@@ -344,8 +188,17 @@ void MainWindow::loadResources()
         QString filename = QString::number(i);
         filename.append(".png");
         filename.prepend(":/actions/");
-        QImage assetImage(filename);
+        QPixmap assetImage(filename);
         actionImages.push_back(assetImage);
+    }
+
+    for(int i = 0; i<41; i++)
+    {
+        QString filename = QString::number(i);
+        filename.append("p.png");
+        filename.prepend(":/people/");
+        QPixmap assetImage(filename);
+        peopleImages.push_back(assetImage);
     }
 }
 
@@ -356,11 +209,15 @@ void MainWindow::actionCardFromPersonalPileSelected(int cardID, Card actionCard)
     switch(actionCard.cardType){
         case Card::ActionCardTypes::generalLineMovement:
             //find out which cards in tableau to make clickable
-            for (int i = 0; i < currentCardsInTableau.size(); i++){
-                int personCardID = model->gameState.tableau[i];
-                if(model->personMap.at(personCardID).colorType == actionCard.colorType){
-                    currentCardsInTableau[i]->setEnabled(true);
-                }
+            for (int i = 0; i < gameState.tableau.size(); i++){
+
+                //TODO: replace this with model logic that update gamestate with whether or not
+                // a card is enabled.
+
+                // int personCardID = gameState.tableau.at(i);
+                // if(model->personMap.at(personCardID).colorType == actionCard.colorType){
+                //     currentCardsInTableau[i]->setEnabled(true);
+                // }
             }
             break;
 
@@ -415,11 +272,15 @@ void MainWindow::showCardsOnTableau()
     //tableauLayout->setHorizontalSpacing(0);
 
     for(int i = 0; i < gameState.tableau.size(); i++){
-        int personCardID = gameState.tableau[i];
+        int personCardID = gameState.tableau.at(i);
 
-        std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
+        //std::cout <<"looking for person card of id: " << personCardID << std::endl;
+
+
+
+        //std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
         //pixmap??
-        QPixmap pixmap(QString::fromStdString(fileName));
+        //QPixmap pixmap(QString::fromStdString(fileName));
 
         //currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
 
@@ -437,7 +298,7 @@ void MainWindow::showCardsOnTableau()
         button->setStyleSheet("border: none; color: palette(window-text); background: transparent;");
 
         label->setGeometry(0, 0, 300, 420);
-        label->setPixmap(pixmap.scaledToHeight(label->geometry().height(), Qt::FastTransformation));
+        label->setPixmap(peopleImages.at(personCardID).scaledToHeight(label->geometry().height(), Qt::FastTransformation));
         //label->setText("<l>Label</>");
 
 
@@ -473,7 +334,7 @@ void MainWindow::updateOtherPlayersHandsBox(){
 void MainWindow::displayPopUp(int index)
 {
     //get chosen player
-    Player* p = &model->gameState.players.at(index);
+    Player* p = &gameState.players.at(index);
 
     //constuct pop up window
     otherPlayerHands* otherPlayersWindow = new otherPlayerHands(nullptr, p);
@@ -483,21 +344,12 @@ void MainWindow::displayPopUp(int index)
 void MainWindow::tableauCardClicked()
 {
 
-    //std::cout << "******************************getting into tableau card clicked" << std::endl;
-
-    // e.g. check with member variable _foobarButton
-    //QObject* obj = sender();
-
     // e.g. casting to the class you know its connected with
     QPushButton* button = qobject_cast<QPushButton*>(sender());
 
-
-
     int cardIndex = tableauLayout->indexOf(button);
 
-
-
-    std::cout << "you clicked the card at: " << cardIndex << std::endl;
+    //std::cout << "you clicked the card at: " << cardIndex << std::endl;
 
 }
 

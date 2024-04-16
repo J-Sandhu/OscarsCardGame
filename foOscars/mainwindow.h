@@ -11,6 +11,7 @@
 #include "server.h"
 #include "gamestate.h"
 #include "model.h"
+#include <QPixmap>
 
 
 QT_BEGIN_NAMESPACE
@@ -24,8 +25,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr, Model* model = nullptr);
-    Model* model;
+    MainWindow(QWidget *parent = nullptr);
+    //Model* model;
     ~MainWindow();
     Server* server;
     QHostAddress serverIpAddress;
@@ -34,7 +35,8 @@ public:
     QTcpSocket* clientSocket;
     GameState gameState;
     int selectedActionCardIndex;
-    QVector<QImage> actionImages;
+    QVector<QPixmap> actionImages;
+    QVector<QPixmap> peopleImages;
     QVector<QLabel*> currentCardsInTableau;
 
     //create tableau layout
@@ -56,8 +58,6 @@ public slots:
     void displayError(QAbstractSocket::SocketError socketError);
     void sendChatMessage();
     void cardPlayed();
-    void nextActionClicked();
-    void PreviousActionClicked();
     void updateTableauAfterActionCardSelectSlot();
     void actionCardFromPersonalPileSelected(int cardID, Card actionCard);
     void onStartClicked();
@@ -75,8 +75,6 @@ private:
     //for when client wants to send a message to the server
     void clientSendMessage(std::string message);
     std::vector<QImage> getActionCardHand();
-    //QString makeActionCardFilename(int actionCardID);
-    void updateActionHand(std::vector<QImage> images);
     ///
     /// \brief Method that will load the images for all action cards
     /// and eventually the images for all player cards

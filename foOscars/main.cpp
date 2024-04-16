@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     Model model;
     //model.modelTestMethod();
     QApplication a(argc, argv);
-    MainWindow w(nullptr, &model);
+    MainWindow w(nullptr);
     w.show();
     return a.exec();
 }
