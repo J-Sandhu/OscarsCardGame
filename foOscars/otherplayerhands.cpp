@@ -15,7 +15,7 @@ otherPlayerHands::otherPlayerHands(QWidget *parent, Player* player)
         QLabel* label = new QLabel(this);
         //can adjust height later
         label->setGeometry(0, 0, 100, 80);
-        std::string fileName = ":/actions/" + std::to_string(player->actionPile.at(i)) + ".png";
+        std::string fileName = ":/people/" + std::to_string(player->actionPile.at(i)) + "p.png";
         QPixmap pixmap(QString::fromStdString(fileName));
         label->setPixmap(pixmap.scaledToHeight(label->geometry().height(), Qt::FastTransformation));
 

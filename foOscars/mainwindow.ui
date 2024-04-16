@@ -220,6 +220,16 @@
     </property>
     <layout class="QVBoxLayout" name="chatLayout">
      <item>
+      <widget class="QLabel" name="scoreBox">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QTextEdit" name="receivedMessageText"/>
      </item>
      <item>
@@ -317,7 +327,7 @@
        <x>0</x>
        <y>0</y>
        <width>569</width>
-       <height>429</height>
+       <height>423</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -335,7 +345,7 @@
      <x>0</x>
      <y>0</y>
      <width>970</width>
-     <height>17</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>

@@ -28,6 +28,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->ipLine->setEnabled(true);
     ui->ipLine->setEnabled(true);
 
+    //display scoreBox with default value
+    ui->scoreBox->setText("Score: 0");
+    // ui->scoreBox->setText("Score: " + Model.gameState.
+
+    //read only for msg box
+    ui->receivedMessageText->setReadOnly(true);
 
     //connect the buttons to their respective actions
     connect(ui->hostButton, &QPushButton::clicked, this, &MainWindow::hostClicked);
@@ -78,20 +84,31 @@ void MainWindow::connectClicked()
     connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
 
 
-    cout<<"state of the client socket: "<<clientSocket->socketDescriptor()<<endl;
+    //cout<<"state of the client socket: "<<clientSocket->socketDescriptor()<<endl;
+    ui->receivedMessageText->setTextColor(Qt::green);
+    ui->receivedMessageText->append(tr("state of the client socket: " + clientSocket->socketDescriptor()));
     clientSocket->connectToHost(ui->ipLine->text(), ui->portLine->text().toInt());
-    cout<<"state of the client socket after attempting to connect to host: "<<clientSocket->socketDescriptor()<<endl;
+    //cout<<"state of the client socket after attempting to connect to host: "<<clientSocket->socketDescriptor()<<endl;
+    ui->receivedMessageText->append(tr("state of the client socket after attempting to connect to host: " + clientSocket->socketDescriptor()));
 
     if(clientSocket->waitForConnected())
     {
-        cout<<"Connected to Server"<<endl;
+        //cout<<"Connected to Server"<<endl;
+        ui->receivedMessageText->setTextColor(Qt::blue);
+        ui->receivedMessageText->append(("Connected to server! YAY! :)"));
         ui->ipLine->setReadOnly(true);
         ui->portLine->setReadOnly(true);
         ui->playerNameLine->setReadOnly(true);
         clientSendMessage("~pname:"+ui->playerNameLine->text().toStdString());            //we can figure out the protocol later
     }
     else
-        cout<<tr("The following error occurred: %1.").arg(clientSocket->errorString()).toStdString()<<endl;
+        //cout<<tr("The following error occurred: %1.").arg(clientSocket->errorString()).toStdString()<<endl;
+        ui->receivedMessageText->setTextColor(Qt::red);
+        QString errorMessage = clientSocket->errorString();
+        ui->receivedMessageText->textCursor().insertText("The following error occurred: " + errorMessage);
+
+        // Move the cursor to the end to ensure new text is displayed properly
+        ui->receivedMessageText->append(tr("The following error occurred: %1.").arg(clientSocket->errorString()));
 
 }
 
@@ -149,6 +166,8 @@ void MainWindow::displayError(QAbstractSocket::SocketError socketError)
 void MainWindow::sendChatMessage()
 {
     clientSendMessage(protocolChat + ui->messageLine->text().toStdString());
+    ui->receivedMessageText->setTextColor(Qt::black);
+    ui->receivedMessageText->append(ui->messageLine->text());
     ui->messageLine->clear();
 }
 
@@ -253,7 +272,6 @@ void MainWindow::updateTableauAfterActionCardSelectSlot(){
         int personCardID = gameState.tableau[i];
 
         std::string fileName = ":/people/" + std::to_string(personCardID) + "p.png";
-        //pixmap??
         QPixmap pixmap(QString::fromStdString(fileName));
         currentCardsInTableau[i]->setPixmap(pixmap.scaledToHeight(currentCardsInTableau[i]->geometry().height(),Qt::FastTransformation));
     }
@@ -322,6 +340,9 @@ void MainWindow::showCardsOnTableau()
 }
 
 void MainWindow::updateOtherPlayersHandsBox(){
+    //enable combo box
+    ui->otherPlayersHandsButton->setEnabled(true);
+
     //at this point, we know how many players are currently in the game
     for(int i = 0; i < gameState.players.size(); i++){
         ui->otherPlayersHandsButton->addItem(gameState.players.at(i).name);
