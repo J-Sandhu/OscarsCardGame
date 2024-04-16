@@ -161,9 +161,9 @@
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>160</y>
+      <y>180</y>
       <width>571</width>
-      <height>490</height>
+      <height>441</height>
      </rect>
     </property>
     <property name="mouseTracking">
@@ -184,7 +184,7 @@
        <x>0</x>
        <y>0</y>
        <width>569</width>
-       <height>472</height>
+       <height>423</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -239,7 +239,7 @@
     <property name="geometry">
      <rect>
       <x>340</x>
-      <y>120</y>
+      <y>130</y>
       <width>261</width>
       <height>31</height>
      </rect>
@@ -259,10 +259,10 @@
    <widget class="QScrollArea" name="handScrollArea">
     <property name="geometry">
      <rect>
-      <x>760</x>
-      <y>160</y>
-      <width>350</width>
-      <height>490</height>
+      <x>770</x>
+      <y>190</y>
+      <width>300</width>
+      <height>420</height>
      </rect>
     </property>
     <property name="verticalScrollBarPolicy">
@@ -279,8 +279,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>348</width>
-       <height>472</height>
+       <width>298</width>
+       <height>418</height>
       </rect>
      </property>
     </widget>

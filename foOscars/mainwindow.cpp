@@ -64,6 +64,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::hostClicked()
 {
+
     ui->connectButton->setEnabled(false);
     ui->hostButton->setEnabled(false);
     ui->startbutton->setEnabled(true);
@@ -318,15 +319,15 @@ void MainWindow::showCardsOnTableau()
 
         QPushButton* button = new QPushButton(this);
         QLabel* label = new QLabel(button);
-        button->setGeometry(0,0,350,490);
-        button->setBaseSize(350,490);
-        button->setFixedSize(350,490);
+        button->setGeometry(0,0,300,420);
+        button->setBaseSize(300,420);
+        button->setFixedSize(300,420);
 
         //button->setText("");
 
         button->setStyleSheet("border: none; color: palette(window-text); background: transparent;");
 
-        label->setGeometry(0, 0, 350, 490);
+        label->setGeometry(0, 0, 300, 420);
         label->setPixmap(peopleImages.at(personCardID).scaledToHeight(label->geometry().height(), Qt::FastTransformation));
         //label->setText("<l>Label</>");
 
@@ -370,15 +371,15 @@ void MainWindow::showCardsInHand()
 
         QPushButton* button = new QPushButton(this);
         QLabel* label = new QLabel(button);
-        button->setGeometry(0,0,350,490);
-        button->setBaseSize(350,490);
-        button->setFixedSize(350,490);
+        button->setGeometry(0,0,300,420);
+        button->setBaseSize(300,420);
+        button->setFixedSize(300,420);
 
         //button->setText("");
 
         button->setStyleSheet("border: none; color: palette(window-text); background: transparent;");
 
-        label->setGeometry(0, 0, 350, 490);
+        label->setGeometry(0, 0, 300, 420);
         label->setPixmap(actionImages.at(actionCardID).scaledToHeight(label->geometry().height(), Qt::FastTransformation));
         //label->setText("<l>Label</>");
 
