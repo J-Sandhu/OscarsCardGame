@@ -101,6 +101,8 @@ private:
     std::string protocolGameState;
     //protocol header for host to start game
     std::string protocolStartGame;
+    //protocol for a callback
+    std::string protocolCallBack;
 
 };
 #endif // MAINWINDOW_H

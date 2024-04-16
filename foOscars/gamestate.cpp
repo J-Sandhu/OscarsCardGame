@@ -85,6 +85,14 @@ void GameState::deserialize(QByteArray serializedGameState)
         //std::cout <<"finding in tableau: "<< person << std::endl;
         tableau.append(person.toInt());
     }
+
+    QJsonArray tableauEnabledArr = jsonObj["Tableau_Enabled"].toArray();
+    //std::copy (tableau.begin(), tableau.end(), std::back_inserter(tableauArr));
+    for (auto isEnabled : tableauEnabledArr){
+        //qDebug() << i;
+        //std::cout <<"finding in tableau: "<< person << std::endl;
+        tableauCardIsEnabled.append(isEnabled.toBool());
+    }
 }
 
 QByteArray GameState::serialize()
@@ -148,6 +156,11 @@ QByteArray GameState::serialize()
     QJsonArray tableauArr;
     std::copy (tableau.begin(), tableau.end(), std::back_inserter(tableauArr));
     jsonObj.insert("Tableau", tableauArr);
+
+    // insert the isEnabledArray
+    QJsonArray tableauCardEnabledArr;
+    std::copy (tableauCardIsEnabled.begin(), tableauCardIsEnabled.end(), std::back_inserter(tableauCardEnabledArr));
+    jsonObj.insert("Tableau_Enabled", tableauCardEnabledArr);
 
     // insert the players array
     jsonObj.insert("Players", jsonPlayerArr);

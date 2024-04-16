@@ -31,7 +31,8 @@ public:
     // 2*2, 11*2, 12*4, 29*2
     QVector<int> personCardStack;
     QVector<int> tableau;
-
+    //Note: this takes tableau index NOT card ID.
+    QVector<bool> tableauCardIsEnabled;
     void deserialize(QByteArray serializedGameState);
     
     QByteArray serialize();

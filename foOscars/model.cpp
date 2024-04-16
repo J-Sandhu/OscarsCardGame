@@ -132,12 +132,19 @@ void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
             if(color == specifiedColor)
             {
                 //enable card at index in tableau
+
+                // intialize tableacardenabled array to false
+                QVector<bool> newVector;
+                for(int j =0; j<gameState.tableau.size(); j++)
+                    newVector.push_back(false);
+
+                gameState.tableauCardIsEnabled = newVector;
+                gameState.tableauCardIsEnabled.replace(i,true);
             }
         }
     }
     //TODO: rn works with only a host bc it will send the 2nd part of the 2 parter to ALL players (not the one who played the card)
     emit sendStateToPlayers(gameState.serialize());
-
 }
 
 void Model::movementCardComplete(int indexInTab)
@@ -171,7 +178,6 @@ void Model::populateGameState()
         gameState.players.push_back(p);
     }
 
-
     // populate the vector with the ids of action cards
     for(int i=0; i<49; i++)
         gameState.actionCardStack.push_back(i);
@@ -199,6 +205,7 @@ void Model::populateGameState()
         gameState.personCardStack.push_back(12);
 
 
+
     // generate a random tableau
     generateRandomTableau();
 
@@ -224,6 +231,12 @@ void Model::generateRandomTableau()
         gameState.personCardStack.removeAt(randomPersonIndex);
 
     }
+
+    QVector<bool> newVector;
+    for(int i=0; i<11; i++)
+       newVector.push_back(false);
+
+    gameState.tableauCardIsEnabled = newVector;
 }
 
 void Model::generateRandomHands()
@@ -235,10 +248,12 @@ void Model::generateRandomHands()
         // put 5 unique action cards into their hand
         for(int j =0; j<6; j++)
         {
+            // TODO: Fix card gen
             // generate a random index within the actionCardStack
-            int randomActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size()-1);
-            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomActionIndex));
-            gameState.actionCardStack.removeAt(randomActionIndex);
+            // int randomActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size()-1);
+            // gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomActionIndex));
+            // gameState.actionCardStack.removeAt(randomActionIndex);
+            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(8));
         }
     }
 }

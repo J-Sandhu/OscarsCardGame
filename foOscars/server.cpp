@@ -169,6 +169,7 @@ void Server::sendChat(QString message)
 }
 void Server::sendState(QByteArray buffer)
 {
+    // TODO: only send to one player if we want
     buffer.prepend(protocolGameState);
     cout<<"sending gameState to players"<<endl;
     foreach(QTcpSocket* s, players)

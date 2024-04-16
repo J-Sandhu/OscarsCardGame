@@ -58,20 +58,19 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "sendChatMessage",
     "cardPlayed",
     "updateTableauAfterActionCardSelectSlot",
-    "actionCardFromPersonalPileSelected",
-    "cardID",
-    "Card",
-    "actionCard",
     "onStartClicked",
     "displayPopUp",
     "index",
     "tableauCardClicked",
     "actionCardClicked",
-    "anotherPlayerPersonCardClicked"
+    "anotherPlayerPersonCardClicked",
+    "updateActionHand",
+    "std::vector<QImage>",
+    "images"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
-    uint offsetsAndSizes[52];
+    uint offsetsAndSizes[50];
     char stringdata0[11];
     char stringdata1[11];
     char stringdata2[1];
@@ -88,16 +87,15 @@ struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
     char stringdata13[16];
     char stringdata14[11];
     char stringdata15[39];
-    char stringdata16[35];
-    char stringdata17[7];
-    char stringdata18[5];
-    char stringdata19[11];
-    char stringdata20[15];
-    char stringdata21[13];
-    char stringdata22[6];
-    char stringdata23[19];
-    char stringdata24[18];
-    char stringdata25[31];
+    char stringdata16[15];
+    char stringdata17[13];
+    char stringdata18[6];
+    char stringdata19[19];
+    char stringdata20[18];
+    char stringdata21[31];
+    char stringdata22[17];
+    char stringdata23[20];
+    char stringdata24[7];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMainWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -119,16 +117,15 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(167, 15),  // "sendChatMessage"
         QT_MOC_LITERAL(183, 10),  // "cardPlayed"
         QT_MOC_LITERAL(194, 38),  // "updateTableauAfterActionCardS..."
-        QT_MOC_LITERAL(233, 34),  // "actionCardFromPersonalPileSel..."
-        QT_MOC_LITERAL(268, 6),  // "cardID"
-        QT_MOC_LITERAL(275, 4),  // "Card"
-        QT_MOC_LITERAL(280, 10),  // "actionCard"
-        QT_MOC_LITERAL(291, 14),  // "onStartClicked"
-        QT_MOC_LITERAL(306, 12),  // "displayPopUp"
-        QT_MOC_LITERAL(319, 5),  // "index"
-        QT_MOC_LITERAL(325, 18),  // "tableauCardClicked"
-        QT_MOC_LITERAL(344, 17),  // "actionCardClicked"
-        QT_MOC_LITERAL(362, 30)   // "anotherPlayerPersonCardClicked"
+        QT_MOC_LITERAL(233, 14),  // "onStartClicked"
+        QT_MOC_LITERAL(248, 12),  // "displayPopUp"
+        QT_MOC_LITERAL(261, 5),  // "index"
+        QT_MOC_LITERAL(267, 18),  // "tableauCardClicked"
+        QT_MOC_LITERAL(286, 17),  // "actionCardClicked"
+        QT_MOC_LITERAL(304, 30),  // "anotherPlayerPersonCardClicked"
+        QT_MOC_LITERAL(335, 16),  // "updateActionHand"
+        QT_MOC_LITERAL(352, 19),  // "std::vector<QImage>"
+        QT_MOC_LITERAL(372, 6)   // "images"
     },
     "MainWindow",
     "newMessage",
@@ -146,16 +143,15 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
     "sendChatMessage",
     "cardPlayed",
     "updateTableauAfterActionCardSelectSlot",
-    "actionCardFromPersonalPileSelected",
-    "cardID",
-    "Card",
-    "actionCard",
     "onStartClicked",
     "displayPopUp",
     "index",
     "tableauCardClicked",
     "actionCardClicked",
-    "anotherPlayerPersonCardClicked"
+    "anotherPlayerPersonCardClicked",
+    "updateActionHand",
+    "std::vector<QImage>",
+    "images"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -187,12 +183,12 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       13,    0,  125,    2, 0x0a,   12 /* Public */,
       14,    0,  126,    2, 0x0a,   13 /* Public */,
       15,    0,  127,    2, 0x0a,   14 /* Public */,
-      16,    2,  128,    2, 0x0a,   15 /* Public */,
-      20,    0,  133,    2, 0x0a,   18 /* Public */,
-      21,    1,  134,    2, 0x0a,   19 /* Public */,
-      23,    0,  137,    2, 0x0a,   21 /* Public */,
-      24,    0,  138,    2, 0x0a,   22 /* Public */,
-      25,    0,  139,    2, 0x0a,   23 /* Public */,
+      16,    0,  128,    2, 0x0a,   15 /* Public */,
+      17,    1,  129,    2, 0x0a,   16 /* Public */,
+      19,    0,  132,    2, 0x0a,   18 /* Public */,
+      20,    0,  133,    2, 0x0a,   19 /* Public */,
+      21,    0,  134,    2, 0x0a,   20 /* Public */,
+      22,    1,  135,    2, 0x0a,   21 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -207,12 +203,12 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, 0x80000000 | 18,   17,   19,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   22,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   18,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 23,   24,
 
        0        // eod
 };
@@ -250,10 +246,6 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'updateTableauAfterActionCardSelectSlot'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'actionCardFromPersonalPileSelected'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<int, std::false_type>,
-        QtPrivate::TypeAndForceComplete<Card, std::false_type>,
         // method 'onStartClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'displayPopUp'
@@ -264,7 +256,10 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'actionCardClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'anotherPlayerPersonCardClicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'updateActionHand'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::vector<QImage>, std::false_type>
     >,
     nullptr
 } };
@@ -285,12 +280,12 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 7: _t->sendChatMessage(); break;
         case 8: _t->cardPlayed(); break;
         case 9: _t->updateTableauAfterActionCardSelectSlot(); break;
-        case 10: _t->actionCardFromPersonalPileSelected((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<Card>>(_a[2]))); break;
-        case 11: _t->onStartClicked(); break;
-        case 12: _t->displayPopUp((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 13: _t->tableauCardClicked(); break;
-        case 14: _t->actionCardClicked(); break;
-        case 15: _t->anotherPlayerPersonCardClicked(); break;
+        case 10: _t->onStartClicked(); break;
+        case 11: _t->displayPopUp((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 12: _t->tableauCardClicked(); break;
+        case 13: _t->actionCardClicked(); break;
+        case 14: _t->anotherPlayerPersonCardClicked(); break;
+        case 15: _t->updateActionHand((*reinterpret_cast< std::add_pointer_t<std::vector<QImage>>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {

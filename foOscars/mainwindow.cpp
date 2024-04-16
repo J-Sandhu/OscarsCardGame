@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     protocolTableau="~tableau";
     protocolGameState="~gstate:";
     protocolStartGame="~startgame:";
+    protocolCallBack = "~callback:";
 }
 
 MainWindow::~MainWindow()
@@ -133,7 +134,6 @@ void MainWindow::readSocket()
         gameState.deserialize(buffer);
         updateView();
     }
-
 }
 
 void MainWindow::displayMessage(const QString& str)
@@ -309,7 +309,7 @@ void MainWindow::showCardsOnTableau()
 
 
         //std::cout <<" adding labelbutton at: " << tableauLayout->indexOf(button) << std::endl;
-
+        button->setEnabled(gameState.tableauCardIsEnabled.at(i));
 
         // It's important to read that a QScrollArea has a function called QScrollArea::setWidget.
         // Attempting to just call QWidget::setLayout will not work for a QScrollArea's intended usage.
@@ -412,6 +412,9 @@ void MainWindow::actionCardClicked()
 
     std::cout << "you clicked the action card at: " << actionCardIndex << std::endl;
 
+
+    clientSendMessage(protocolAction + to_string(actionCardIndex));
+
 }
 
 void MainWindow::updateView()
@@ -423,4 +426,5 @@ void MainWindow::updateView()
 void MainWindow::anotherPlayerPersonCardClicked()
 {
     std::cout <<"you clicked someone else's person card" << std::endl;
+
 }
