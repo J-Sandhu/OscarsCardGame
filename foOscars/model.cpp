@@ -63,8 +63,8 @@ void Model::HandleActionSelection(long long id, QString message)
     auto[function, params, callback] = actionCard;
     // selectedActionCardIDFromPersonalPile = actionCardID;
     // emit actionCardSelectedFromPersonalPile(selectedActionCard);
-    cardFunction test= function;
-    ((*this).*test)(1,1,1);
+    cardFunction cardFunction= function;
+    ((*this).*cardFunction)(params[0],params[1],params[2]);
 }
 void Model::HandleStartGame(long long id)
 {

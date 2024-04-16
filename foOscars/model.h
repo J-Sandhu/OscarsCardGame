@@ -37,8 +37,8 @@ public:
     typedef void (Model::* cardCallBack)(int);
     int currentAID;
 
-    typedef std::tuple<int, int, void (Model::*)(int)> peopleTuple;
-    std::map <int,peopleTuple> peopleMap; //int = id person, cardTuple = correpsonding info (value, color, special func)
+    typedef std::tuple<int, int, void (Model::*)(int)> peopleTuple; //cardTuple = correpsonding info (value, color, special func)
+    std::map <int,peopleTuple> peopleMap; // int = person id
     std::map <int,cardTuple> actionMap;
 
 
