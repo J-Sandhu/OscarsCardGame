@@ -11,7 +11,6 @@ CONFIG += c++17
 
 SOURCES += \
     card.cpp \
-    client.cpp \
     gamestate.cpp \
     mainwindow.cpp \
     model.cpp \
@@ -22,7 +21,6 @@ SOURCES += \
 
 HEADERS += \
     card.h \
-    client.h \
     gamestate.h \
     mainwindow.h \
     model.h \
