@@ -14,10 +14,13 @@ public:
     QVector<int> actionPile;
     int selectedActionIndex;
 
-    QVector<int> bluePeoplePile;
-    QVector<int> redPeoplePile;
-    QVector<int> purplePeoplePile;
-    QVector<int> greenPeoplePile;
+    // THIS CORRESPONDS TO COLOR INDECES
+    QVector<int> bluePeoplePile; //color index = 0
+    QVector<int> greenPeoplePile; // color index = 1
+    QVector<int> purplePeoplePile; // color index = 2
+    QVector<int> redPeoplePile; // color index = 3
+
+
 
     QVector<int> scoreManipulators;
     int score;

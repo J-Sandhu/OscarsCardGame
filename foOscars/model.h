@@ -131,7 +131,19 @@ private:
     ///
     void generateRandomHands();
 
+    ///
+    /// \brief This method adds card information to the model
+    /// including any special properties
+    ///
     void populatePeopleMap();
+
+
+    ///
+    /// \brief adds action card information to the model
+    /// this includes the function pointers to any
+    /// effects they have
+    ///
+    void populateActionMap();
 
 
 
