@@ -31,6 +31,7 @@ public:
     //chase's stuff
     void movementCardComplete(int indexInTab);
     void HandleCallBack(long long id, QString message);
+    void scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int misc);
     //card Tuple containns model's ptr function and callback
     typedef std::tuple<void(Model::*)(int, int, int), int*, void(Model::*)(int)> cardTuple; //function, array of params, callback (reference lines below)
     typedef void (Model::* cardFunction)(int, int, int);
@@ -132,6 +133,8 @@ private:
     void generateRandomHands();
 
     void populatePeopleMap();
+
+    void drawActionCard(int numberOfCards);
 
 
 

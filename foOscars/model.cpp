@@ -177,6 +177,35 @@ void Model::movementCardComplete(int indexInTab)
 }
 
 
+void Model::scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int misc)
+{
+
+    if(misc==1)
+    {
+        int numberOfPurps= gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.size();
+        drawActionCard(numberOfPurps);
+        return;
+
+    }
+    else if(misc==2)
+    {
+        //todo: dealing with number of crew
+        return;
+    }
+    else if(specifiedColor ==-1)
+    {
+        gameState.players.at(gameState.currentPlayerIndex).score+=colorScoreBuff;
+        return;
+    }
+    else
+    {
+       gameState.players.at(gameState.currentPlayerIndex).scoreManipulators[specifiedColor]=colorScoreBuff;
+    }
+
+
+}
+
+
 
 void newTableau(int unused1, int unused2, int unused3)
 {
@@ -300,10 +329,19 @@ void Model::populatePeopleMap()
     peopleTuple tuple2(2,1, &Model::movementCardComplete);
     //int= card id, tuple contains correspinding card's info
     peopleMap.insert(std::pair<int,peopleTuple>(2,tuple2));
+}
 
+void Model::drawActionCard(int numberOfCards)
+{
+    for(int i =0;i<numberOfCards;i++)
+    {
+        int randomActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size()-1);
 
+        int randomActionID= gameState.actionCardStack.at(randomActionIndex);
+        gameState.actionCardStack.removeAt(randomActionIndex);
 
-
+        gameState.players.at(gameState.currentPlayerIndex).actionPile.push_back(randomActionID);
+    }
 
 }
 
