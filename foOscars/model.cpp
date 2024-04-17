@@ -17,6 +17,8 @@ Model::Model(QObject *parent) : QObject(parent){
     //int= card id, tuple contains correspinding card's info
     actionMap.insert(std::pair<int,cardTuple>(8,tuple));
 
+    populatePeopleMap();
+
 }
 
 void Model::HandlePlayerName(long long id, QString message)
@@ -61,10 +63,15 @@ void Model::HandleActionSelection(long long id, QString message)
 
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
+    std::cout<<params[0]<<std::endl;
+    std::cout<<params[1]<<std::endl;
+    std::cout<<params[2]<<std::endl;
+
+    std::cout<<"get to action card selection being handeled"<<std::endl;
     // selectedActionCardIDFromPersonalPile = actionCardID;
     // emit actionCardSelectedFromPersonalPile(selectedActionCard);
     cardFunction cardFunction= function;
-    ((*this).*cardFunction)(params[0],params[1],params[2]);
+    ((*this).*cardFunction)(-1,params[1],params[2]);
 }
 void Model::HandleStartGame(long long id)
 {
@@ -123,11 +130,15 @@ void Model::decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModificati
 void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
 {
     std::cout << "getting into move person card emission function" << std::endl;
+    std::cout << specifiedColor << std::endl;
 
     if (specifiedColor != -1){
         for (int i = 0; i<gameState.tableau.size(); i++){
+            std::cout <<"before looking at people tuple" <<std::endl;
+            std::cout <<"size of peoplemap: " << peopleMap.size() << std::endl;
             peopleTuple person = peopleMap.at(gameState.tableau.at(i));
 
+            std::cout <<"getting past looking at people tuple" << std::endl;
             auto[value, color, specialFunc] = person;
             if(color == specifiedColor)
             {
@@ -139,9 +150,20 @@ void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
                     newVector.push_back(false);
 
                 gameState.tableauCardIsEnabled = newVector;
+                std::cout <<"Right before enabling a card in gamestate through model" << std::endl;
                 gameState.tableauCardIsEnabled.replace(i,true);
+                std::cout <<"surviving it!" << std::endl;
             }
         }
+    }
+    else
+    {
+        QVector<bool> newEnabledVector;
+        for(int i =0; i<gameState.tableau.size(); i++)
+            newEnabledVector.push_back(true);
+        std::cout <<"***************************************setting some cards to enabled" << std::endl;
+
+        gameState.tableauCardIsEnabled = newEnabledVector;
     }
     //TODO: rn works with only a host bc it will send the 2nd part of the 2 parter to ALL players (not the one who played the card)
     emit sendStateToPlayers(gameState.serialize());
@@ -208,6 +230,7 @@ void Model::populateGameState()
 
     // generate a random tableau
     generateRandomTableau();
+    populatePeopleMap();
 
     // generate random hands
     generateRandomHands();
@@ -221,14 +244,22 @@ void Model::populateGameState()
 void Model::generateRandomTableau()
 {
     std::cout << "getting into random tableau" << std::endl;
-    for(int i=0; i<11; i++)
+
+    gameState.tableau.push_back(gameState.personCardStack.at(2));
+
+    for(int i=1; i<11; i++)
     {
         // generate a random index
-        int randomPersonIndex = QRandomGenerator::global()->bounded(gameState.personCardStack.size()-1);
+
+        // int randomPersonIndex = QRandomGenerator::global()->bounded(gameState.personCardStack.size()-1);
+
+        //not so random random
+        int randomPersonIndex =1;
+
         // put the ID from that index into the tableau
         gameState.tableau.push_back(gameState.personCardStack.at(randomPersonIndex));
         // remove the ID at that index so that the same Person won't be included twice(except duplicate cards)
-        gameState.personCardStack.removeAt(randomPersonIndex);
+        //gameState.personCardStack.removeAt(randomPersonIndex);
 
     }
 
@@ -258,4 +289,26 @@ void Model::generateRandomHands()
     }
 }
 
+
+
+void Model::populatePeopleMap()
+{
+    //(value, color, special func)
+
+
+    //can change num of params later
+    peopleTuple tuple(2,1, &Model::movementCardComplete);
+    //int= card id, tuple contains correspinding card's info
+    peopleMap.insert(std::pair<int,peopleTuple>(1,tuple));
+
+    //can change num of params later
+    peopleTuple tuple2(2,1, &Model::movementCardComplete);
+    //int= card id, tuple contains correspinding card's info
+    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple2));
+
+
+
+
+
+}
 

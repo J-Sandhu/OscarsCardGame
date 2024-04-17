@@ -132,6 +132,7 @@ void MainWindow::readSocket()
     {
         buffer.remove(0,protocolGameState.length());
         gameState.deserialize(buffer);
+        std::cout << buffer.toStdString() << std::endl;
         updateView();
     }
 }

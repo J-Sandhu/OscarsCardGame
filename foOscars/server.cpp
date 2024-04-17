@@ -115,6 +115,7 @@ void Server::readSocket()
     }
     else if (message.rfind(protocolAction,0)==0)
     {
+        std::cout<<"getting to server handeling action card"<<std::endl;
         QString m= QString::fromStdString(message.substr(protocolAction.length()));
         model->HandleActionSelection(socket->socketDescriptor(),m);
     }
