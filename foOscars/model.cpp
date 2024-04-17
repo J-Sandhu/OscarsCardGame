@@ -169,8 +169,8 @@ void Model::movementCardComplete(int indexInTab)
 
     if(indexInTab-params.at(1) < 0)
         gameState.tableau.move(indexInTab,0);
-    else if(indexInTab+params.at(1) > tableau.size()-1)
-        gameState.tableau.move(indexInTab, tableau.size()-1);
+    else if(indexInTab+params.at(1) > gameState.tableau.size()-1)
+        gameState.tableau.move(indexInTab, gameState.tableau.size()-1);
     else
         gameState.tableau.move(indexInTab, indexInTab - params.at(1));
 
@@ -348,7 +348,7 @@ void Model::drawActionCard(int numberOfCards)
 
 }
 
-void Model::populationActionMap()
+void Model::populateActionMap()
 {
     // add card 2: forward 1, draw another action card
 
