@@ -12,11 +12,19 @@ Model::Model(QObject *parent) : QObject(parent){
     std::cout << gameState.serialize().toStdString() << std::endl;
 
     //creating card 8: move forward 1
-    int parameters[3]{-1,1,0};//can change num of params later
+    QVector<int> parameters;//can change num of params later
+    parameters.push_back(-1);
+    parameters.push_back(1);
+    parameters.push_back(0);
 
+    std::cout << "************8parameters at construction: " << std::endl;
+    std::cout<< parameters[0] << std::endl;
+    std::cout << parameters[1]<<std::endl;
+    std::cout<<parameters[2]<<std::endl;
     cardTuple tuple(&Model::movementCardPlayed, parameters, &Model::movementCardComplete);
     //int= card id, tuple contains correspinding card's info
     actionMap.insert(std::pair<int,cardTuple>(8,tuple));
+
 
     populatePeopleMap();
 
@@ -64,15 +72,16 @@ void Model::HandleActionSelection(long long id, QString message)
 
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
+    std::cout <<"############ Parameters in handleactionselection" << std::endl;
     std::cout<<params[0]<<std::endl;
     std::cout<<params[1]<<std::endl;
     std::cout<<params[2]<<std::endl;
 
-    std::cout<<"get to action card selection being handeled"<<std::endl;
+    std::cout<<"get to action card selection being handled"<<std::endl;
     // selectedActionCardIDFromPersonalPile = actionCardID;
     // emit actionCardSelectedFromPersonalPile(selectedActionCard);
     cardFunction cardFunction= function;
-    ((*this).*cardFunction)(-1,params[1],params[2]);
+    ((*this).*cardFunction)(params[0],params[1],params[2]);
 }
 void Model::HandleStartGame(long long id)
 {
