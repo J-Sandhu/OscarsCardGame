@@ -12,7 +12,8 @@ Model::Model(QObject *parent) : QObject(parent){
     std::cout << gameState.serialize().toStdString() << std::endl;
 
     //creating card 8: move forward 1
-    int parameters [3] {-1,1,0}; //can change num of params later
+    int parameters[3]{-1,1,0};//can change num of params later
+
     cardTuple tuple(&Model::movementCardPlayed, parameters, &Model::movementCardComplete);
     //int= card id, tuple contains correspinding card's info
     actionMap.insert(std::pair<int,cardTuple>(8,tuple));
@@ -86,11 +87,11 @@ void Model::HandleStartGame(long long id)
 }
 
 void Model::HandleCallBack(long long id, QString message){
+
+
     int returnedParam = message.toInt();
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
-
-    //cardCallBack test = callback;
     ((*this).*callback)(returnedParam);
 }
 
@@ -117,15 +118,6 @@ void Model::decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModificati
     gameState.players.at(victimPlayerIndex).scoreManipulators[4] += scoreModification;
 }
 
-// void Model::modelTestMethod()
-// {
-//     std::cout << "getting into modelTest Method " << std::endl;
-//     int* params = actionMap.at(0).parameters;
-//     std::cout << " getting past parameter cast " << std::endl;
-//     auto func = actionMap.at(0).function;
-
-//     // func(params[0], params[1], params[2]);
-// }
 
 void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
 {
@@ -171,11 +163,14 @@ void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
 
 void Model::movementCardComplete(int indexInTab)
 {
-    //gameState.tableau.move(indexInTab, indexInTab- actionMap.at(selectedActionCardIDFromPersonalPile).parameters[1]);
+
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
 
-    gameState.tableau.move(indexInTab, indexInTab - params[1]);
+    std::cout << "movementCardComplete is called as a callback. Paramters when I get to here is: " <<params[0]<<", "<<params[1]<<", "<<params[2]<<std::endl;
+    std::cout<<"indexInTab is: "<<indexInTab<<std::endl;
+    gameState.tableau.move(indexInTab, indexInTab - 1);
+
     //gameState.currentPlayerIndex += 1; *talk to Jai about hadling other player turns
     emit sendStateToPlayers(gameState.serialize());
 

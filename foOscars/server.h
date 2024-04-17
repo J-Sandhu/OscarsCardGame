@@ -53,6 +53,7 @@ private:
     std::string protocolTableau;
     std::string protocolGameState;
     std::string protocolStartGame;
+    std::string protocolCallBack;
 
 };
 

@@ -47,6 +47,7 @@ Server::Server(QWidget *parent): QObject(parent)
     protocolTableau="~tableau";
     protocolGameState="~gstate:";
     protocolStartGame="~startgame:";
+    protocolCallBack= "~callback:";
 
 
 }
@@ -115,9 +116,15 @@ void Server::readSocket()
     }
     else if (message.rfind(protocolAction,0)==0)
     {
-        std::cout<<"getting to server handeling action card"<<std::endl;
+        std::cout<<"Server is handing off action protocol to model handle action selection"<<std::endl;
         QString m= QString::fromStdString(message.substr(protocolAction.length()));
         model->HandleActionSelection(socket->socketDescriptor(),m);
+    }
+    else if (message.rfind(protocolCallBack,0)==0)
+    {
+        std::cout<<"Server is handing off callback protocol to model handle callback"<<std::endl;
+        QString m= QString::fromStdString(message.substr(protocolCallBack.length()));
+        model->HandleCallBack(socket->socketDescriptor(),m);
     }
     else if (message.rfind(protocolTableau,0)==0)
     {

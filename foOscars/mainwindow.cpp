@@ -132,7 +132,7 @@ void MainWindow::readSocket()
     {
         buffer.remove(0,protocolGameState.length());
         gameState.deserialize(buffer);
-        std::cout << buffer.toStdString() << std::endl;
+        // std::cout << buffer.toStdString() << std::endl;
         updateView();
     }
 }
@@ -203,50 +203,6 @@ void MainWindow::loadResources()
     }
 }
 
-// void MainWindow::actionCardFromPersonalPileSelected(int cardID, Card actionCard){
-//     clientSendMessage(protocolAction + std::to_string(cardID));
-
-//     //get selected action card info
-//     switch(actionCard.cardType){
-//         case Card::ActionCardTypes::generalLineMovement:
-//             //find out which cards in tableau to make clickable
-//             for (int i = 0; i < gameState.tableau.size(); i++){
-
-//                 //TODO: replace this with model logic that update gamestate with whether or not
-//                 // a card is enabled.
-
-//                 // int personCardID = gameState.tableau.at(i);
-//                 // if(model->personMap.at(personCardID).colorType == actionCard.colorType){
-//                 //     currentCardsInTableau[i]->setEnabled(true);
-//                 // }
-//             }
-//             break;
-
-//         case Card::ActionCardTypes::lineOrder:
-//             //enable all cards in tableau
-//             for (auto i : currentCardsInTableau){
-//                 i->setEnabled(true);
-//             }
-//             break;
-
-//         case Card::ActionCardTypes::addToLine:
-
-//             // currentCurrentInTableau.add();
-//             break;
-
-//         case Card::ActionCardTypes::scorePile:
-//             //some stuff
-//             break;
-
-//         case Card::ActionCardTypes::specificNoble:
-//             //some stuff
-//             break;
-
-//         case Card::ActionCardTypes::actionCardManipulation:
-//             //some stuff
-//             break;
-//         }
-// }
 
 void MainWindow::updateTableauAfterActionCardSelectSlot(){
     //redraw
@@ -303,6 +259,8 @@ void MainWindow::showCardsOnTableau()
 
 
 
+        button->setEnabled(gameState.tableauCardIsEnabled.at(i));
+
         //label->setText("<b>Button</b> Test");
         connect(button, &QPushButton::clicked, this, &MainWindow::tableauCardClicked);
         //ui->tableauLayout->addWidget(label);
@@ -310,7 +268,7 @@ void MainWindow::showCardsOnTableau()
 
 
         //std::cout <<" adding labelbutton at: " << tableauLayout->indexOf(button) << std::endl;
-        button->setEnabled(gameState.tableauCardIsEnabled.at(i));
+
 
         // It's important to read that a QScrollArea has a function called QScrollArea::setWidget.
         // Attempting to just call QWidget::setLayout will not work for a QScrollArea's intended usage.
@@ -401,7 +359,8 @@ void MainWindow::tableauCardClicked()
 
     int cardIndex = tableauLayout->indexOf(button);
 
-    //std::cout << "you clicked the card at: " << cardIndex << std::endl;
+    clientSendMessage(protocolCallBack + to_string(cardIndex));
+
 
 }
 
