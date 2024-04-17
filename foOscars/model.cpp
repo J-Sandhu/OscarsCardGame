@@ -11,14 +11,9 @@ Model::Model(QObject *parent) : QObject(parent){
     std::cout << "############### NEW GAME STATE ################" << std::endl;
     std::cout << gameState.serialize().toStdString() << std::endl;
 
-    //creating card 8: move forward 1
-    int parameters[3]{-1,1,0};//can change num of params later
-
-    cardTuple tuple(&Model::movementCardPlayed, parameters, &Model::movementCardComplete);
-    //int= card id, tuple contains correspinding card's info
-    actionMap.insert(std::pair<int,cardTuple>(8,tuple));
 
     populatePeopleMap();
+    populateActionMap();
 
 }
 
@@ -64,15 +59,16 @@ void Model::HandleActionSelection(long long id, QString message)
 
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
+    std::cout <<"############ Parameters in handleactionselection" << std::endl;
     std::cout<<params[0]<<std::endl;
     std::cout<<params[1]<<std::endl;
     std::cout<<params[2]<<std::endl;
 
-    std::cout<<"get to action card selection being handeled"<<std::endl;
+    std::cout<<"get to action card selection being handled"<<std::endl;
     // selectedActionCardIDFromPersonalPile = actionCardID;
     // emit actionCardSelectedFromPersonalPile(selectedActionCard);
     cardFunction cardFunction= function;
-    ((*this).*cardFunction)(-1,params[1],params[2]);
+    ((*this).*cardFunction)(params[0],params[1],params[2]);
 }
 void Model::HandleStartGame(long long id)
 {
@@ -124,6 +120,7 @@ void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
     std::cout << "getting into move person card emission function" << std::endl;
     std::cout << specifiedColor << std::endl;
 
+    //TODO: make it so that we dont go out of bounds if someone plays +4 in the first slot
     if (specifiedColor != -1){
         for (int i = 0; i<gameState.tableau.size(); i++){
             std::cout <<"before looking at people tuple" <<std::endl;
@@ -167,9 +164,15 @@ void Model::movementCardComplete(int indexInTab)
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
 
-    std::cout << "movementCardComplete is called as a callback. Paramters when I get to here is: " <<params[0]<<", "<<params[1]<<", "<<params[2]<<std::endl;
-    std::cout<<"indexInTab is: "<<indexInTab<<std::endl;
-    gameState.tableau.move(indexInTab, indexInTab - 1);
+    // std::cout << "movementCardComplete is called as a callback. Paramters when I get to here is: " <<params[0]<<", "<<params[1]<<", "<<params[2]<<std::endl;
+    // std::cout<<"indexInTab is: "<<indexInTab<<std::endl;
+
+    if(indexInTab-params.at(1) < 0)
+        gameState.tableau.move(indexInTab,0);
+    else if(indexInTab+params.at(1) > tableau.size()-1)
+        gameState.tableau.move(indexInTab, tableau.size()-1);
+    else
+        gameState.tableau.move(indexInTab, indexInTab - params.at(1));
 
     //gameState.currentPlayerIndex += 1; *talk to Jai about hadling other player turns
     emit sendStateToPlayers(gameState.serialize());
@@ -343,5 +346,70 @@ void Model::drawActionCard(int numberOfCards)
         gameState.players.at(gameState.currentPlayerIndex).actionPile.push_back(randomActionID);
     }
 
+}
+
+void Model::populationActionMap()
+{
+    // add card 2: forward 1, draw another action card
+
+
+    //add card 3: fan fav- forward 4
+    QVector<int> parameters3{-1,4,0};
+    cardTuple tuple3(&Model::movementCardPlayed, parameters3, &Model::movementCardComplete);
+    actionMap.insert(std::pair<int,cardTuple>(3,tuple3));
+
+    //add card 4: forward 2
+    QVector<int> parameters4{-1,2,0};
+    cardTuple tuple4(&Model::movementCardPlayed, parameters4, &Model::movementCardComplete);
+    actionMap.insert(std::pair<int,cardTuple>(4,tuple4));
+
+    // add card 5: forward 3
+    QVector<int> parameters5{-1,3,0};
+    cardTuple tuple5(&Model::movementCardPlayed, parameters5, &Model::movementCardComplete);
+    actionMap.insert(std::pair<int,cardTuple>(5,tuple5));
+
+    // add card 6: purple 2
+    QVector<int> parameters6{2,4,0};
+    cardTuple tuple6(&Model::movementCardPlayed, parameters6, &Model::movementCardComplete);
+    actionMap.insert(std::pair<int,cardTuple>(6,tuple6));
+
+    // add card 7: back 2
+    QVector<int> parameters7{-1,-2,0};
+    cardTuple tuple7(&Model::movementCardPlayed, parameters7, &Model::movementCardComplete);
+    actionMap.insert(std::pair<int,cardTuple>(7,tuple7));
+
+    // add card 8: speed walk-move forward 1
+    QVector<int> parameters8{-1,1,0};//can change num of params later
+    cardTuple tuple8(&Model::movementCardPlayed, parameters8, &Model::movementCardComplete);
+    actionMap.insert(std::pair<int,cardTuple>(8,tuple8));
+
+    // add card 9: forward 2 same as card 4
+    actionMap.insert(std::pair<int, cardTuple>(9,tuple4));
+
+    // add card 10: forward 3- same as card 5
+    actionMap.insert(std::pair<int, cardTuple>(10,tuple5));
+
+    // add card 11: back 3
+    QVector<int> parameters11{-1,-3,0};
+    cardTuple tuple11(&Model::movementCardPlayed, parameters11, &Model::movementCardComplete);
+    actionMap.insert(std::pair<int,cardTuple>(11,tuple11));
+
+    // add card 12: discard any noble
+
+    // add card 13: winners walk
+    QVector<int> parameters13{-1,100,0}; // enough to bring any card to the front
+    cardTuple tuple13(&Model::movementCardPlayed, parameters13, &Model::movementCardComplete);
+    actionMap.insert(std::pair<int,cardTuple>(13,tuple13));
+
+    // add card 14: move the front card to the back
+    //TODO: write this
+
+
+    // add card 15: green up 2
+    QVector<int> parameters15{1,2,0};
+    cardTuple tuple15(&Model::movementCardPlayed, parameters15, &Model::movementCardComplete);
+    actionMap.insert(std::pair<int,cardTuple>(15,tuple15));
+
+    //
 }
 

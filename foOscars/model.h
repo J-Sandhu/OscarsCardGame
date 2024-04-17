@@ -33,7 +33,7 @@ public:
     void HandleCallBack(long long id, QString message);
     void scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int misc);
     //card Tuple containns model's ptr function and callback
-    typedef std::tuple<void(Model::*)(int, int, int), int*, void(Model::*)(int)> cardTuple; //function, array of params, callback (reference lines below)
+    typedef std::tuple<void(Model::*)(int, int, int), QVector<int>, void(Model::*)(int)> cardTuple; //function, array of params, callback (reference lines below)
     typedef void (Model::* cardFunction)(int, int, int);
     typedef void (Model::* cardCallBack)(int);
     int currentAID;
@@ -132,9 +132,21 @@ private:
     ///
     void generateRandomHands();
 
+    ///
+    /// \brief This method adds card information to the model
+    /// including any special properties
+    ///
     void populatePeopleMap();
 
     void drawActionCard(int numberOfCards);
+
+
+    ///
+    /// \brief adds action card information to the model
+    /// this includes the function pointers to any
+    /// effects they have
+    ///
+    void populateActionMap();
 
 
 
