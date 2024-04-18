@@ -182,30 +182,21 @@ void Model::movementCardComplete(int indexInTab)
 
 void Model::scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int misc)
 {
-
-    if(misc==1)
-    {
-        int numberOfPurps= gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.size();
-        drawActionCard(numberOfPurps);
-        return;
-
-    }
-    else if(misc==2)
-    {
-        //todo: dealing with number of crew
-        return;
-    }
-    else if(specifiedColor ==-1)
+    if(specifiedColor ==anyColor)
     {
         gameState.players.at(gameState.currentPlayerIndex).score+=colorScoreBuff;
         return;
     }
+    if(specifiedColor==purple)
+    {
+        int numberOfPurps= gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.size();
+        drawActionCard(numberOfPurps);
+        return;
+    }
     else
     {
-       gameState.players.at(gameState.currentPlayerIndex).scoreManipulators[specifiedColor]=colorScoreBuff;
+        gameState.players.at(gameState.currentPlayerIndex).scoreManipulators[specifiedColor]=colorScoreBuff;
     }
-
-
 }
 
 
@@ -411,5 +402,28 @@ void Model::populateActionMap()
     actionMap.insert(std::pair<int,cardTuple>(15,tuple15));
 
     //
+}
+
+
+void Model::endOfTurn()
+{
+    int cardCollectedId =gameState.tableau.at(0);
+
+    if(std::get<2>(peopleMap.at(cardCollectedId))!=nullptr)
+    {
+
+    }
+
+    //could be more based on the people card picked up
+    drawActionCard(1);
+
+    //move to next players turn
+    if(gameState.currentPlayerIndex+=1>gameState.players.size()-1)
+        gameState.currentPlayerIndex=0;
+    else
+        gameState.currentPlayerIndex+=1;
+
+
+    emit sendStateToPlayers(gameState.serialize());
 }
 

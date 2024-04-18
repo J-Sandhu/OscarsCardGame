@@ -44,9 +44,18 @@ public:
     std::map <int,cardTuple> actionMap;
 
 
+    //blue,green,purple,red
+    int blue = 0;
+    int green = 1;
+    int purple = 2;
+    int red = 3;
+    int anyColor= -1;
 
-// public slots:
-//     void startGameSlot();
+    void endOfTurn();
+
+
+
+
 
 signals:
     void sendChatToPlayers(QString);
@@ -55,10 +64,6 @@ signals:
     void updateTableauAfterActionCardSelect();
     void gameInitializedSignal();
 
-    //view signals
-    // void lineSelection(int colorIndex);
-    // void requestFromPeoplePile(int numberOfCards);
-    // void requestForPlayerSelection();
 
 private:
     ///

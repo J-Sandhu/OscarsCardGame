@@ -14,20 +14,32 @@ public:
     QVector<int> actionPile;
     int selectedActionIndex;
 
+
+    typedef std::pair<int,int> person;
+
+
     // THIS CORRESPONDS TO COLOR INDECES
+    int numberOfColors= 4;
+    // QVector<person> bluePeoplePile; //color index = 0
+    // QVector<person> greenPeoplePile; // color index = 1
+    // QVector<person> purplePeoplePile; // color index = 2
+    // QVector<person> redPeoplePile; // color index = 3
+    // QVector<person> crewPile;
+    QVector<bool> scoreManipulators;
+
     QVector<int> bluePeoplePile; //color index = 0
     QVector<int> greenPeoplePile; // color index = 1
     QVector<int> purplePeoplePile; // color index = 2
     QVector<int> redPeoplePile; // color index = 3
+    QVector<int> crewPile;
 
 
 
-    QVector<int> scoreManipulators;
     int score;
     long long id;
 
     void recalculateScore();
-    QVector<int> calulatePeopleSums();
+    int calulateColorSum(int color,bool manipultorEnabled);
 
 };
 
