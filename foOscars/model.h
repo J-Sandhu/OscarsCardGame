@@ -43,6 +43,8 @@ public:
     std::map <int,peopleTuple> peopleMap; // int = person id
     std::map <int,cardTuple> actionMap;
 
+    int calulateColorSum(int color, bool manipultorEnabled);
+    void recalculateScore();
 
     //blue,green,purple,red
     int blue = 0;
@@ -50,6 +52,7 @@ public:
     int purple = 2;
     int red = 3;
     int anyColor= -1;
+    int numberOfColors= 4;
 
     void endOfTurn();
 

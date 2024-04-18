@@ -398,7 +398,44 @@ void Model::populateActionMap()
     cardTuple tuple15(&Model::movementCardPlayed, parameters15, &Model::movementCardComplete);
     actionMap.insert(std::pair<int,cardTuple>(15,tuple15));
 
-    //
+    //(int specifiedColor, int colorScoreBuff, int misc)
+    //add card 24: green +1
+    QVector<int> parameters24{green,1,0};
+    cardTuple tuple24(&Model::scoreManipulatorPlayed, parameters24, nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(24,tuple24));
+
+    //(int specifiedColor, int colorScoreBuff, int misc)
+    //add card 25: score +2
+    QVector<int> parameters25{anyColor,2,0};
+    cardTuple tuple25(&Model::scoreManipulatorPlayed, parameters25, nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(25,tuple25));
+
+    //(int specifiedColor, int colorScoreBuff, int misc)
+    //add card 26: blue +1
+    QVector<int> parameters26{blue,1,0};
+    cardTuple tuple26(&Model::scoreManipulatorPlayed, parameters26, nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(26,tuple26));
+
+    //(int specifiedColor, int colorScoreBuff, int misc)
+    //add card 27: score -2
+    QVector<int> parameters27{anyColor,-2,0};
+    cardTuple tuple27(&Model::scoreManipulatorPlayed, parameters27, nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(27,tuple27));
+
+    //(int specifiedColor, int colorScoreBuff, int misc)
+    //add card 28: red +1
+    QVector<int> parameters28{red,1,0};
+    cardTuple tuple28(&Model::scoreManipulatorPlayed, parameters28, nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(28,tuple28));
+
+    //add card 29: nuetrlize grays, could get rid of
+
+    //(int specifiedColor, int colorScoreBuff, int misc)
+    //add card 30: +1 action for every purple
+    QVector<int> parameters30{purple,0,0};
+    cardTuple tuple30(&Model::scoreManipulatorPlayed, parameters30, nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(30,tuple30));
+
 }
 
 
@@ -406,8 +443,25 @@ void Model::endOfTurn()
 {
     int personCollectedId =gameState.tableau.at(0);
 
+    gameState.tableau.removeAt(0);
+
+    int color = std::get<1>(peopleMap.at(personCollectedId));
+
+    //check which color
+    if(color ==blue)
+        gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.append(personCollectedId);
+    else if(color == green)
+        gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.append(personCollectedId);
+    else if(color ==purple)
+        gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.append(personCollectedId);
+    else if(color ==red)
+        gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.append(personCollectedId);
+
+
+
     if(std::get<2>(peopleMap.at(personCollectedId))!=nullptr)
     {
+
         //currently only card with specialness is Greer Garson, so wouldnt be a loss to get rid of her or not
         //do her effect through a function
     }
@@ -416,8 +470,6 @@ void Model::endOfTurn()
         gameState.round+=1;
         //some function that puts 10 people cards from deck into tableau
     }
-
-
 
     //could be more based on the people card picked up
     drawActionCard(1);
@@ -430,5 +482,84 @@ void Model::endOfTurn()
 
 
     emit sendStateToPlayers(gameState.serialize());
+}
+
+
+
+void Model::recalculateScore()
+{
+    int updatedScore=0;
+
+    //color pile sums
+    for(int i=0;i<numberOfColors;i++)
+    {
+        updatedScore+= calulateColorSum(i, gameState.players.at(gameState.currentPlayerIndex).scoreManipulators.at(i));
+    }
+
+    //crew stuff
+    int num_Of_Crew=0;
+    int id_Of_Crew=12;
+
+    foreach(int person ,gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile )
+    {
+        if(person==id_Of_Crew)
+        {
+         num_Of_Crew++;
+        }
+    }
+    gameState.players.at(gameState.currentPlayerIndex).score+= num_Of_Crew * num_Of_Crew;
+
+    gameState.players.at(gameState.currentPlayerIndex).score= updatedScore;
+}
+
+int Model::calulateColorSum(int color, bool manipultorEnabled)
+{
+    QVector<int> vectorToBeSummed;
+
+    //check which color
+    if(color ==blue)
+        vectorToBeSummed= gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile;
+    else if(color == green)
+        vectorToBeSummed = gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile;
+    else if(color ==purple)
+        vectorToBeSummed=gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile;
+    else if(color ==red)
+        vectorToBeSummed=gameState.players.at(gameState.currentPlayerIndex).redPeoplePile;
+
+    //sum that color pile
+    int pileSum=0;
+    foreach(int person ,vectorToBeSummed )
+    {
+
+        //crazy logic but this is to handle not searching for the same pair twice and doing the point boost twice
+        //so if you only search when you find the even half you only do the pair adding once.
+        if(person<=8 &&person>0&& (person%2==0) )
+        {
+
+            if(person==8&& gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.contains(7))
+            {
+                pileSum+=std::get<0>(peopleMap.at(person))*3;
+            }
+            else if(gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.contains(person-1))
+            {
+                pileSum+=std::get<0>(peopleMap.at(person))*3;
+            }
+
+        }
+        else
+        {
+            pileSum+=std::get<0>(peopleMap.at(person))*3;
+        }
+
+    }
+
+    if(manipultorEnabled)
+    {
+        pileSum+=vectorToBeSummed.size();
+    }
+
+    return pileSum;
+
+
 }
 

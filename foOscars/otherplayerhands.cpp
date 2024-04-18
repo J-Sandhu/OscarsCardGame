@@ -12,7 +12,7 @@ otherPlayerHands::otherPlayerHands(QWidget *parent, Player* player, QVector<QPix
 
     // add blue people to scroll view
     for(int i = 0; i < player->bluePeoplePile.size(); i++){
-        int personCardID = player->bluePeoplePile.at(i);
+        int personCardID =player->bluePeoplePile.at(i);
 
         QPushButton* button = new QPushButton(this);
         QLabel* label = new QLabel(button);
