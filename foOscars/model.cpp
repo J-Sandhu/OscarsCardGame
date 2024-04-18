@@ -2,14 +2,15 @@
 Model::Model(QObject *parent) : QObject(parent){
 
     //populateGameState();
+
     gameIsStarted=false;
     std::cout << "########## OLD GAME STATE ############" << std::endl;
-    std::cout << gameState.serialize().toStdString() << std::endl;
+    //std::cout << gameState.serialize().toStdString() << std::endl;
 
 
-    gameState.deserialize(gameState.serialize());
+    //gameState.deserialize(gameState.serialize());
     std::cout << "############### NEW GAME STATE ################" << std::endl;
-    std::cout << gameState.serialize().toStdString() << std::endl;
+    //std::cout << gameState.serialize().toStdString() << std::endl;
 
 
     populatePeopleMap();
@@ -25,13 +26,20 @@ void Model::HandlePlayerName(long long id, QString message)
         cout<<message.toStdString()<<endl;
     }
 
-    Player p;
-    p.id=id;
-    p.name= message;
-    gameState.players.push_back(p);
+    //TODO: fix this
+    // Player p;
+    // p.id=id;
+    // p.name= message;
 
-    message.append(" joined the game!");
-    emit sendChatToPlayers(message);
+    for(int i =0; i<gameState.players.size(); i++)
+        if(gameState.players.at(i).id==id)
+        {
+            gameState.players.at(i).name = message;
+
+             message.append(" joined the game!");
+             emit sendChatToPlayers(message);
+        }
+
 
 }
 void Model::HandleChatMessage(long long id, QString message)
@@ -86,10 +94,11 @@ void Model::HandleStartGame(long long id)
         std::cout << gameState.serialize().toStdString() << std::endl;
     }
 
-    std::cout<<"gamestate.playerID != "<< id << " instead = " << gameState.players.at(0).id << std::endl;
+   // std::cout<<"gamestate.playerID != "<< id << " instead = " << gameState.players.at(0).id << std::endl;
 }
 
-void Model::HandleCallBack(long long id, QString message){
+void Model::HandleCallBack(long long id, QString message)
+{
 
 }
 
@@ -157,7 +166,8 @@ void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
         gameState.tableauCardIsEnabled = newEnabledVector;
     }
     //TODO: rn works with only a host bc it will send the 2nd part of the 2 parter to ALL players (not the one who played the card)
-    emit sendStateToPlayers(gameState.serialize());
+    //emit sendStateToPlayers(gameState.serialize());
+    emit sendStatetoPlayer(gameState.serialize(),gameState.currentPlayerIndex);
 }
 
 void Model::movementCardComplete(int indexInTab)
@@ -169,6 +179,7 @@ void Model::movementCardComplete(int indexInTab)
     // std::cout << "movementCardComplete is called as a callback. Paramters when I get to here is: " <<params[0]<<", "<<params[1]<<", "<<params[2]<<std::endl;
     // std::cout<<"indexInTab is: "<<indexInTab<<std::endl;
 
+    std::cout << "getting into movement card played" << std::endl;
     if(indexInTab-params.at(1) < 0)
         gameState.tableau.move(indexInTab,0);
     else if(indexInTab+params.at(1) > gameState.tableau.size()-1)
@@ -214,11 +225,11 @@ void Model::populateGameState()
 
     // probably get rid of this, but populate some players.
     //TODO: definitely get rid of this lol
-    for(int i = 0; i<4; i++)
-    {
-        Player p;
-        gameState.players.push_back(p);
-    }
+    // for(int i = 0; i<4; i++)
+    // {
+    //     Player p;
+    //     gameState.players.push_back(p);
+    // }
 
     gameState.round=1;
     gameState.currentPlayerIndex=0;
@@ -260,6 +271,7 @@ void Model::populateGameState()
 
     //emit signal that game has been initialized and notify mainwindow to upload card images
     //emit gameInitializedSignal();
+    std::cout <<"Getting to send state to players" << std::endl;
     emit sendStateToPlayers(gameState.serialize());
 
 }
@@ -434,9 +446,6 @@ void Model::endOfTurn()
         gameState.round+=1;
         //some function that puts 10 people cards from deck into tableau
     }
-
-
-
     //could be more based on the people card picked up
     drawActionCard(1);
 
@@ -457,5 +466,7 @@ void Model::addNewPlayer(long long id)
     newPlayer.id = id;
 
     gameState.players.push_back(newPlayer);
+
+    emit sendStateToPlayers(gameState.serialize());
 }
 

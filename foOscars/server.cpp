@@ -64,7 +64,7 @@ void Server::newConnection()
         cout<<"connection!!"<<endl;
         connect(socket, &QTcpSocket::readyRead, this, &Server::readSocket);
         connect(socket, &QTcpSocket::disconnected, this, &Server::discardSocket);
-        players.insert(socket);
+        players.push_back(socket);
 
         // alert the model of the new player and add it to the gameState
         model->addNewPlayer(socket->socketDescriptor());
@@ -81,10 +81,12 @@ void Server::newConnection()
 void Server::discardSocket()
 {
     QTcpSocket* socket = reinterpret_cast<QTcpSocket*>(sender());
-    QSet<QTcpSocket*>::iterator it = players.find(socket);
-    if (it != players.end()){
-        emit displayMessage(QString("INFO :: A client has just left the room").arg(socket->socketDescriptor()));
-        players.remove(*it);
+    for (int i=0; i<players.size();i++)
+    {
+        if (players.at(i)->socketDescriptor()==socket->socketDescriptor())
+        {
+            players.remove(i);
+        }
     }
     socket->deleteLater();
 }
@@ -108,7 +110,6 @@ void Server::readSocket()
         emit displayMessage(message);
         return;
     }
-
     string message = buffer.toStdString();
 
     if (message.rfind(protocolName,0)==0)
@@ -183,13 +184,22 @@ void Server::sendChat(QString message)
 }
 void Server::sendState(QByteArray buffer)
 {
-    // TODO: only send to one player if we want
     buffer.prepend(protocolGameState);
     cout<<"sending gameState to players"<<endl;
     foreach(QTcpSocket* s, players)
     {
+        std::cout << "sending state to player id: " <<s->socketDescriptor() << std::endl;
         sendMessage(s,buffer.toStdString());
     }
+}
+
+void Server::sendStateToPlayer(QByteArray buffer, int playerIndex)
+{
+    buffer.prepend(protocolGameState);
+    cout<<"sending gameState to jsut one player"<<endl;
+
+    std::cout << "sending state to player id: " <<players.at(playerIndex)->socketDescriptor() << std::endl;
+    sendMessage(players.at(playerIndex),buffer.toStdString());
 }
 
 void Server::sendIndex(int indexInPlayers, QTcpSocket* client)

@@ -54,11 +54,13 @@ constexpr auto qt_meta_stringdata_CLASSServerENDCLASS = QtMocHelpers::stringData
     "sendChat",
     "message",
     "sendState",
-    "buffer"
+    "buffer",
+    "sendStateToPlayer",
+    "playerIndex"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSServerENDCLASS_t {
-    uint offsetsAndSizes[26];
+    uint offsetsAndSizes[30];
     char stringdata0[7];
     char stringdata1[13];
     char stringdata2[1];
@@ -72,6 +74,8 @@ struct qt_meta_stringdata_CLASSServerENDCLASS_t {
     char stringdata10[8];
     char stringdata11[10];
     char stringdata12[7];
+    char stringdata13[18];
+    char stringdata14[12];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSServerENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -89,7 +93,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSServerENDCLASS_t qt_meta_string
         QT_MOC_LITERAL(92, 8),  // "sendChat"
         QT_MOC_LITERAL(101, 7),  // "message"
         QT_MOC_LITERAL(109, 9),  // "sendState"
-        QT_MOC_LITERAL(119, 6)   // "buffer"
+        QT_MOC_LITERAL(119, 6),  // "buffer"
+        QT_MOC_LITERAL(126, 17),  // "sendStateToPlayer"
+        QT_MOC_LITERAL(144, 11)   // "playerIndex"
     },
     "Server",
     "errorOccured",
@@ -103,7 +109,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSServerENDCLASS_t qt_meta_string
     "sendChat",
     "message",
     "sendState",
-    "buffer"
+    "buffer",
+    "sendStateToPlayer",
+    "playerIndex"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -115,7 +123,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSServerENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -123,15 +131,16 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSServerENDCLASS[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   56,    2, 0x06,    1 /* Public */,
-       4,    1,   59,    2, 0x06,    3 /* Public */,
+       1,    1,   62,    2, 0x06,    1 /* Public */,
+       4,    1,   65,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       6,    0,   62,    2, 0x0a,    5 /* Public */,
-       7,    0,   63,    2, 0x0a,    6 /* Public */,
-       8,    0,   64,    2, 0x0a,    7 /* Public */,
-       9,    1,   65,    2, 0x0a,    8 /* Public */,
-      11,    1,   68,    2, 0x0a,   10 /* Public */,
+       6,    0,   68,    2, 0x0a,    5 /* Public */,
+       7,    0,   69,    2, 0x0a,    6 /* Public */,
+       8,    0,   70,    2, 0x0a,    7 /* Public */,
+       9,    1,   71,    2, 0x0a,    8 /* Public */,
+      11,    1,   74,    2, 0x0a,   10 /* Public */,
+      13,    2,   77,    2, 0x0a,   12 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -143,6 +152,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSServerENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   10,
     QMetaType::Void, QMetaType::QByteArray,   12,
+    QMetaType::Void, QMetaType::QByteArray, QMetaType::Int,   12,   14,
 
        0        // eod
 };
@@ -173,7 +183,11 @@ Q_CONSTINIT const QMetaObject Server::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'sendState'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>
+        QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>,
+        // method 'sendStateToPlayer'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>
     >,
     nullptr
 } };
@@ -191,6 +205,7 @@ void Server::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 4: _t->readSocket(); break;
         case 5: _t->sendChat((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 6: _t->sendState((*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[1]))); break;
+        case 7: _t->sendStateToPlayer((*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -231,13 +246,13 @@ int Server::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }
