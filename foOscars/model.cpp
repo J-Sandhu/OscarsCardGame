@@ -24,6 +24,7 @@ void Model::HandlePlayerName(long long id, QString message)
         message.append(to_string(id));
         cout<<message.toStdString()<<endl;
     }
+
     Player p;
     p.id=id;
     p.name= message;

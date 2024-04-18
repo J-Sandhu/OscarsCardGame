@@ -66,11 +66,12 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "anotherPlayerPersonCardClicked",
     "updateActionHand",
     "std::vector<QImage>",
-    "images"
+    "images",
+    "playerButtonClicked"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
-    uint offsetsAndSizes[50];
+    uint offsetsAndSizes[52];
     char stringdata0[11];
     char stringdata1[11];
     char stringdata2[1];
@@ -96,6 +97,7 @@ struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
     char stringdata22[17];
     char stringdata23[20];
     char stringdata24[7];
+    char stringdata25[20];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMainWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -125,7 +127,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(304, 30),  // "anotherPlayerPersonCardClicked"
         QT_MOC_LITERAL(335, 16),  // "updateActionHand"
         QT_MOC_LITERAL(352, 19),  // "std::vector<QImage>"
-        QT_MOC_LITERAL(372, 6)   // "images"
+        QT_MOC_LITERAL(372, 6),  // "images"
+        QT_MOC_LITERAL(379, 19)   // "playerButtonClicked"
     },
     "MainWindow",
     "newMessage",
@@ -151,7 +154,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
     "anotherPlayerPersonCardClicked",
     "updateActionHand",
     "std::vector<QImage>",
-    "images"
+    "images",
+    "playerButtonClicked"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -163,7 +167,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      16,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -171,24 +175,25 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,  110,    2, 0x06,    1 /* Public */,
+       1,    1,  116,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    0,  113,    2, 0x0a,    3 /* Public */,
-       5,    1,  114,    2, 0x0a,    4 /* Public */,
-       6,    0,  117,    2, 0x0a,    6 /* Public */,
-       7,    0,  118,    2, 0x0a,    7 /* Public */,
-       8,    1,  119,    2, 0x0a,    8 /* Public */,
-      10,    1,  122,    2, 0x0a,   10 /* Public */,
-      13,    0,  125,    2, 0x0a,   12 /* Public */,
-      14,    0,  126,    2, 0x0a,   13 /* Public */,
-      15,    0,  127,    2, 0x0a,   14 /* Public */,
-      16,    0,  128,    2, 0x0a,   15 /* Public */,
-      17,    1,  129,    2, 0x0a,   16 /* Public */,
-      19,    0,  132,    2, 0x0a,   18 /* Public */,
-      20,    0,  133,    2, 0x0a,   19 /* Public */,
-      21,    0,  134,    2, 0x0a,   20 /* Public */,
-      22,    1,  135,    2, 0x0a,   21 /* Public */,
+       4,    0,  119,    2, 0x0a,    3 /* Public */,
+       5,    1,  120,    2, 0x0a,    4 /* Public */,
+       6,    0,  123,    2, 0x0a,    6 /* Public */,
+       7,    0,  124,    2, 0x0a,    7 /* Public */,
+       8,    1,  125,    2, 0x0a,    8 /* Public */,
+      10,    1,  128,    2, 0x0a,   10 /* Public */,
+      13,    0,  131,    2, 0x0a,   12 /* Public */,
+      14,    0,  132,    2, 0x0a,   13 /* Public */,
+      15,    0,  133,    2, 0x0a,   14 /* Public */,
+      16,    0,  134,    2, 0x0a,   15 /* Public */,
+      17,    1,  135,    2, 0x0a,   16 /* Public */,
+      19,    0,  138,    2, 0x0a,   18 /* Public */,
+      20,    0,  139,    2, 0x0a,   19 /* Public */,
+      21,    0,  140,    2, 0x0a,   20 /* Public */,
+      22,    1,  141,    2, 0x0a,   21 /* Public */,
+      25,    0,  144,    2, 0x0a,   23 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -209,6 +214,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 23,   24,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -259,7 +265,9 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'updateActionHand'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<std::vector<QImage>, std::false_type>
+        QtPrivate::TypeAndForceComplete<std::vector<QImage>, std::false_type>,
+        // method 'playerButtonClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
 } };
@@ -286,6 +294,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 13: _t->actionCardClicked(); break;
         case 14: _t->anotherPlayerPersonCardClicked(); break;
         case 15: _t->updateActionHand((*reinterpret_cast< std::add_pointer_t<std::vector<QImage>>>(_a[1]))); break;
+        case 16: _t->playerButtonClicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -330,13 +339,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 16)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 17;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 16)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 17;
     }
     return _id;
 }

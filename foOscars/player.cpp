@@ -15,7 +15,7 @@ void Player::recalculateScore()
     //     updatedScore+= calulateColorSum(i, scoreManipulators.at(i));
     // }
 
-    // //crew stuff
+    // crew stuff
     // score+= crewPile.size() *crewPile.size();
 
     // score= updatedScore;
