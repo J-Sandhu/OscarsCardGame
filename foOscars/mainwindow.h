@@ -48,10 +48,13 @@ public:
     QHBoxLayout* handLayout = new QHBoxLayout;
     QWidget* handScrollWidget = new QWidget;
 
+
+
     void showCardsOnTableau();
     void showCardsInHand();
     void updateOtherPlayersHandsBox();
     void updateView();
+    void showPlayerButtons();
 
 
 
@@ -72,6 +75,7 @@ public slots:
     void actionCardClicked();
     void anotherPlayerPersonCardClicked();
     void updateActionHand(std::vector<QImage> images);
+    void playerButtonClicked();
 
 signals:
     void newMessage(QString message);
@@ -103,6 +107,8 @@ private:
     std::string protocolStartGame;
     //protocol for a callback
     std::string protocolCallBack;
+    // protocol for catching index in player array
+    std::string protocolPlayerIndex;
 
 };
 #endif // MAINWINDOW_H

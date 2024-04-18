@@ -52,8 +52,7 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../foOscars/card.cpp \
-		../foOscars/gamestate.cpp \
+SOURCES       = ../foOscars/gamestate.cpp \
 		../foOscars/mainwindow.cpp \
 		../foOscars/model.cpp \
 		../foOscars/otherplayerhands.cpp \
@@ -64,8 +63,7 @@ SOURCES       = ../foOscars/card.cpp \
 		moc_model.cpp \
 		moc_otherplayerhands.cpp \
 		moc_server.cpp
-OBJECTS       = card.o \
-		gamestate.o \
+OBJECTS       = gamestate.o \
 		mainwindow.o \
 		model.o \
 		otherplayerhands.o \
@@ -241,14 +239,12 @@ DIST          = /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_pre.pr
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/exceptions.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/yacc.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/lex.prf \
-		../foOscars/sand.pro ../foOscars/card.h \
-		../foOscars/gamestate.h \
+		../foOscars/sand.pro ../foOscars/gamestate.h \
 		../foOscars/mainwindow.h \
 		../foOscars/model.h \
 		../foOscars/otherplayerhands.h \
 		../foOscars/player.h \
-		../foOscars/server.h ../foOscars/card.cpp \
-		../foOscars/gamestate.cpp \
+		../foOscars/server.h ../foOscars/gamestate.cpp \
 		../foOscars/mainwindow.cpp \
 		../foOscars/model.cpp \
 		../foOscars/otherplayerhands.cpp \
@@ -645,8 +641,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../foOscars/resources.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/card.h ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/otherplayerhands.h ../foOscars/player.h ../foOscars/server.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/card.cpp ../foOscars/gamestate.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/otherplayerhands.cpp ../foOscars/player.cpp ../foOscars/server.cpp ../foOscars/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/otherplayerhands.h ../foOscars/player.h ../foOscars/server.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/gamestate.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/otherplayerhands.cpp ../foOscars/player.cpp ../foOscars/server.cpp ../foOscars/main.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../foOscars/mainwindow.ui ../foOscars/otherPlayerHands.ui $(DISTDIR)/
 
 
@@ -2109,31 +2105,6 @@ compiler_lex_clean:
 compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
-
-card.o: ../foOscars/card.cpp ../foOscars/card.h \
-		../foOscars/gamestate.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qvector.h \
-		../foOscars/player.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QString \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qstring.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonObject \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsonobject.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QByteArray \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qbytearray.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonArray \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsonarray.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonValue \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsonvalue.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QJsonDocument \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qjsondocument.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QFile \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qfile.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QDebug \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qdebug.h \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QLatin1String \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qlatin1stringview.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o card.o ../foOscars/card.cpp
 
 gamestate.o: ../foOscars/gamestate.cpp ../foOscars/gamestate.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \

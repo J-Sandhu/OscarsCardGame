@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     protocolGameState="~gstate:";
     protocolStartGame="~startgame:";
     protocolCallBack = "~callback:";
+    protocolPlayerIndex = "~index:";
 }
 
 MainWindow::~MainWindow()
@@ -134,6 +135,12 @@ void MainWindow::readSocket()
         gameState.deserialize(buffer);
         // std::cout << buffer.toStdString() << std::endl;
         updateView();
+    }
+    else if(message.toStdString().rfind(protocolPlayerIndex,0)==0)
+    {
+        buffer.remove(0,protocolPlayerIndex.length());
+        clientIndexInPlayerArray = buffer.toInt();
+        std::cout << "This client's index in the gameState player array is: " << clientIndexInPlayerArray << std::endl;
     }
 }
 
@@ -381,10 +388,55 @@ void MainWindow::updateView()
 {
     showCardsOnTableau();
     showCardsInHand();
+    showPlayerButtons();
 }
 
 void MainWindow::anotherPlayerPersonCardClicked()
 {
     std::cout <<"you clicked someone else's person card" << std::endl;
 
+}
+
+void MainWindow::showPlayerButtons()
+{
+    //TODO: make this highlight the player whose turn it is
+    qDeleteAll(ui->playerLayout->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+    std::cout <<"size of playerLayout after clearing: "<< ui->playerLayout->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly).size() <<std::endl;
+
+    for(int i = 0; i < gameState.players.size(); i++){
+        QString playerName = gameState.players.at(i).name;
+
+        QPushButton* button = new QPushButton(this);
+        //QLabel* label = new QLabel(button);
+        button->setGeometry(0,0,200,200);
+        button->setBaseSize(200,200);
+        button->setFixedSize(200,200);
+
+        QString buttonSuffix("\n Score: ");
+        buttonSuffix.append(QString::number(gameState.players.at(i).score));
+        QString buttonText = playerName.append(buttonSuffix);
+
+        button->setText(buttonText);
+
+        //button->setStyleSheet("border: none; color: palette(window-text); background: transparent;");
+
+        // label->setGeometry(0, 0, 350, 490);
+        // label->setPixmap(actionImages.at(actionCardID).scaledToHeight(label->geometry().height(), Qt::FastTransformation));
+        //label->setText("<l>Label</>");
+
+
+
+        //label->setText("<b>Button</b> Test");
+        connect(button, &QPushButton::clicked, this, &MainWindow::playerButtonClicked);
+        //ui->tableauLayout->addWidget(label);
+        ui->playerLayout->addWidget(button);
+    }
+
+    // handScrollWidget->setLayout(handLayout);
+    // ui->handScrollArea->setWidget(handScrollWidget);
+}
+
+void MainWindow::playerButtonClicked()
+{
+    std::cout <<"getting into playerButton clicked" << std::endl;
 }

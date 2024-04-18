@@ -26,6 +26,8 @@ public:
     void HandleActionSelection(long long id, QString message);
     void HandlePlayerName(long long id, QString message);
     void HandleStartGame(long long id);
+    void addNewPlayer(long long id);
+    void endGame();
 
 
     //chase's stuff

@@ -48,6 +48,7 @@ Server::Server(QWidget *parent): QObject(parent)
     protocolGameState="~gstate:";
     protocolStartGame="~startgame:";
     protocolCallBack= "~callback:";
+    protocolPlayerIndex = "~index:";
 
 
 }
@@ -63,7 +64,13 @@ void Server::newConnection()
         cout<<"connection!!"<<endl;
         connect(socket, &QTcpSocket::readyRead, this, &Server::readSocket);
         connect(socket, &QTcpSocket::disconnected, this, &Server::discardSocket);
-         players.insert(socket);
+        players.insert(socket);
+
+        // alert the model of the new player and add it to the gameState
+        model->addNewPlayer(socket->socketDescriptor());
+        // alert the player of its position within player array
+        int newPlayerIndex = players.size()-1;
+        sendIndex(newPlayerIndex,socket);
         // connect(socket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
         //emit displayMessage(QString("INFO :: Client with sockd:%1 has just entered the room").arg(socket->socketDescriptor()));
@@ -183,6 +190,14 @@ void Server::sendState(QByteArray buffer)
     {
         sendMessage(s,buffer.toStdString());
     }
+}
+
+void Server::sendIndex(int indexInPlayers, QTcpSocket* client)
+{
+    QString message = QString::number(indexInPlayers);
+    message.prepend(protocolPlayerIndex);
+    cout<<"sending index in player array to players"<<endl;
+    sendMessage(client,message.toStdString());
 }
 
 
