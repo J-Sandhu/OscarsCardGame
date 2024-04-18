@@ -72,14 +72,21 @@ void Model::HandleActionSelection(long long id, QString message)
 }
 void Model::HandleStartGame(long long id)
 {
+    std::cout<<"getting into handle start game" << std::endl;
     if (gameIsStarted)
+    {
+        std::cout <<"game is already started" << std::endl;
         return;
+    }
     if (id==gameState.players[0].id)
     {
         //populate tableau
+        std::cout<< "game has not yet started! calling populate methods"<<std::endl;
         populateGameState();
         std::cout << gameState.serialize().toStdString() << std::endl;
     }
+
+    std::cout<<"gamestate.playerID != "<< id << " instead = " << gameState.players.at(0).id << std::endl;
 }
 
 void Model::HandleCallBack(long long id, QString message){
@@ -288,19 +295,29 @@ void Model::generateRandomTableau()
 
 void Model::generateRandomHands()
 {
-    std::cout << "getting into random hands" << std::endl;
+
+    // I'm going to make a little thing to make hands only generate out of cards we have implemented.
+    //std::cout << "getting into random hands" << std::endl;
+
+    QVector<int> existingActionCards;
+
+    for(std::map<int,cardTuple>::iterator it = actionMap.begin(); it != actionMap.end(); ++it)
+        existingActionCards.push_back(it->first);
+
     // for each of the 4 players
-    for(int i =0 ; i<4; i++)
+    for(int i =0 ; i<gameState.players.size(); i++)
     {
         // put 5 unique action cards into their hand
         for(int j =0; j<6; j++)
         {
             // TODO: Fix card gen
             // generate a random index within the actionCardStack
-            // int randomActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size()-1);
+            //int randomActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size()-1);
             // gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomActionIndex));
             // gameState.actionCardStack.removeAt(randomActionIndex);
-            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(8));
+
+            int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size()-1);
+            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
         }
     }
 }
@@ -431,5 +448,14 @@ void Model::endOfTurn()
 
 
     emit sendStateToPlayers(gameState.serialize());
+}
+
+void Model::addNewPlayer(long long id)
+{
+
+    Player newPlayer;
+    newPlayer.id = id;
+
+    gameState.players.push_back(newPlayer);
 }
 

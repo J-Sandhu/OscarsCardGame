@@ -65,6 +65,9 @@ void Server::newConnection()
         connect(socket, &QTcpSocket::readyRead, this, &Server::readSocket);
         connect(socket, &QTcpSocket::disconnected, this, &Server::discardSocket);
         players.insert(socket);
+
+        // alert the model of the new player and add it to the gameState
+        model->addNewPlayer(socket->socketDescriptor());
         // alert the player of its position within player array
         int newPlayerIndex = players.size()-1;
         sendIndex(newPlayerIndex,socket);
