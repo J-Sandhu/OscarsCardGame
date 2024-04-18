@@ -22,7 +22,7 @@ public:
     GameState();
     vector<Player> players;
     int currentPlayerIndex=0;
-    
+    int round;
     // 48+ 4
     // 2,3,4,8
     QVector<int> actionCardStack;

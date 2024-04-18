@@ -1,5 +1,3 @@
-debug/card.o
-debug/client.o
 debug/gamestate.o
 debug/mainwindow.o
 debug/model.o

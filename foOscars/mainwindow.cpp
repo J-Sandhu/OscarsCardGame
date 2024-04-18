@@ -359,7 +359,7 @@ void MainWindow::tableauCardClicked()
 
     int cardIndex = tableauLayout->indexOf(button);
 
-    clientSendMessage(protocolCallBack + to_string(cardIndex));
+    clientSendMessage(protocolTableau + to_string(cardIndex));
 
 
 }

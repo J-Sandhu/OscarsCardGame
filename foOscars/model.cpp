@@ -45,11 +45,10 @@ void Model::HandleChatMessage(long long id, QString message)
 }
 void Model::HandleTableauSelection(long long id, QString message)
 {
-    // int selectedPersonCardInTableau = message.toInt();
-    // // int personCardID = gameState.tableau[selectedPersonCardInTableau];
-
-    // actionMap.at(currentAID).function(&gameState, selectedPersonCardInTableau);
-    // // emit updateTableauAfterActionCardSelect();
+    int returnedParam = message.toInt();
+    cardTuple actionCard = actionMap.at(currentAID);
+    auto[function, params, callback] = actionCard;
+    ((*this).*callback)(returnedParam);
 }
 
 void Model::HandleActionSelection(long long id, QString message)
@@ -84,11 +83,6 @@ void Model::HandleStartGame(long long id)
 
 void Model::HandleCallBack(long long id, QString message){
 
-
-    int returnedParam = message.toInt();
-    cardTuple actionCard = actionMap.at(currentAID);
-    auto[function, params, callback] = actionCard;
-    ((*this).*callback)(returnedParam);
 }
 
 void Model::addPointsFromActionCard(int scoreModification, int unused1, int unused2)
@@ -217,6 +211,9 @@ void Model::populateGameState()
         Player p;
         gameState.players.push_back(p);
     }
+
+    gameState.round=1;
+    gameState.currentPlayerIndex=0;
 
     // populate the vector with the ids of action cards
     for(int i=0; i<49; i++)
@@ -413,6 +410,11 @@ void Model::endOfTurn()
     {
         //currently only card with specialness is Greer Garson, so wouldnt be a loss to get rid of her or not
         //do her effect through a function
+    }
+    else
+    {
+        gameState.round+=1;
+        //some function that puts 10 people cards from deck into tableau
     }
 
 

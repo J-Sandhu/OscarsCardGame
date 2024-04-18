@@ -122,12 +122,11 @@ void Server::readSocket()
     }
     else if (message.rfind(protocolCallBack,0)==0)
     {
-        std::cout<<"Server is handing off callback protocol to model handle callback"<<std::endl;
-        QString m= QString::fromStdString(message.substr(protocolCallBack.length()));
-        model->HandleCallBack(socket->socketDescriptor(),m);
+
     }
     else if (message.rfind(protocolTableau,0)==0)
     {
+        std::cout<<"Server is handing off callback protocol to model handle callback"<<std::endl;
         QString m= QString::fromStdString(message.substr(protocolTableau.length()));
         model->HandleTableauSelection(socket->socketDescriptor(),m);
     }
