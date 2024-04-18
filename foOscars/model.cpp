@@ -222,6 +222,7 @@ void Model::populateGameState()
 
     gameState.round=1;
     gameState.currentPlayerIndex=0;
+    gameState.gameOver=false;
 
     // populate the vector with the ids of action cards
     for(int i=0; i<49; i++)
@@ -432,7 +433,12 @@ void Model::endOfTurn()
     else
     {
         gameState.round+=1;
-        //some function that puts 10 people cards from deck into tableau
+        if (gameState.round==4)
+            endGame();
+        else
+        {
+            //some function that puts 10 people cards from deck into tableau
+        }
     }
 
 
@@ -450,6 +456,11 @@ void Model::endOfTurn()
     emit sendStateToPlayers(gameState.serialize());
 }
 
+void Model::endGame()
+{
+    gameState.gameOver=true;
+    sendStateToPlayers(gameState.serialize());
+}
 void Model::addNewPlayer(long long id)
 {
 
