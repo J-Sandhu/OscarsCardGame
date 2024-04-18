@@ -315,12 +315,12 @@ void Model::populatePeopleMap()
 
 
     //can change num of params later
-    peopleTuple tuple(2,1, &Model::movementCardComplete);
+    peopleTuple tuple(2,1, nullptr);
     //int= card id, tuple contains correspinding card's info
     peopleMap.insert(std::pair<int,peopleTuple>(1,tuple));
 
     //can change num of params later
-    peopleTuple tuple2(2,1, &Model::movementCardComplete);
+    peopleTuple tuple2(2,1, nullptr);
     //int= card id, tuple contains correspinding card's info
     peopleMap.insert(std::pair<int,peopleTuple>(2,tuple2));
 }
@@ -407,12 +407,15 @@ void Model::populateActionMap()
 
 void Model::endOfTurn()
 {
-    int cardCollectedId =gameState.tableau.at(0);
+    int personCollectedId =gameState.tableau.at(0);
 
-    if(std::get<2>(peopleMap.at(cardCollectedId))!=nullptr)
+    if(std::get<2>(peopleMap.at(personCollectedId))!=nullptr)
     {
-
+        //currently only card with specialness is Greer Garson, so wouldnt be a loss to get rid of her or not
+        //do her effect through a function
     }
+
+
 
     //could be more based on the people card picked up
     drawActionCard(1);

@@ -40,6 +40,15 @@ public:
 
     void recalculateScore();
     int calulateColorSum(int color,bool manipultorEnabled);
+    bool isPair(person firstHalf);
+
+
+    //blue,green,purple,red
+    int blue = 0;
+    int green = 1;
+    int purple = 2;
+    int red = 3;
+    int anyColor= -1;
 
 };
 
