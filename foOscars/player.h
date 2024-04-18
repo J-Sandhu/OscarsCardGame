@@ -13,6 +13,7 @@ public:
 
     QVector<int> actionPile;
     int selectedActionIndex;
+    int indexInPlayerArray;
 
 
     typedef std::pair<int,int> person;

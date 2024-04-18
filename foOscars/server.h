@@ -33,6 +33,7 @@ public:
 
 
 
+
 signals:
     void errorOccured(QString error);
     void displayMessage(QString newMessage);
@@ -47,6 +48,13 @@ public slots:
     void sendState(QByteArray buffer);
 
 private:
+    ///
+    /// \brief sends a player its index within the gameStates player
+    /// array upon connection
+    /// \param indexInPlayers
+    /// \param client
+    ///
+    void sendIndex(int indexInPlayers, QTcpSocket* client);
     std::string protocolName;
     std::string protocolChat;
     std::string protocolAction;
@@ -54,6 +62,7 @@ private:
     std::string protocolGameState;
     std::string protocolStartGame;
     std::string protocolCallBack;
+    std::string protocolPlayerIndex;
 
 };
 

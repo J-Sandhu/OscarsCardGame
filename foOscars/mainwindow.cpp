@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     protocolGameState="~gstate:";
     protocolStartGame="~startgame:";
     protocolCallBack = "~callback:";
+    protocolPlayerIndex = "~index:";
 }
 
 MainWindow::~MainWindow()
@@ -134,6 +135,12 @@ void MainWindow::readSocket()
         gameState.deserialize(buffer);
         // std::cout << buffer.toStdString() << std::endl;
         updateView();
+    }
+    else if(message.toStdString().rfind(protocolPlayerIndex,0)==0)
+    {
+        buffer.remove(0,protocolPlayerIndex.length());
+        clientIndexInPlayerArray = buffer.toInt();
+        std::cout << "This client's index in the gameState player array is: " << clientIndexInPlayerArray << std::endl;
     }
 }
 

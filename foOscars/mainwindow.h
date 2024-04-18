@@ -107,6 +107,8 @@ private:
     std::string protocolStartGame;
     //protocol for a callback
     std::string protocolCallBack;
+    // protocol for catching index in player array
+    std::string protocolPlayerIndex;
 
 };
 #endif // MAINWINDOW_H
