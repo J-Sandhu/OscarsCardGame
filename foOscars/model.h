@@ -45,6 +45,21 @@ public:
     std::map <int,cardTuple> actionMap;
 
 
+    //line order cards
+    void shuffleTableauPlayed(int, int, int);
+    void shuffleTableauPlayed16(int, int, int);
+    void shuffleTableauPlayed17(int, int, int);
+    void reverseCardPlayed(int, int, int);
+    void newLinePlayed(int, int, int);
+    void escapeCardPlayed1stPart(int, int, int);
+    void escapeCardPlayed2ndPart(int);
+    void addToTableau(int numCardsToShuffle, int, int);
+    void addFromTopThree(int, int, int);
+
+    // int askUserToChooseCardFromPeoplePile();
+    // std::map <int, peopleTuple> discardedPeopleMap;
+    // std::map <int, cardTuple> discardedActionMap;
+
     //blue,green,purple,red
     int blue = 0;
     int green = 1;

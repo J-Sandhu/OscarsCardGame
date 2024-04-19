@@ -162,7 +162,6 @@ void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
 
 void Model::movementCardComplete(int indexInTab)
 {
-
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
 
@@ -180,6 +179,141 @@ void Model::movementCardComplete(int indexInTab)
     emit sendStateToPlayers(gameState.serialize());
 
 }
+
+//reuse for 16, 17, 20
+void Model::shuffleTableauPlayed(int numCardsToShuffle,int unused, int unused2)
+{
+    for (int i = 0; i < numCardsToShuffle / 2; i++) {
+        // Calculate the index of the corresponding element from the end
+        int j = numCardsToShuffle - 1 - i;
+
+        // Swap elements at index i and j
+        int temp =  gameState.tableau[i];
+        gameState.tableau[i] =  gameState.tableau[j];
+        gameState.tableau[j] = temp;
+    }
+
+    //notify other players
+    emit sendStateToPlayers(gameState.serialize());
+}
+
+//for card 16
+void Model::shuffleTableauPlayed16(int unused, int unused1, int unused2)
+{
+    shuffleTableauPlayed(4, 0, 0);
+}
+
+//for card 17
+void Model::shuffleTableauPlayed17(int unused, int unused1, int unused2)
+{
+    shuffleTableauPlayed(5, 0, 0);
+}
+
+//for card 18
+void Model::reverseCardPlayed(int unused, int unused1, int unused2)
+{
+    int start = 0;
+    int end = gameState.tableau.size() - 1;
+
+    while (start < end) {
+        // Swap elements at start and end index
+        auto temp = gameState.tableau[start];
+        gameState.tableau[start] = gameState.tableau[end];
+        gameState.tableau[end] = temp;
+
+        start++;
+        end--;
+    }
+
+    emit sendStateToPlayers((gameState.serialize()));
+    // qDebug()<<"call reverse";
+}
+
+
+//for card 19
+void Model::newLinePlayed(int unused, int unused1, int unused2)
+{
+    generateRandomTableau();
+    emit sendStateToPlayers((gameState.serialize()));
+}
+
+//for card 20
+void Model::escapeCardPlayed1stPart(int unused, int unused1, int unused2)
+{
+    //enable all the cards on tableau
+    QVector<bool> newEnabledVector;
+    for(int i =0; i<gameState.tableau.size(); i++)
+        newEnabledVector.push_back(true);
+
+    gameState.tableauCardIsEnabled = newEnabledVector;
+
+    emit sendStateToPlayers(gameState.serialize());
+
+}
+//for card20 - remove and shuffle
+void Model::escapeCardPlayed2ndPart(int chosenIndex)
+{
+    gameState.tableau.removeAt(chosenIndex);
+
+    //disable cards
+    QVector<bool> newEnabledVector;
+    for(int i =0; i<gameState.tableau.size(); i++)
+        newEnabledVector.push_back(false);
+    gameState.tableauCardIsEnabled = newEnabledVector;
+
+    shuffleTableauPlayed(gameState.tableau.size(), 0, 0);
+}
+
+//for card 21
+//TODO:
+
+//for card 22
+void Model::addToTableau(int numCardsToAdd, int unused, int unused1)
+{   numCardsToAdd = 3;
+    if(gameState.personCardStack.size() < numCardsToAdd)
+    {
+        numCardsToAdd = gameState.personCardStack.size();
+    }
+    for (int i = 0; i<numCardsToAdd; i++)
+    {
+        int rand = std::rand() % gameState.personCardStack.size();
+        gameState.tableauCardIsEnabled.push_back(false);
+        gameState.tableau.push_back(gameState.personCardStack.at(rand));
+        gameState.personCardStack.removeAt(rand);
+    }
+    emit sendStateToPlayers(gameState.serialize());
+}
+
+//for card 23
+void Model::addFromTopThree(int unused, int unused1, int unused2){
+    int numToChoose = 3;
+    if(gameState.personCardStack.size() < numToChoose)
+    {
+        numToChoose = gameState.personCardStack.size();
+    }
+    int chosenIndex = std::rand() % numToChoose;
+
+    gameState.tableauCardIsEnabled.push_back(false);
+    gameState.tableau.push_back(gameState.personCardStack.at(chosenIndex));
+    gameState.personCardStack.removeAt(chosenIndex);
+
+    emit sendStateToPlayers(gameState.serialize());
+
+}
+
+
+
+// //for card 34
+// void Model::chrisRockToFront(int unused, int unused1, int unused2)
+// {
+
+// }
+
+
+// void Model::newTableau(int unused1, int unused2, int unused3)
+// {
+//     std::cout <<" getting into new Tableau function" << std::endl;
+// }
 
 
 void Model::scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int misc)
@@ -203,15 +337,17 @@ void Model::scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int m
 
 
 
-void newTableau(int unused1, int unused2, int unused3)
-{
-    std::cout <<" getting into new Tableau function" << std::endl;
-}
+// void newTableau(int unused1, int unused2, int unused3)
+// {
+//     std::cout <<" getting into new Tableau function" << std::endl;
+// }
 
 void Model::populateGameState()
 {
     std::cout <<"getting into populate game state" <<std::endl;
 
+    //clear ppl stack
+    gameState.personCardStack.clear();
     // probably get rid of this, but populate some players.
     //TODO: definitely get rid of this lol
     for(int i = 0; i<4; i++)
@@ -267,7 +403,7 @@ void Model::populateGameState()
 void Model::generateRandomTableau()
 {
     std::cout << "getting into random tableau" << std::endl;
-
+    gameState.tableau.clear();
     gameState.tableau.push_back(gameState.personCardStack.at(2));
 
     for(int i=1; i<11; i++)
@@ -277,17 +413,18 @@ void Model::generateRandomTableau()
         // int randomPersonIndex = QRandomGenerator::global()->bounded(gameState.personCardStack.size()-1);
 
         //not so random random
-        int randomPersonIndex =1;
+        int randomPersonIndex = 1;
 
+        int randomTestVic = std::rand() % 10; //using first 10 cards
         // put the ID from that index into the tableau
-        gameState.tableau.push_back(gameState.personCardStack.at(randomPersonIndex));
+        gameState.tableau.push_back(gameState.personCardStack.at(randomTestVic));
         // remove the ID at that index so that the same Person won't be included twice(except duplicate cards)
         //gameState.personCardStack.removeAt(randomPersonIndex);
 
     }
 
     QVector<bool> newVector;
-    for(int i=0; i<11; i++)
+    for(int i=0; i<gameState.tableau.size(); i++)
        newVector.push_back(false);
 
     gameState.tableauCardIsEnabled = newVector;
@@ -317,7 +454,10 @@ void Model::generateRandomHands()
             // gameState.actionCardStack.removeAt(randomActionIndex);
 
             int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size()-1);
-            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
+            //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
+
+            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(23));
+
         }
     }
 }
@@ -416,7 +556,43 @@ void Model::populateActionMap()
     cardTuple tuple15(&Model::movementCardPlayed, parameters15, &Model::movementCardComplete);
     actionMap.insert(std::pair<int,cardTuple>(15,tuple15));
 
-    //
+    // add card 16: mix first 4
+    QVector<int> parameters16{0,-1,0};
+    cardTuple tuple16(&Model::shuffleTableauPlayed16, parameters16, nullptr);
+    actionMap.insert(std::pair<int, cardTuple>(16, tuple16));
+
+    //add card 17: mix first 5
+    QVector<int> parameters17{0,-1,0};
+    cardTuple tuple17(&Model::shuffleTableauPlayed17, parameters17, nullptr);
+    actionMap.insert(std::pair<int, cardTuple>(17, tuple17));
+
+    //add card 18: reverse line
+    QVector<int> parameters18{0,-1,0};
+    cardTuple tuple18(&Model::reverseCardPlayed, parameters18, nullptr);
+    actionMap.insert(std::pair<int, cardTuple>(18, tuple18));
+
+    //add card 19: new line
+    QVector<int> parameters19{0,-1,0};
+    cardTuple tuple19(&Model::newLinePlayed, parameters19, nullptr);
+    actionMap.insert(std::pair<int, cardTuple>(19, tuple19));
+
+    //add card 20: complete mix
+    QVector<int> parameters20{0,-1,0};
+    cardTuple tuple20(&Model::escapeCardPlayed1stPart, parameters20, &Model::escapeCardPlayed2ndPart);
+    actionMap.insert(std::pair<int, cardTuple>(20, tuple20));
+
+    //add card 21:
+    //TODO:ask
+
+    //add card 22: add 3 new people to tableau
+    QVector<int> parameters22{0,-1,0};
+    cardTuple tuple22(&Model::addToTableau, parameters22, nullptr);
+    actionMap.insert(std::pair<int, cardTuple>(22, tuple22));
+
+    //add card 23: add top 3 from people stack
+    QVector<int> parameters23{0,-1,0};
+    cardTuple tuple23(&Model::addFromTopThree, parameters23, nullptr);
+    actionMap.insert(std::pair<int, cardTuple>(23, tuple23));
 }
 
 
@@ -434,8 +610,6 @@ void Model::endOfTurn()
         gameState.round+=1;
         //some function that puts 10 people cards from deck into tableau
     }
-
-
 
     //could be more based on the people card picked up
     drawActionCard(1);
