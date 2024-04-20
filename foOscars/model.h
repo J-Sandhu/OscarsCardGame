@@ -27,6 +27,7 @@ public:
     void HandlePlayerName(long long id, QString message);
     void HandleStartGame(long long id);
     void addNewPlayer(long long id);
+    void endGame();
 
 
     //chase's stuff
@@ -44,6 +45,23 @@ public:
     std::map <int,peopleTuple> peopleMap; // int = person id
     std::map <int,cardTuple> actionMap;
 
+    int calulateColorSum(int color, bool manipultorEnabled);
+    void recalculateScore();
+
+    //line order cards
+    void shuffleTableauPlayed(int, int, int);
+    void shuffleTableauPlayed16(int, int, int);
+    void shuffleTableauPlayed17(int, int, int);
+    void reverseCardPlayed(int, int, int);
+    void newLinePlayed(int, int, int);
+    void escapeCardPlayed1stPart(int, int, int);
+    void escapeCardPlayed2ndPart(int);
+    void addToTableau(int numCardsToShuffle, int, int);
+    void addFromTopThree(int, int, int);
+
+    // int askUserToChooseCardFromPeoplePile();
+    // std::map <int, peopleTuple> discardedPeopleMap;
+    // std::map <int, cardTuple> discardedActionMap;
 
     //blue,green,purple,red
     int blue = 0;
@@ -51,6 +69,7 @@ public:
     int purple = 2;
     int red = 3;
     int anyColor= -1;
+    int numberOfColors= 4;
 
     void endOfTurn();
 
