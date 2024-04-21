@@ -313,19 +313,65 @@ void Model::addFromTopThree(int unused, int unused1, int unused2){
 }
 
 
-
 // //for card 34
 // void Model::chrisRockToFront(int unused, int unused1, int unused2)
 // {
 
 // }
 
-
-// void Model::newTableau(int unused1, int unused2, int unused3)
+//for card 35
+// void Model::moveClosestBlueToFront(int unused , int specifiedColor , int unused2)
 // {
-//     std::cout <<" getting into new Tableau function" << std::endl;
+//     //disable cards
+//     for (int i = 0; i < gameState.tableau.size(); i++) {
+//         gameState.tableauCardIsEnabled.push_back(false);
+//     }
+
+//     //find a blue card
+//     int closestBlueIndex;
+
+//     for(int i=0; i<gameState.tableau.size(); i++)
+//     {
+//         peopleTuple person = peopleMap.at(gameState.tableau.at(i));
+//         auto[value, color, specialFunc] = person;
+//         if(color == specifiedColor) //if a blue card exists
+//         {
+//             //move blue to front
+//             gameState.tableau.insert(gameState.tableau.begin(), gameState.tableau.at(closestBlueIndex));
+//             //delete where it was
+//             gameState.tableau.removeAt(closestBlueIndex);
+
+//             //shift index 1 - length over 1
+//             for (int i = gameState.tableau.size() - 1; i > 0; i--) {
+//                 gameState.tableau[i] = gameState.tableau[(i - 1)];
+//             }
+//         }
+//         //else //no blue card
+//         //next turn
+//     }
+
+//     emit sendStateToPlayers(gameState.serialize());
 // }
 
+//for card 42 - deal new action card for all players
+void Model::dealNewActionCard(int unused2, int unused, int unused1)
+{
+    generateRandomHands();
+}
+
+//for card 44 - all players must discard 1 action card
+void Model::discardOneAction(int unused, int unused1, int unused2)
+{
+    std::cout<<"getting into discard one action"<<std::endl;
+
+    //for each player
+    for(int i =0 ; i<gameState.players.size(); i++)
+    {
+        std::cout<<"player action pile before removing: "<< gameState.players.at(i).actionPile.size() <<std::endl;
+        gameState.players.at(i).actionPile.removeAt(gameState.players.at(i).actionPile.at(gameState.players.at(i).selectedActionIndex));
+        std::cout<<"player action pile: "<< gameState.players.at(i).actionPile.size() << std::endl;
+    }
+}
 
 void Model::scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int misc)
 {
@@ -417,7 +463,8 @@ void Model::generateRandomTableau()
 {
     std::cout << "getting into random tableau" << std::endl;
     gameState.tableau.clear();
-    gameState.tableau.push_back(gameState.personCardStack.at(2));
+    // gameState.tableau.push_back(gameState.personCardStack.at(2));
+
 
     for(int i=1; i<11; i++)
     {
@@ -428,13 +475,15 @@ void Model::generateRandomTableau()
         //not so random random
         int randomPersonIndex = 1;
 
-        int randomTestVic = std::rand() % 10; //using first 10 cards
+        //std::rand() % (max - min + 1) + min;
+        int randomTestVic = std::rand() % (19 - 10 +1) + 10 ; //using 10 - 19
         // put the ID from that index into the tableau
-        gameState.tableau.push_back(gameState.personCardStack.at(randomTestVic));
+        gameState.tableau.push_back(gameState.personCardStack.at(i+12));
         // remove the ID at that index so that the same Person won't be included twice(except duplicate cards)
         //gameState.personCardStack.removeAt(randomPersonIndex);
 
     }
+    gameState.tableau.push_back(gameState.personCardStack.at(2));
 
     QVector<bool> newVector;
     for(int i=0; i<gameState.tableau.size(); i++)
@@ -469,7 +518,7 @@ void Model::generateRandomHands()
             int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size()-1);
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
 
-            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(23)); //hard coded to test AC 23
+            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(44)); //hard coded to test AC#
 
         }
     }
@@ -569,7 +618,6 @@ void Model::populateActionMap()
     cardTuple tuple15(&Model::movementCardPlayed, parameters15, &Model::movementCardComplete);
     actionMap.insert(std::pair<int,cardTuple>(15,tuple15));
 
-// <<<<<<< HEAD
     // add card 16: mix first 4
     QVector<int> parameters16{0,-1,0};
     cardTuple tuple16(&Model::shuffleTableauPlayed16, parameters16, nullptr);
@@ -607,7 +655,7 @@ void Model::populateActionMap()
     QVector<int> parameters23{0,-1,0};
     cardTuple tuple23(&Model::addFromTopThree, parameters23, nullptr);
     actionMap.insert(std::pair<int, cardTuple>(23, tuple23));
-// =======
+
     //(int specifiedColor, int colorScoreBuff, int misc)
     //add card 24: green +1
     QVector<int> parameters24{green,1,0};
@@ -646,7 +694,28 @@ void Model::populateActionMap()
     cardTuple tuple30(&Model::scoreManipulatorPlayed, parameters30, nullptr);
     actionMap.insert(std::pair<int,cardTuple>(30,tuple30));
 
-// >>>>>>> 3c55d2ddac40a6646d694410ffb817ba1e211756
+    //add 34: Marie to front (idk who's our "Marie")
+
+    // //add card 35: closest blue to front
+    // QVector<int> parameters35{0,blue,0};
+    // cardTuple tuple35(&Model::moveClosestBlueToFront, parameters35, nullptr);
+    // actionMap.insert(std::pair<int,cardTuple>(35,tuple35));
+
+    //add card 36: move a card up 2
+    QVector<int> parameters36{-1,2,0};
+    cardTuple tuple36(&Model::movementCardPlayed, parameters36, &Model::movementCardComplete);
+    actionMap.insert(std::pair<int,cardTuple>(36,tuple36));
+
+    //add card 42: deal new action cards
+    QVector<int> parameters42{-1,0,0};
+    cardTuple tuple42(&Model::dealNewActionCard, parameters42, nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(42,tuple42));
+
+    // //add card 43: discard one action
+    // QVector<int> parameters43{-1,0,0};
+    // cardTuple tuple43(&Model::discardOneAction, parameters43, nullptr);
+    // actionMap.insert(std::pair<int,cardTuple>(43,tuple43));
+
 }
 
 

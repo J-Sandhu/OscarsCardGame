@@ -21,6 +21,7 @@ class GameState
 public:
     GameState();
     vector<Player> players;
+    int indexOfWinner;
     int currentPlayerIndex=0;
     int round;
     bool gameOver;

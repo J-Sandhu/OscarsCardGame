@@ -5,6 +5,9 @@
 #include <QMessageBox>
 #include<QString>
 #include "otherplayerhands.h"
+#include <Box2D/Box2D.h>
+#include "confetti.h"
+#include <QRect>
 
 
 using namespace std;
@@ -27,6 +30,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->ipLine->setEnabled(true);
     ui->ipLine->setEnabled(true);
+
+    //BOX2D graphics view
+    ui->graphicsView->setStyleSheet("background: transparent;");
+    ui->graphicsView->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+    ui->graphicsView->setScene(&scene);
+
+    QRect rcontent = ui->graphicsView->contentsRect();
+    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
+
 
 
     //connect the buttons to their respective actions
@@ -158,6 +170,9 @@ void MainWindow::sendChatMessage()
 {
     clientSendMessage(protocolChat + ui->messageLine->text().toStdString());
     ui->messageLine->clear();
+
+    //TODO: delete later...for testing confetti
+    startConfetti();
 }
 
 void MainWindow::clientSendMessage(std::string message)
@@ -440,3 +455,45 @@ void MainWindow::playerButtonClicked()
 {
     std::cout <<"getting into playerButton clicked" << std::endl;
 }
+
+//start the simulation
+void MainWindow::startConfetti()
+{
+    //connect timer to show confetti
+    connect(&timer, &QTimer::timeout, this, &MainWindow::showConfetti);
+
+    //get all scores of players and compare
+    int highScore = gameState.players.at(0).score;
+
+    // Iterate through  players to find highest score
+    for (int i = 1; i < gameState.players.size(); i++)
+    {
+        if (gameState.players.at(i).score > highScore)
+        {
+            highScore = gameState.players.at(i).score;
+            gameState.indexOfWinner = i;
+        }
+    }
+
+    timer.start(50);
+
+    // //display winner's name on screen -> slot thing
+    // Qstring winnerDisplayName = gameState.players.at(indexOfWinner).name + "IS THE WINNER!!!";
+}
+
+//draws the confetti
+void MainWindow::showConfetti()
+{
+    ui->graphicsView->scene()->clear();
+    confetti.doConfettiSimulation();
+    for(int i = 0; i<confetti.confettiVectors.size(); i++)
+    {
+        QRectF rect(confetti.confettiVectors.at(i)->GetPosition().x, confetti.confettiVectors.at(i)->GetPosition().y, 10, 10);
+        QPen pen(Qt::black); // Black outline
+        QBrush brush(Qt::red); // red fill
+        ui->graphicsView->scene()->addRect(rect, pen, brush);
+    }
+
+    ui->graphicsView->scene()->update();
+}
+

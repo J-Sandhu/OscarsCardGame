@@ -12,6 +12,9 @@
 #include "gamestate.h"
 #include "model.h"
 #include <QPixmap>
+#include <Box2D/Box2D.h>
+#include "confetti.h"
+#include <QTimer>
 
 
 QT_BEGIN_NAMESPACE
@@ -56,6 +59,13 @@ public:
     void updateView();
     void showPlayerButtons();
 
+    //Box2d
+    QTimer timer;
+    Confetti confetti;
+    QGraphicsScene scene;
+    void startConfetti();
+    void showConfetti();
+
 
 
 public slots:
@@ -76,6 +86,7 @@ public slots:
     void anotherPlayerPersonCardClicked();
     void updateActionHand(std::vector<QImage> images);
     void playerButtonClicked();
+
 
 signals:
     void newMessage(QString message);
