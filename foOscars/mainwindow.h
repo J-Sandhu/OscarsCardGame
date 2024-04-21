@@ -65,6 +65,7 @@ public:
     QGraphicsScene scene;
     void startConfetti();
     void showConfetti();
+    void displayWinnerName();
 
 
 
@@ -86,7 +87,8 @@ public slots:
     void anotherPlayerPersonCardClicked();
     void updateActionHand(std::vector<QImage> images);
     void playerButtonClicked();
-
+    void displayWinnerAndConfettiSlot();
+    void endGameClicked();
 
 signals:
     void newMessage(QString message);

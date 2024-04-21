@@ -63,6 +63,8 @@ public:
     void dealNewActionCard(int currentPlayerIndex, int unused, int unused1);
     void discardOneAction(int, int, int);
 
+    void movementThenDraw(int);
+
     //blue,green,purple,red
     int blue = 0;
     int green = 1;
@@ -83,6 +85,7 @@ signals:
     void actionCardSelectedFromPersonalPile(Card selectedActionCard);
     void updateTableauAfterActionCardSelect();
     void gameInitializedSignal();
+    void displayWinnerAndConfetti();
 
 
 private:

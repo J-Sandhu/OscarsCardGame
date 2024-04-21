@@ -15,6 +15,7 @@ public:
     int screenX; //have to scale to fit screen later
     int screenY;
     int confettiTimeLength;
+    int showConfettiCount = 0;
 
     double minVelocity = 100.0;
     double velocityScaler = 100.0;
