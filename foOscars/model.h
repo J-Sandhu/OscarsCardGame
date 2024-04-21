@@ -59,9 +59,9 @@ public:
     void addToTableau(int numCardsToShuffle, int, int);
     void addFromTopThree(int, int, int);
 
-    // int askUserToChooseCardFromPeoplePile();
-    // std::map <int, peopleTuple> discardedPeopleMap;
-    // std::map <int, cardTuple> discardedActionMap;
+    void moveClosestBlueToFront(int, int, int);
+    void dealNewActionCard(int currentPlayerIndex, int unused, int unused1);
+    void discardOneAction(int, int, int);
 
     //blue,green,purple,red
     int blue = 0;

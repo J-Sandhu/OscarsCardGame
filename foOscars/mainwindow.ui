@@ -352,6 +352,16 @@
      </property>
     </widget>
    </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1184</width>
+      <height>718</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -359,7 +369,7 @@
      <x>0</x>
      <y>0</y>
      <width>1184</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
