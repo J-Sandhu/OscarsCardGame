@@ -40,6 +40,9 @@ Server::Server(QWidget *parent): QObject(parent)
     // connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
     connect(model,&Model::sendChatToPlayers,this,&Server::sendChat);
     connect(model,&Model::sendStateToPlayers,this,&Server::sendState);
+
+    connect(model, &Model::sendStateToPlayer, this, &Server::sendStateToPlayer);
+
     connect(tcpServer, &QTcpServer::newConnection, this, &Server::newConnection);
     protocolName = "~pname:";
     protocolChat = "~chat:";
@@ -181,6 +184,8 @@ void Server::sendChat(QString message)
         sendMessage(s,message.toStdString());
     }
 }
+
+
 void Server::sendState(QByteArray buffer)
 {
     // TODO: only send to one player if we want
@@ -192,12 +197,42 @@ void Server::sendState(QByteArray buffer)
     }
 }
 
+void Server::sendStateToPlayer(QByteArray buffer, int playerIndex)
+{
+
+
+    // TODO: only send to one player if we want
+    buffer.prepend(protocolGameState);
+    cout<<"sending gameState to players"<<endl;
+    foreach(QTcpSocket* s, players)
+    {
+        if()
+        sendMessage(s,buffer.toStdString());
+    }
+}
+
+
+
 void Server::sendIndex(int indexInPlayers, QTcpSocket* client)
 {
     QString message = QString::number(indexInPlayers);
     message.prepend(protocolPlayerIndex);
     cout<<"sending index in player array to players"<<endl;
     sendMessage(client,message.toStdString());
+}
+
+void Model::endGame()
+{
+    gameState.gameOver=true;
+    sendStateToPlayers(gameState.serialize());
+}
+void Model::addNewPlayer(long long id)
+{
+
+    Player newPlayer;
+    newPlayer.id = id;
+
+    gameState.players.push_back(newPlayer);
 }
 
 

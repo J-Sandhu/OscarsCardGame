@@ -6,6 +6,8 @@
 #include "gamestate.h"
 #include <QRandomGenerator>
 #include <QObject>
+#include <QTcpSocket>
+#include <QHostAddress>
 
 class Model : public QObject
 {
@@ -58,6 +60,8 @@ public:
 
     void endOfTurn();
 
+    QSet<QTcpSocket*> players;
+
 
 
 
@@ -65,6 +69,7 @@ public:
 signals:
     void sendChatToPlayers(QString);
     void sendStateToPlayers(QByteArray);
+    void sendStateToPlayer(QByteArray, int player);
     void actionCardSelectedFromPersonalPile(Card selectedActionCard);
     void updateTableauAfterActionCardSelect();
     void gameInitializedSignal();

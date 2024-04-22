@@ -46,6 +46,7 @@ public slots:
     void readSocket();
     void sendChat(QString message);
     void sendState(QByteArray buffer);
+    void sendStateToPlayer(QByteArray buffer, int playerIndex);
 
 private:
     ///
