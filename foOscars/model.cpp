@@ -319,7 +319,7 @@ void Model::addFromTopThree(int unused, int unused1, int unused2){
 
 // }
 
-//for card 35
+// // for card 35
 // void Model::moveClosestBlueToFront(int unused , int specifiedColor , int unused2)
 // {
 //     //disable cards
@@ -492,6 +492,7 @@ void Model::generateRandomTableau()
     gameState.tableauCardIsEnabled = newVector;
 }
 
+
 void Model::generateRandomHands()
 {
 
@@ -518,8 +519,7 @@ void Model::generateRandomHands()
             int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size()-1);
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
 
-            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(44)); //hard coded to test AC#
-
+            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(2)); //hard coded to test AC#
         }
     }
 }
@@ -556,10 +556,10 @@ void Model::drawActionCard(int numberOfCards)
 
 }
 
+
+//for card
 void Model::populateActionMap()
 {
-    // add card 2: forward 1, draw another action card
-
 
     //add card 3: fan fav- forward 4
     QVector<int> parameters3{-1,4,0};
@@ -849,8 +849,11 @@ int Model::calulateColorSum(int color, bool manipultorEnabled)
 void Model::endGame()
 {
     gameState.gameOver=true;
-    sendStateToPlayers(gameState.serialize());
+    emit sendStateToPlayers(gameState.serialize());
+
+    emit displayWinnerAndConfetti();
 }
+
 
 void Model::addNewPlayer(long long id)
 {

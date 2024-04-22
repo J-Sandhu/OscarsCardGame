@@ -6,7 +6,7 @@
 Confetti::Confetti()
 {
     // Define the gravity vector.
-    b2Vec2 gravity(0.0f, 30.0f);
+    b2Vec2 gravity(0.0f, 300.0f);
 
     // Construct a world object, which will hold and simulate the rigid bodies.
     world = new b2World(gravity);
@@ -32,8 +32,6 @@ Confetti::Confetti()
     // QVector <b2Body> confettiVectors;
     b2BodyDef confettiDef;
     confettiDef.type = b2_dynamicBody;
-
-    //set con
 
 
     //500 confetti pieces
