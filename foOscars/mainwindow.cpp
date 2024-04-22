@@ -428,7 +428,7 @@ void MainWindow::showPlayerButtons()
 
     for(int i = 0; i < gameState.players.size(); i++){
         QString playerName = gameState.players.at(i).name;
-
+        cout<<"pname in updateButton:"<<playerName.toStdString()<<endl;
         QPushButton* button = new QPushButton(this);
         //QLabel* label = new QLabel(button);
         button->setGeometry(0,0,200,200);

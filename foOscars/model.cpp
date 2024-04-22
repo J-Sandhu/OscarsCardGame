@@ -25,10 +25,23 @@ void Model::HandlePlayerName(long long id, QString message)
         cout<<message.toStdString()<<endl;
     }
 
-    Player p;
-    p.id=id;
-    p.name= message;
-    gameState.players.push_back(p);
+    for (int i=0; i<gameState.players.size(); i++)
+    {
+        if (gameState.players.at(i).id==id)
+        {
+            gameState.players.at(i).name=message;
+            cout<<"player found in naming! :"<<gameState.players.at(i).name.toStdString()<<endl;
+        }
+    }
+    // foreach (Player p, gameState.players)
+    // {
+    //     if (p.id==id)
+    //     {
+    //         p.name=message;
+    //         cout<<"player found in naming! :"<<p.name.toStdString()<<endl;
+
+    //     }
+    // }
 
     message.append(" joined the game!");
     emit sendChatToPlayers(message);
@@ -42,10 +55,15 @@ void Model::HandleChatMessage(long long id, QString message)
             sender = p.name.toStdString()+": ";
     message.prepend(sender);
     foreach (Player p, gameState.players)
-        sendChatToPlayers(message);
+        emit sendChatToPlayers(message);
 }
 void Model::HandleTableauSelection(long long id, QString message)
 {
+    if(id !=gameState.players[gameState.currentPlayerIndex].id)
+    {
+        cout<<"ignored selection from non-current player"<<endl;
+        return;
+    }
     int returnedParam = message.toInt();
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
@@ -54,6 +72,12 @@ void Model::HandleTableauSelection(long long id, QString message)
 
 void Model::HandleActionSelection(long long id, QString message)
 {
+
+    if(id !=gameState.players[gameState.currentPlayerIndex].id)
+    {
+        cout<<"ignored selection from non-current player"<<endl;
+        return;
+    }
     int actionIndex = message.toInt(); //index corresponds to tableau
     currentAID= gameState.players.at(gameState.currentPlayerIndex).actionPile[actionIndex];
 
@@ -396,11 +420,11 @@ void Model::populateGameState()
     gameState.personCardStack.clear();
     // probably get rid of this, but populate some players.
     //TODO: definitely get rid of this lol
-    for(int i = 0; i<4; i++)
-    {
-        Player p;
-        gameState.players.push_back(p);
-    }
+    // for(int i = 0; i<4; i++)
+    // {
+    //     Player p;
+    //     gameState.players.push_back(p);
+    // }
 
     gameState.round=1;
     gameState.currentPlayerIndex=0;
