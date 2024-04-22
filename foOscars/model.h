@@ -50,6 +50,23 @@ public:
     int calulateColorSum(int color, bool manipultorEnabled);
     void recalculateScore();
 
+    //line order cards
+    void shuffleTableauPlayed(int, int, int);
+    void shuffleTableauPlayed16(int, int, int);
+    void shuffleTableauPlayed17(int, int, int);
+    void reverseCardPlayed(int, int, int);
+    void newLinePlayed(int, int, int);
+    void escapeCardPlayed1stPart(int, int, int);
+    void escapeCardPlayed2ndPart(int);
+    void addToTableau(int numCardsToShuffle, int, int);
+    void addFromTopThree(int, int, int);
+
+    void moveClosestBlueToFront(int, int, int);
+    void dealNewActionCard(int currentPlayerIndex, int unused, int unused1);
+    void discardOneAction(int, int, int);
+
+    void movementThenDraw(int);
+
     //blue,green,purple,red
     int blue = 0;
     int green = 1;
@@ -73,6 +90,7 @@ signals:
     void actionCardSelectedFromPersonalPile(Card selectedActionCard);
     void updateTableauAfterActionCardSelect();
     void gameInitializedSignal();
+    void displayWinnerAndConfetti();
 
 
 private:

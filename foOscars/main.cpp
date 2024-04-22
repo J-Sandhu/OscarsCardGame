@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-
+#include <Box2D/Box2D.h>
 #include <QApplication>
 #include "model.h" //TODO: remove this evil evil code
 

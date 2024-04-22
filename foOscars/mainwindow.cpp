@@ -5,6 +5,9 @@
 #include <QMessageBox>
 #include<QString>
 #include "otherplayerhands.h"
+#include <Box2D/Box2D.h>
+#include "confetti.h"
+#include <QRect>
 
 
 using namespace std;
@@ -28,12 +31,26 @@ MainWindow::MainWindow(QWidget *parent)
     ui->ipLine->setEnabled(true);
     ui->ipLine->setEnabled(true);
 
+    //BOX2D graphics view
+    ui->graphicsView->setStyleSheet("background: transparent;");
+    ui->graphicsView->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+    ui->graphicsView->setScene(&scene);
+
+    QRect rcontent = ui->graphicsView->contentsRect();
+    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
+
+    //BOX2D -winner display
+    ui->winnerNameLabel->setVisible(false);
+    ui->endGameButton->setEnabled(false);
+    connect(ui->endGameButton, &QPushButton::clicked, this, &MainWindow::endGameClicked);
+
 
     //connect the buttons to their respective actions
     connect(ui->hostButton, &QPushButton::clicked, this, &MainWindow::hostClicked);
     connect(ui->connectButton, &QPushButton::clicked, this, &MainWindow::connectClicked);
     connect(ui->startbutton, &QPushButton::clicked, this, &MainWindow::onStartClicked);
     connect(ui->sendMessageButton, &QPushButton::clicked, this, &MainWindow::sendChatMessage);
+
 
     protocolName = "~pname:";
     protocolChat = "~chat:";
@@ -61,6 +78,9 @@ void MainWindow::hostClicked()
     ui->portLine->setReadOnly(true);
 
     server= new Server(this);
+
+    //connect endTurn slots and signals -> ask Jai about end game protocol
+    connect(server->model, &Model::displayWinnerAndConfetti, this, &MainWindow::displayWinnerAndConfettiSlot);
 
     ui->ipLine->setText(server->ipAddress);
     ui->portLine->setText(QString::number(server->port));
@@ -229,6 +249,9 @@ void MainWindow::onStartClicked()
     clientSendMessage(protocolStartGame);
     cout<<"start clicked, sending message to server"<<endl;
     //emit startGame();
+
+    ui->winnerNameLabel->setVisible(false);
+    ui->endGameButton->setEnabled(true);
 }
 
 void MainWindow::showCardsOnTableau()
@@ -440,3 +463,73 @@ void MainWindow::playerButtonClicked()
 {
     std::cout <<"getting into playerButton clicked" << std::endl;
 }
+
+//start the simulation -> only do when there are no cards in the tableau
+void MainWindow::startConfetti()
+{
+    confetti = Confetti();
+    //connect timer to show confetti
+    connect(&timer, &QTimer::timeout, this, &MainWindow::showConfetti);
+    timer.start(50);
+
+}
+
+void MainWindow::displayWinnerName()
+{
+    //get all scores of players and compare
+    int highScore = gameState.players.at(0).score;
+
+    // Iterate through  players to find highest score
+    for (int i = 1; i < gameState.players.size(); i++)
+    {
+        if (gameState.players.at(i).score > highScore)
+        {
+            highScore = gameState.players.at(i).score;
+            gameState.indexOfWinner = i;
+        }
+    }
+
+    QString winDisplay = gameState.players.at(gameState.indexOfWinner).name.toUpper() + " IS THE WINNER !!!";
+    //set font stuff later...
+    ui->winnerNameLabel->setText(winDisplay);
+    ui->winnerNameLabel->setVisible(true);
+}
+
+void MainWindow::displayWinnerAndConfettiSlot()
+{
+    startConfetti();
+    displayWinnerName();
+}
+
+//draws the confetti
+void MainWindow::showConfetti()
+{
+    confetti.showConfettiCount++;
+    ui->graphicsView->scene()->clear();
+    if (confetti.showConfettiCount > 160)//8 seconds
+    {
+        timer.stop();
+        ui->winnerNameLabel->setText("");
+        return;
+    }
+
+    //colors array for confetti
+    Qt::GlobalColor colors [] = {Qt::red, Qt::yellow, Qt::blue, Qt::green};
+    confetti.doConfettiSimulation();
+    for(int i = 0; i<confetti.confettiVectors.size(); i++)
+    {
+        QRectF rect(confetti.confettiVectors.at(i)->GetPosition().x, confetti.confettiVectors.at(i)->GetPosition().y, 10, 10);
+        QPen pen(Qt::black); // Black outline
+        QBrush brush (colors[i % 4]);
+        ui->graphicsView->scene()->addRect(rect, pen, brush);
+    }
+
+    ui->graphicsView->scene()->update();
+}
+
+//TODO: can delete later once end game protocol is figured out
+void MainWindow::endGameClicked()
+{
+    server->model->endGame();
+}
+
