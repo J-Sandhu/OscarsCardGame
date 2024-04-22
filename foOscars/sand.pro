@@ -137,8 +137,3 @@ HEADERS += \
 DISTFILES += \
     Box2D/Box2DConfig.cmake \
     Box2D/CMakeLists.txt
-
-
-
-
-

@@ -14,7 +14,7 @@ public:
     QVector<int> actionPile;
     int selectedActionIndex;
     int indexInPlayerArray;
-    int
+
 
 
     // THIS CORRESPONDS TO COLOR INDECES

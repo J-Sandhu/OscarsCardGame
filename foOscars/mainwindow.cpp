@@ -532,4 +532,3 @@ void MainWindow::endGameClicked()
 {
     server->model->endGame();
 }
-
