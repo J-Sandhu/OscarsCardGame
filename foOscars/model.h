@@ -65,7 +65,7 @@ public:
     void swapHandsComplete(int victimPlayer);
     void dealNewActionCard(int currentPlayerIndex, int unused, int unused1);
     void discardOneAction(int, int, int);
-
+    void afterYou(int);
     void movementThenDraw(int);
 
     //blue,green,purple,red

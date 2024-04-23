@@ -472,6 +472,35 @@ void Model::discardOneAction(int unused, int unused1, int unused2)
     }
 }
 
+void Model::afterYou(int victimPlayerIndex)
+{
+    cout<<"inside After You..."<<endl;
+    int firstCardID = gameState.tableau.at(0);          //get the id of the first card
+    peopleTuple person = peopleMap[firstCardID];        //get the card associated with first card
+    auto[value, color, specialFunc] = person;           //get details of card
+    gameState.tableau.removeFirst();                    //remove card
+    if(color==purple)
+    {
+        //add first card id to purple pile
+        gameState.players.at(victimPlayerIndex).purplePeoplePile.push_back(firstCardID);
+    }
+    else if (color==blue)
+    {
+        //add first card id to blue pile
+        gameState.players.at(victimPlayerIndex).bluePeoplePile.push_back(firstCardID);
+    }
+    else if (color==red)
+    {
+        //add first card id to red pile
+        gameState.players.at(victimPlayerIndex).redPeoplePile.push_back(firstCardID);
+    }
+    else if (color==green)
+    {
+        //add first card id to green pile
+        gameState.players.at(victimPlayerIndex).greenPeoplePile.push_back(firstCardID);
+    }
+    endOfTurn();
+}
 void Model::scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int misc)
 {
     if(specifiedColor ==anyColor)
@@ -617,7 +646,7 @@ void Model::generateRandomHands()
             int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size()-1);
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
 
-            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(13)); //hard coded to test AC#
+            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(0)); //hard coded to test AC#
         }
     }
 }
@@ -833,6 +862,10 @@ void Model::drawActionCard(int numberOfCards)
 //for card
 void Model::populateActionMap()
 {
+    //add card 0: after you
+    QVector<int> parameters0{0,0,0};
+    cardTuple tuple0(&Model::swapHands,parameters0,&Model::afterYou);
+    actionMap.insert(std::pair<int,cardTuple>(0,tuple0));
     //add card 2: back 1
     QVector<int> parameters2{-1,-1,0};
     cardTuple tuple2(&Model::movementCardPlayed, parameters2, &Model::movementCardComplete);
