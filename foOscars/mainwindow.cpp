@@ -322,10 +322,11 @@ void MainWindow::showCardsInHand()
     //     //tableauLayout->
     // }
 
+    cout<<"clientIndexInPlayerArray: "<<clientIndexInPlayerArray<<endl;
     //TODO: look at how we are planning to identify which player we are.
     // for now I'm only showing player 0's hand which will ALWAYS be the server
-    for(int i = 0; i < gameState.players.at(0).actionPile.size(); i++){
-        int actionCardID = gameState.players.at(0).actionPile.at(i);
+    for(int i = 0; i < gameState.players.at(clientIndexInPlayerArray).actionPile.size(); i++){
+        int actionCardID = gameState.players.at(clientIndexInPlayerArray).actionPile.at(i);
 
         QPushButton* button = new QPushButton(this);
         QLabel* label = new QLabel(button);
@@ -428,7 +429,7 @@ void MainWindow::showPlayerButtons()
 
     for(int i = 0; i < gameState.players.size(); i++){
         QString playerName = gameState.players.at(i).name;
-
+        cout<<"pname in updateButton:"<<playerName.toStdString()<<endl;
         QPushButton* button = new QPushButton(this);
         //QLabel* label = new QLabel(button);
         button->setGeometry(0,0,200,200);
@@ -532,4 +533,3 @@ void MainWindow::endGameClicked()
 {
     server->model->endGame();
 }
-

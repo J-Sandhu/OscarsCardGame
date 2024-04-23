@@ -9,11 +9,12 @@ public:
     Player();
 
     //right now hard coded as player, but we can change it later
-    QString name = "player";
+    QString name;
 
     QVector<int> actionPile;
     int selectedActionIndex;
     int indexInPlayerArray;
+
 
 
     // THIS CORRESPONDS TO COLOR INDECES

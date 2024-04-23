@@ -209,5 +209,3 @@ void Server::sendIndex(int indexInPlayers, QTcpSocket* client)
     cout<<"sending index in player array to players"<<endl;
     sendMessage(client,message.toStdString());
 }
-
-
