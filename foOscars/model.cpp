@@ -858,6 +858,97 @@ void Model::drawActionCard(int numberOfCards)
 
 }
 
+void Model::replacePerson(int indexInTab)
+{
+
+    cardTuple actionCard = actionMap.at(currentAID);
+    auto[function, params, callback] = actionCard;
+
+
+
+    std::cout << "getting into replacePerson" << std::endl;
+
+    int randomPersonID= QRandomGenerator::global()->bounded(gameState.personCardStack.size()-1);
+
+    gameState.personCardStack.removeAt(randomPersonID);
+
+
+
+    gameState.tableau.replace(indexInTab, randomPersonID);
+
+    endOfTurn();
+
+}
+
+void Model::discardPerson(int indexInTab)
+{
+    cardTuple actionCard = actionMap.at(currentAID);
+    auto[function, params, callback] = actionCard;
+
+
+
+    std::cout << "getting into replacePerson" << std::endl;
+
+
+    gameState.tableau.remove(indexInTab);
+
+    endOfTurn();
+}
+
+
+void Model::mixAfterTurn(int unused, int unused1, int unuesed2)
+{
+
+    //this is not going to call end of turn
+    int personCollectedId =gameState.tableau.at(0);
+
+    gameState.tableau.removeAt(0);
+
+    int color = std::get<1>(peopleMap.at(personCollectedId));
+
+    //check which color
+    if(color ==blue)
+        gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.append(personCollectedId);
+    else if(color == green)
+        gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.append(personCollectedId);
+    else if(color ==purple)
+        gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.append(personCollectedId);
+    else if(color ==red)
+        gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.append(personCollectedId);
+
+
+
+    if(std::get<2>(peopleMap.at(personCollectedId))!=nullptr)
+    {
+
+        //currently only card with specialness is Greer Garson, so wouldnt be a loss to get rid of her or not
+        //do her effect through a function
+    }
+    else
+    {
+        gameState.round+=1;
+        if (gameState.round==4)
+            endGame();
+        else
+        {
+            //some function that puts 10 people cards from deck into tableau
+        }
+    }
+    //could be more based on the people card picked up
+    drawActionCard(1);
+
+    //move to next players turn
+    if(gameState.currentPlayerIndex+=1>gameState.players.size()-1)
+        gameState.currentPlayerIndex=0;
+    else
+        gameState.currentPlayerIndex+=1;
+
+    //FOR EViN TO START
+
+
+    emit sendStateToPlayers(gameState.serialize());
+
+}
 
 //for card
 void Model::populateActionMap()
@@ -866,6 +957,13 @@ void Model::populateActionMap()
     QVector<int> parameters0{0,0,0};
     cardTuple tuple0(&Model::swapHands,parameters0,&Model::afterYou);
     actionMap.insert(std::pair<int,cardTuple>(0,tuple0));
+
+
+    // add card 1: Re-cast
+    QVector<int> parameters1{-1,0,0};
+    cardTuple tuple1(&Model::movementCardPlayed,parameters1,&Model::replacePerson);
+    actionMap.insert(std::pair<int,cardTuple>(0,tuple1));
+
     //add card 2: back 1
     QVector<int> parameters2{-1,-1,0};
     cardTuple tuple2(&Model::movementCardPlayed, parameters2, &Model::movementCardComplete);
@@ -912,7 +1010,11 @@ void Model::populateActionMap()
     cardTuple tuple11(&Model::movementCardPlayed, parameters11, &Model::movementCardComplete);
     actionMap.insert(std::pair<int,cardTuple>(11,tuple11));
 
-    // add card 12: discard any noble
+    // add card 12: Jell Cell Tengo
+    QVector<int> parameters12{-1,0,0};
+    cardTuple tuple12(&Model::movementCardPlayed,parameters12,&Model::discardPerson);
+    actionMap.insert(std::pair<int,cardTuple>(0,tuple12));
+
 
 
     // add card 13: winners walk
@@ -954,8 +1056,10 @@ void Model::populateActionMap()
     cardTuple tuple20(&Model::escapeCardPlayed1stPart, parameters20, &Model::escapeCardPlayed2ndPart);
     actionMap.insert(std::pair<int, cardTuple>(20, tuple20));
 
-    //add card 21:
-    //TODO:ask
+    //add card 21: mislabled envelops
+    QVector<int> parameters21{0,-1,0};
+    cardTuple tuple21(&Model::mixAfterTurn, parameters21, nullptr);
+    actionMap.insert(std::pair<int, cardTuple>(20, tuple21));
 
     //add card 22: add 3 new people to tableau
     QVector<int> parameters22{0,-1,0};

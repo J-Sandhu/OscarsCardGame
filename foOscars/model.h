@@ -27,6 +27,7 @@ public:
     void HandlePlayerName(long long id, QString message);
     void HandleStartGame(long long id);
     void addNewPlayer(long long id);
+
     void endGame();
 
 
@@ -62,11 +63,15 @@ public:
     void crewToFront(int, int, int);
     void moveClosestBlueToFront(int, int, int);
     void swapHands(int, int, int);
+    void mixAfterTurn(int,int,int);
     void swapHandsComplete(int victimPlayer);
     void dealNewActionCard(int currentPlayerIndex, int unused, int unused1);
     void discardOneAction(int, int, int);
     void afterYou(int);
     void movementThenDraw(int);
+    void replacePerson(int);
+    void discardPerson(int);
+
 
     //blue,green,purple,red
     int blue = 0;
