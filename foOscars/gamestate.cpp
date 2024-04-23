@@ -30,6 +30,8 @@ void GameState::deserialize(QByteArray serializedGameState)
         //std::cout <<"casting gamestate players score from JSON" << std::endl;
         /// HERE IS THE PROBLEM
         newPlayer.score = thisPlayer["Score"].toInt();
+        newPlayer.name = thisPlayer["Name"].toString();
+        cout<<"deserialized name: "<<newPlayer.name.toStdString()<<endl;
 
         //std::cout <<"getting past placing the score" << std::endl;
         QJsonArray actionPileArray = thisPlayer["Action_Pile"].toArray();
@@ -121,7 +123,8 @@ QByteArray GameState::serialize()
         QJsonArray purpleGroup;
         std::copy (player.purplePeoplePile.begin(), player.purplePeoplePile.end(), std::back_inserter(purpleGroup));
 
-
+        QJsonValue playerName(player.name);
+        cout<<"inserting player name:"<<player.name.toStdString()<<endl;
         playerObj.insert("Action_Pile", actionPileArray);
         playerObj.insert("Blue_Pile", blueManGroup);
         playerObj.insert("Red_Pile", redGroup);
@@ -129,6 +132,7 @@ QByteArray GameState::serialize()
         playerObj.insert("Purple_Pile", purpleGroup);
 
         playerObj.insert("Score", player.score);
+        playerObj.insert("Name", playerName);
 
         jsonPlayerArr.append(playerObj);
 

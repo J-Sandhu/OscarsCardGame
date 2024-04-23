@@ -86,6 +86,7 @@ signals:
     void actionCardSelectedFromPersonalPile(Card selectedActionCard);
     void updateTableauAfterActionCardSelect();
     void gameInitializedSignal();
+    void sendStatetoPlayer(QByteArray, int playerIndex);
     void displayWinnerAndConfetti();
 
 

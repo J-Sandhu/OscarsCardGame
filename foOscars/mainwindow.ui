@@ -142,6 +142,16 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <widget class="QGraphicsView" name="graphicsView">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>-120</y>
+         <width>391</width>
+         <height>421</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QScrollArea" name="handScrollArea">
@@ -207,20 +217,28 @@
       <string>Your Hand</string>
      </property>
     </widget>
-    <widget class="QWidget" name="horizontalLayoutWidget">
+    <widget class="QScrollArea" name="playerButtonScrollArea">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>1061</width>
-       <height>200</height>
+       <x>0</x>
+       <y>0</y>
+       <width>991</width>
+       <height>211</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="playerLayout">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetFixedSize</enum>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>989</width>
+        <height>209</height>
+       </rect>
       </property>
-     </layout>
+     </widget>
     </widget>
    </widget>
    <widget class="QPushButton" name="connectButton">
@@ -352,16 +370,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>1184</width>
-      <height>718</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="winnerNameLabel">
     <property name="geometry">
      <rect>
@@ -400,7 +408,7 @@
      <x>0</x>
      <y>0</y>
      <width>1184</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

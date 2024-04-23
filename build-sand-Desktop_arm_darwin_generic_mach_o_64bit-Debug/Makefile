@@ -52,7 +52,54 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../foOscars/gamestate.cpp \
+SOURCES       = ../foOscars/Box2D/Collision/Shapes/b2ChainShape.cpp \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.cpp \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.cpp \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.cpp \
+		../foOscars/Box2D/Collision/b2BroadPhase.cpp \
+		../foOscars/Box2D/Collision/b2CollideCircle.cpp \
+		../foOscars/Box2D/Collision/b2CollideEdge.cpp \
+		../foOscars/Box2D/Collision/b2CollidePolygon.cpp \
+		../foOscars/Box2D/Collision/b2Collision.cpp \
+		../foOscars/Box2D/Collision/b2Distance.cpp \
+		../foOscars/Box2D/Collision/b2DynamicTree.cpp \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.cpp \
+		../foOscars/Box2D/Common/b2BlockAllocator.cpp \
+		../foOscars/Box2D/Common/b2Draw.cpp \
+		../foOscars/Box2D/Common/b2Math.cpp \
+		../foOscars/Box2D/Common/b2Settings.cpp \
+		../foOscars/Box2D/Common/b2StackAllocator.cpp \
+		../foOscars/Box2D/Common/b2Timer.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2CircleContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2ContactSolver.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2PolygonContact.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2GearJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.cpp \
+		../foOscars/Box2D/Dynamics/b2Body.cpp \
+		../foOscars/Box2D/Dynamics/b2ContactManager.cpp \
+		../foOscars/Box2D/Dynamics/b2Fixture.cpp \
+		../foOscars/Box2D/Dynamics/b2Island.cpp \
+		../foOscars/Box2D/Dynamics/b2World.cpp \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.cpp \
+		../foOscars/Box2D/Rope/b2Rope.cpp \
+		../foOscars/confetti.cpp \
+		../foOscars/gamestate.cpp \
 		../foOscars/mainwindow.cpp \
 		../foOscars/model.cpp \
 		../foOscars/otherplayerhands.cpp \
@@ -63,7 +110,54 @@ SOURCES       = ../foOscars/gamestate.cpp \
 		moc_model.cpp \
 		moc_otherplayerhands.cpp \
 		moc_server.cpp
-OBJECTS       = gamestate.o \
+OBJECTS       = b2ChainShape.o \
+		b2CircleShape.o \
+		b2EdgeShape.o \
+		b2PolygonShape.o \
+		b2BroadPhase.o \
+		b2CollideCircle.o \
+		b2CollideEdge.o \
+		b2CollidePolygon.o \
+		b2Collision.o \
+		b2Distance.o \
+		b2DynamicTree.o \
+		b2TimeOfImpact.o \
+		b2BlockAllocator.o \
+		b2Draw.o \
+		b2Math.o \
+		b2Settings.o \
+		b2StackAllocator.o \
+		b2Timer.o \
+		b2ChainAndCircleContact.o \
+		b2ChainAndPolygonContact.o \
+		b2CircleContact.o \
+		b2Contact.o \
+		b2ContactSolver.o \
+		b2EdgeAndCircleContact.o \
+		b2EdgeAndPolygonContact.o \
+		b2PolygonAndCircleContact.o \
+		b2PolygonContact.o \
+		b2DistanceJoint.o \
+		b2FrictionJoint.o \
+		b2GearJoint.o \
+		b2Joint.o \
+		b2MotorJoint.o \
+		b2MouseJoint.o \
+		b2PrismaticJoint.o \
+		b2PulleyJoint.o \
+		b2RevoluteJoint.o \
+		b2RopeJoint.o \
+		b2WeldJoint.o \
+		b2WheelJoint.o \
+		b2Body.o \
+		b2ContactManager.o \
+		b2Fixture.o \
+		b2Island.o \
+		b2World.o \
+		b2WorldCallbacks.o \
+		b2Rope.o \
+		confetti.o \
+		gamestate.o \
 		mainwindow.o \
 		model.o \
 		otherplayerhands.o \
@@ -75,7 +169,9 @@ OBJECTS       = gamestate.o \
 		moc_model.o \
 		moc_otherplayerhands.o \
 		moc_server.o
-DIST          = /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_pre.prf \
+DIST          = ../foOscars/Box2D/Box2DConfig.cmake \
+		../foOscars/Box2D/CMakeLists.txt \
+		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_pre.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/device_config.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/common/unix.conf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/common/mac.conf \
@@ -239,12 +335,107 @@ DIST          = /Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/spec_pre.pr
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/exceptions.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/yacc.prf \
 		/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/features/lex.prf \
-		../foOscars/sand.pro ../foOscars/gamestate.h \
+		../foOscars/sand.pro ../foOscars/Box2D/Box2D.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Common/b2Draw.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Common/b2Timer.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2CircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2ContactSolver.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2PolygonContact.h \
+		../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2GearJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Island.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Rope/b2Rope.h \
+		../foOscars/confetti.h \
+		../foOscars/gamestate.h \
 		../foOscars/mainwindow.h \
 		../foOscars/model.h \
 		../foOscars/otherplayerhands.h \
 		../foOscars/player.h \
-		../foOscars/server.h ../foOscars/gamestate.cpp \
+		../foOscars/server.h ../foOscars/Box2D/Collision/Shapes/b2ChainShape.cpp \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.cpp \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.cpp \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.cpp \
+		../foOscars/Box2D/Collision/b2BroadPhase.cpp \
+		../foOscars/Box2D/Collision/b2CollideCircle.cpp \
+		../foOscars/Box2D/Collision/b2CollideEdge.cpp \
+		../foOscars/Box2D/Collision/b2CollidePolygon.cpp \
+		../foOscars/Box2D/Collision/b2Collision.cpp \
+		../foOscars/Box2D/Collision/b2Distance.cpp \
+		../foOscars/Box2D/Collision/b2DynamicTree.cpp \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.cpp \
+		../foOscars/Box2D/Common/b2BlockAllocator.cpp \
+		../foOscars/Box2D/Common/b2Draw.cpp \
+		../foOscars/Box2D/Common/b2Math.cpp \
+		../foOscars/Box2D/Common/b2Settings.cpp \
+		../foOscars/Box2D/Common/b2StackAllocator.cpp \
+		../foOscars/Box2D/Common/b2Timer.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2CircleContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2ContactSolver.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp \
+		../foOscars/Box2D/Dynamics/Contacts/b2PolygonContact.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2GearJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.cpp \
+		../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.cpp \
+		../foOscars/Box2D/Dynamics/b2Body.cpp \
+		../foOscars/Box2D/Dynamics/b2ContactManager.cpp \
+		../foOscars/Box2D/Dynamics/b2Fixture.cpp \
+		../foOscars/Box2D/Dynamics/b2Island.cpp \
+		../foOscars/Box2D/Dynamics/b2World.cpp \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.cpp \
+		../foOscars/Box2D/Rope/b2Rope.cpp \
+		../foOscars/confetti.cpp \
+		../foOscars/gamestate.cpp \
 		../foOscars/mainwindow.cpp \
 		../foOscars/model.cpp \
 		../foOscars/otherplayerhands.cpp \
@@ -641,8 +832,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../foOscars/resources.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/otherplayerhands.h ../foOscars/player.h ../foOscars/server.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../foOscars/gamestate.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/otherplayerhands.cpp ../foOscars/player.cpp ../foOscars/server.cpp ../foOscars/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/Box2D/Box2D.h ../foOscars/Box2D/Collision/Shapes/b2ChainShape.h ../foOscars/Box2D/Collision/Shapes/b2CircleShape.h ../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h ../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h ../foOscars/Box2D/Collision/Shapes/b2Shape.h ../foOscars/Box2D/Collision/b2BroadPhase.h ../foOscars/Box2D/Collision/b2Collision.h ../foOscars/Box2D/Collision/b2Distance.h ../foOscars/Box2D/Collision/b2DynamicTree.h ../foOscars/Box2D/Collision/b2TimeOfImpact.h ../foOscars/Box2D/Common/b2BlockAllocator.h ../foOscars/Box2D/Common/b2Draw.h ../foOscars/Box2D/Common/b2GrowableStack.h ../foOscars/Box2D/Common/b2Math.h ../foOscars/Box2D/Common/b2Settings.h ../foOscars/Box2D/Common/b2StackAllocator.h ../foOscars/Box2D/Common/b2Timer.h ../foOscars/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h ../foOscars/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h ../foOscars/Box2D/Dynamics/Contacts/b2CircleContact.h ../foOscars/Box2D/Dynamics/Contacts/b2Contact.h ../foOscars/Box2D/Dynamics/Contacts/b2ContactSolver.h ../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h ../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h ../foOscars/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h ../foOscars/Box2D/Dynamics/Contacts/b2PolygonContact.h ../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.h ../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.h ../foOscars/Box2D/Dynamics/Joints/b2GearJoint.h ../foOscars/Box2D/Dynamics/Joints/b2Joint.h ../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.h ../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.h ../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.h ../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.h ../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.h ../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.h ../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.h ../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.h ../foOscars/Box2D/Dynamics/b2Body.h ../foOscars/Box2D/Dynamics/b2ContactManager.h ../foOscars/Box2D/Dynamics/b2Fixture.h ../foOscars/Box2D/Dynamics/b2Island.h ../foOscars/Box2D/Dynamics/b2TimeStep.h ../foOscars/Box2D/Dynamics/b2World.h ../foOscars/Box2D/Dynamics/b2WorldCallbacks.h ../foOscars/Box2D/Rope/b2Rope.h ../foOscars/confetti.h ../foOscars/gamestate.h ../foOscars/mainwindow.h ../foOscars/model.h ../foOscars/otherplayerhands.h ../foOscars/player.h ../foOscars/server.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../foOscars/Box2D/Collision/Shapes/b2ChainShape.cpp ../foOscars/Box2D/Collision/Shapes/b2CircleShape.cpp ../foOscars/Box2D/Collision/Shapes/b2EdgeShape.cpp ../foOscars/Box2D/Collision/Shapes/b2PolygonShape.cpp ../foOscars/Box2D/Collision/b2BroadPhase.cpp ../foOscars/Box2D/Collision/b2CollideCircle.cpp ../foOscars/Box2D/Collision/b2CollideEdge.cpp ../foOscars/Box2D/Collision/b2CollidePolygon.cpp ../foOscars/Box2D/Collision/b2Collision.cpp ../foOscars/Box2D/Collision/b2Distance.cpp ../foOscars/Box2D/Collision/b2DynamicTree.cpp ../foOscars/Box2D/Collision/b2TimeOfImpact.cpp ../foOscars/Box2D/Common/b2BlockAllocator.cpp ../foOscars/Box2D/Common/b2Draw.cpp ../foOscars/Box2D/Common/b2Math.cpp ../foOscars/Box2D/Common/b2Settings.cpp ../foOscars/Box2D/Common/b2StackAllocator.cpp ../foOscars/Box2D/Common/b2Timer.cpp ../foOscars/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2CircleContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2Contact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2ContactSolver.cpp ../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2PolygonContact.cpp ../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2GearJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2Joint.cpp ../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.cpp ../foOscars/Box2D/Dynamics/b2Body.cpp ../foOscars/Box2D/Dynamics/b2ContactManager.cpp ../foOscars/Box2D/Dynamics/b2Fixture.cpp ../foOscars/Box2D/Dynamics/b2Island.cpp ../foOscars/Box2D/Dynamics/b2World.cpp ../foOscars/Box2D/Dynamics/b2WorldCallbacks.cpp ../foOscars/Box2D/Rope/b2Rope.cpp ../foOscars/confetti.cpp ../foOscars/gamestate.cpp ../foOscars/mainwindow.cpp ../foOscars/model.cpp ../foOscars/otherplayerhands.cpp ../foOscars/player.cpp ../foOscars/server.cpp ../foOscars/main.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../foOscars/mainwindow.ui ../foOscars/otherPlayerHands.ui $(DISTDIR)/
 
 
@@ -1194,6 +1385,46 @@ moc_mainwindow.cpp: ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/QPixmap \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/qpixmap.h \
+		../foOscars/Box2D/Box2D.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Draw.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Timer.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2GearJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.h \
+		../foOscars/confetti.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QTimer \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QGraphicsView \
 		/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc
 	/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=15 -D__clang_minor__=0 -D__clang_patchlevel__=0 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-clang -I'/Users/evanblanchard/Downloads/Spring 2024/CS 3505/FinalProject/cs3505-assignment9-J-Sandhu/foOscars' -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include -F/Users/evanblanchard/Qt/6.6.2/macos/lib ../foOscars/mainwindow.h -o moc_mainwindow.cpp
 
@@ -1655,6 +1886,46 @@ moc_otherplayerhands.cpp: ../foOscars/otherplayerhands.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/QPixmap \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/qpixmap.h \
+		../foOscars/Box2D/Box2D.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Draw.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Timer.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2GearJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.h \
+		../foOscars/confetti.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QTimer \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QGraphicsView \
 		/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc
 	/Users/evanblanchard/Qt/6.6.2/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=15 -D__clang_minor__=0 -D__clang_patchlevel__=0 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/evanblanchard/Qt/6.6.2/macos/mkspecs/macx-clang -I'/Users/evanblanchard/Downloads/Spring 2024/CS 3505/FinalProject/cs3505-assignment9-J-Sandhu/foOscars' -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers -I/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include -F/Users/evanblanchard/Qt/6.6.2/macos/lib ../foOscars/otherplayerhands.h -o moc_otherplayerhands.cpp
 
@@ -2106,6 +2377,592 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
+b2ChainShape.o: ../foOscars/Box2D/Collision/Shapes/b2ChainShape.cpp ../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2ChainShape.o ../foOscars/Box2D/Collision/Shapes/b2ChainShape.cpp
+
+b2CircleShape.o: ../foOscars/Box2D/Collision/Shapes/b2CircleShape.cpp ../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Collision/b2Collision.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2CircleShape.o ../foOscars/Box2D/Collision/Shapes/b2CircleShape.cpp
+
+b2EdgeShape.o: ../foOscars/Box2D/Collision/Shapes/b2EdgeShape.cpp ../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Collision/b2Collision.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2EdgeShape.o ../foOscars/Box2D/Collision/Shapes/b2EdgeShape.cpp
+
+b2PolygonShape.o: ../foOscars/Box2D/Collision/Shapes/b2PolygonShape.cpp ../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Collision/b2Collision.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2PolygonShape.o ../foOscars/Box2D/Collision/Shapes/b2PolygonShape.cpp
+
+b2BroadPhase.o: ../foOscars/Box2D/Collision/b2BroadPhase.cpp ../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2BroadPhase.o ../foOscars/Box2D/Collision/b2BroadPhase.cpp
+
+b2CollideCircle.o: ../foOscars/Box2D/Collision/b2CollideCircle.cpp ../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2CollideCircle.o ../foOscars/Box2D/Collision/b2CollideCircle.cpp
+
+b2CollideEdge.o: ../foOscars/Box2D/Collision/b2CollideEdge.cpp ../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2CollideEdge.o ../foOscars/Box2D/Collision/b2CollideEdge.cpp
+
+b2CollidePolygon.o: ../foOscars/Box2D/Collision/b2CollidePolygon.cpp ../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2CollidePolygon.o ../foOscars/Box2D/Collision/b2CollidePolygon.cpp
+
+b2Collision.o: ../foOscars/Box2D/Collision/b2Collision.cpp ../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Distance.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Collision.o ../foOscars/Box2D/Collision/b2Collision.cpp
+
+b2Distance.o: ../foOscars/Box2D/Collision/b2Distance.cpp ../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Distance.o ../foOscars/Box2D/Collision/b2Distance.cpp
+
+b2DynamicTree.o: ../foOscars/Box2D/Collision/b2DynamicTree.cpp ../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2DynamicTree.o ../foOscars/Box2D/Collision/b2DynamicTree.cpp
+
+b2TimeOfImpact.o: ../foOscars/Box2D/Collision/b2TimeOfImpact.cpp ../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Common/b2Timer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2TimeOfImpact.o ../foOscars/Box2D/Collision/b2TimeOfImpact.cpp
+
+b2BlockAllocator.o: ../foOscars/Box2D/Common/b2BlockAllocator.cpp ../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Common/b2Settings.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2BlockAllocator.o ../foOscars/Box2D/Common/b2BlockAllocator.cpp
+
+b2Draw.o: ../foOscars/Box2D/Common/b2Draw.cpp ../foOscars/Box2D/Common/b2Draw.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Draw.o ../foOscars/Box2D/Common/b2Draw.cpp
+
+b2Math.o: ../foOscars/Box2D/Common/b2Math.cpp ../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Math.o ../foOscars/Box2D/Common/b2Math.cpp
+
+b2Settings.o: ../foOscars/Box2D/Common/b2Settings.cpp ../foOscars/Box2D/Common/b2Settings.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Settings.o ../foOscars/Box2D/Common/b2Settings.cpp
+
+b2StackAllocator.o: ../foOscars/Box2D/Common/b2StackAllocator.cpp ../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Math.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2StackAllocator.o ../foOscars/Box2D/Common/b2StackAllocator.cpp
+
+b2Timer.o: ../foOscars/Box2D/Common/b2Timer.cpp ../foOscars/Box2D/Common/b2Timer.h \
+		../foOscars/Box2D/Common/b2Settings.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Timer.o ../foOscars/Box2D/Common/b2Timer.cpp
+
+b2ChainAndCircleContact.o: ../foOscars/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2ChainAndCircleContact.o ../foOscars/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.cpp
+
+b2ChainAndPolygonContact.o: ../foOscars/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2ChainAndPolygonContact.o ../foOscars/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.cpp
+
+b2CircleContact.o: ../foOscars/Box2D/Dynamics/Contacts/b2CircleContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2CircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Collision/b2Distance.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2CircleContact.o ../foOscars/Box2D/Dynamics/Contacts/b2CircleContact.cpp
+
+b2Contact.o: ../foOscars/Box2D/Dynamics/Contacts/b2Contact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2CircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2PolygonContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2ContactSolver.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Contact.o ../foOscars/Box2D/Dynamics/Contacts/b2Contact.cpp
+
+b2ContactSolver.o: ../foOscars/Box2D/Dynamics/Contacts/b2ContactSolver.cpp ../foOscars/Box2D/Dynamics/Contacts/b2ContactSolver.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2ContactSolver.o ../foOscars/Box2D/Dynamics/Contacts/b2ContactSolver.cpp
+
+b2EdgeAndCircleContact.o: ../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Body.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2EdgeAndCircleContact.o ../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.cpp
+
+b2EdgeAndPolygonContact.o: ../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Body.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2EdgeAndPolygonContact.o ../foOscars/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp
+
+b2PolygonAndCircleContact.o: ../foOscars/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Body.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2PolygonAndCircleContact.o ../foOscars/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp
+
+b2PolygonContact.o: ../foOscars/Box2D/Dynamics/Contacts/b2PolygonContact.cpp ../foOscars/Box2D/Dynamics/Contacts/b2PolygonContact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2PolygonContact.o ../foOscars/Box2D/Dynamics/Contacts/b2PolygonContact.cpp
+
+b2DistanceJoint.o: ../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2DistanceJoint.o ../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.cpp
+
+b2FrictionJoint.o: ../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2FrictionJoint.o ../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.cpp
+
+b2GearJoint.o: ../foOscars/Box2D/Dynamics/Joints/b2GearJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2GearJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2GearJoint.o ../foOscars/Box2D/Dynamics/Joints/b2GearJoint.cpp
+
+b2Joint.o: ../foOscars/Box2D/Dynamics/Joints/b2Joint.cpp ../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2GearJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Joint.o ../foOscars/Box2D/Dynamics/Joints/b2Joint.cpp
+
+b2MotorJoint.o: ../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2MotorJoint.o ../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.cpp
+
+b2MouseJoint.o: ../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2MouseJoint.o ../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.cpp
+
+b2PrismaticJoint.o: ../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2PrismaticJoint.o ../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp
+
+b2PulleyJoint.o: ../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2PulleyJoint.o ../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.cpp
+
+b2RevoluteJoint.o: ../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2RevoluteJoint.o ../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp
+
+b2RopeJoint.o: ../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2RopeJoint.o ../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.cpp
+
+b2WeldJoint.o: ../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2WeldJoint.o ../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.cpp
+
+b2WheelJoint.o: ../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.cpp ../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2WheelJoint.o ../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.cpp
+
+b2Body.o: ../foOscars/Box2D/Dynamics/b2Body.cpp ../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Body.o ../foOscars/Box2D/Dynamics/b2Body.cpp
+
+b2ContactManager.o: ../foOscars/Box2D/Dynamics/b2ContactManager.cpp ../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2ContactManager.o ../foOscars/Box2D/Dynamics/b2ContactManager.cpp
+
+b2Fixture.o: ../foOscars/Box2D/Dynamics/b2Fixture.cpp ../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Fixture.o ../foOscars/Box2D/Dynamics/b2Fixture.cpp
+
+b2Island.o: ../foOscars/Box2D/Dynamics/b2Island.cpp ../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Island.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2ContactSolver.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Common/b2Timer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Island.o ../foOscars/Box2D/Dynamics/b2Island.cpp
+
+b2World.o: ../foOscars/Box2D/Dynamics/b2World.cpp ../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Island.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2ContactSolver.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Common/b2Draw.h \
+		../foOscars/Box2D/Common/b2Timer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2World.o ../foOscars/Box2D/Dynamics/b2World.cpp
+
+b2WorldCallbacks.o: ../foOscars/Box2D/Dynamics/b2WorldCallbacks.cpp ../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2WorldCallbacks.o ../foOscars/Box2D/Dynamics/b2WorldCallbacks.cpp
+
+b2Rope.o: ../foOscars/Box2D/Rope/b2Rope.cpp ../foOscars/Box2D/Rope/b2Rope.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Draw.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o b2Rope.o ../foOscars/Box2D/Rope/b2Rope.cpp
+
+confetti.o: ../foOscars/confetti.cpp ../foOscars/confetti.h \
+		../foOscars/Box2D/Box2D.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Draw.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Timer.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2GearJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QTimer \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qtimer.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QGraphicsView \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qgraphicsview.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QRandomGenerator \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qrandom.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o confetti.o ../foOscars/confetti.cpp
+
 gamestate.o: ../foOscars/gamestate.cpp ../foOscars/gamestate.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QVector \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/qvector.h \
@@ -2554,11 +3411,52 @@ mainwindow.o: ../foOscars/mainwindow.cpp ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/QPixmap \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/qpixmap.h \
+		../foOscars/Box2D/Box2D.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Draw.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Timer.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2GearJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.h \
+		../foOscars/confetti.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QTimer \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QGraphicsView \
 		ui_mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers/QNetworkInterface \
 		../foOscars/otherplayerhands.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QDialog \
-		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QHBoxLayout
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QHBoxLayout \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QRect
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../foOscars/mainwindow.cpp
 
 model.o: ../foOscars/model.cpp ../foOscars/model.h \
@@ -3018,6 +3916,46 @@ otherplayerhands.o: ../foOscars/otherplayerhands.cpp ../foOscars/otherplayerhand
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/QPixmap \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/qpixmap.h \
+		../foOscars/Box2D/Box2D.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Draw.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Timer.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2GearJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.h \
+		../foOscars/confetti.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QTimer \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QGraphicsView \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QLabel
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o otherplayerhands.o ../foOscars/otherplayerhands.cpp
 
@@ -3872,6 +4810,46 @@ main.o: ../foOscars/main.cpp ../foOscars/mainwindow.h \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/QPixmap \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtGui.framework/Headers/qpixmap.h \
+		../foOscars/Box2D/Box2D.h \
+		../foOscars/Box2D/Common/b2Settings.h \
+		../foOscars/Box2D/Common/b2Draw.h \
+		../foOscars/Box2D/Common/b2Math.h \
+		../foOscars/Box2D/Common/b2Timer.h \
+		../foOscars/Box2D/Collision/Shapes/b2CircleShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2Shape.h \
+		../foOscars/Box2D/Common/b2BlockAllocator.h \
+		../foOscars/Box2D/Collision/b2Collision.h \
+		../foOscars/Box2D/Collision/Shapes/b2EdgeShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2ChainShape.h \
+		../foOscars/Box2D/Collision/Shapes/b2PolygonShape.h \
+		../foOscars/Box2D/Collision/b2BroadPhase.h \
+		../foOscars/Box2D/Collision/b2DynamicTree.h \
+		../foOscars/Box2D/Common/b2GrowableStack.h \
+		../foOscars/Box2D/Collision/b2Distance.h \
+		../foOscars/Box2D/Collision/b2TimeOfImpact.h \
+		../foOscars/Box2D/Dynamics/b2Body.h \
+		../foOscars/Box2D/Dynamics/b2Fixture.h \
+		../foOscars/Box2D/Dynamics/b2WorldCallbacks.h \
+		../foOscars/Box2D/Dynamics/b2TimeStep.h \
+		../foOscars/Box2D/Dynamics/b2World.h \
+		../foOscars/Box2D/Common/b2StackAllocator.h \
+		../foOscars/Box2D/Dynamics/b2ContactManager.h \
+		../foOscars/Box2D/Dynamics/Contacts/b2Contact.h \
+		../foOscars/Box2D/Dynamics/Joints/b2DistanceJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2Joint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2FrictionJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2GearJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MotorJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2MouseJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PrismaticJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2PulleyJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RevoluteJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2RopeJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WeldJoint.h \
+		../foOscars/Box2D/Dynamics/Joints/b2WheelJoint.h \
+		../foOscars/confetti.h \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtCore.framework/Headers/QTimer \
+		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QGraphicsView \
 		/Users/evanblanchard/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../foOscars/main.cpp
 

@@ -26,7 +26,7 @@ public:
     QTcpServer* tcpServer= nullptr;
     QString ipAddress;
     int port;
-    QSet<QTcpSocket*> players;
+    QVector<QTcpSocket*> players;
     Model* model;
 
     void sendMessage(QTcpSocket* socket, string message);
@@ -46,6 +46,7 @@ public slots:
     void readSocket();
     void sendChat(QString message);
     void sendState(QByteArray buffer);
+    void sendStateToPlayer(QByteArray buffer, int playerIndex);
 
 private:
     ///

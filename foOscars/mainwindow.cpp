@@ -322,10 +322,11 @@ void MainWindow::showCardsInHand()
     //     //tableauLayout->
     // }
 
+    cout<<"clientIndexInPlayerArray: "<<clientIndexInPlayerArray<<endl;
     //TODO: look at how we are planning to identify which player we are.
     // for now I'm only showing player 0's hand which will ALWAYS be the server
-    for(int i = 0; i < gameState.players.at(0).actionPile.size(); i++){
-        int actionCardID = gameState.players.at(0).actionPile.at(i);
+    for(int i = 0; i < gameState.players.at(clientIndexInPlayerArray).actionPile.size(); i++){
+        int actionCardID = gameState.players.at(clientIndexInPlayerArray).actionPile.at(i);
 
         QPushButton* button = new QPushButton(this);
         QLabel* label = new QLabel(button);
@@ -423,12 +424,15 @@ void MainWindow::anotherPlayerPersonCardClicked()
 void MainWindow::showPlayerButtons()
 {
     //TODO: make this highlight the player whose turn it is
-    qDeleteAll(ui->playerLayout->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
-    std::cout <<"size of playerLayout after clearing: "<< ui->playerLayout->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly).size() <<std::endl;
+    //qDeleteAll(ui->playerLayout->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+    qDeleteAll(playerButtonWidget->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+    //std::cout <<"size of playerLayout after clearing: "<< ui->playerLayout->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly).size() <<std::endl;
+    //std::cout <<"size of gameState players array when drawing: " << gameState.players.size() << std::endl;
 
     for(int i = 0; i < gameState.players.size(); i++){
+        std::cout << "adding another player to the player buttons: " << i << std::endl;
         QString playerName = gameState.players.at(i).name;
-
+        cout<<"pname in updateButton:"<<playerName.toStdString()<<endl;
         QPushButton* button = new QPushButton(this);
         //QLabel* label = new QLabel(button);
         button->setGeometry(0,0,200,200);
@@ -452,11 +456,12 @@ void MainWindow::showPlayerButtons()
         //label->setText("<b>Button</b> Test");
         connect(button, &QPushButton::clicked, this, &MainWindow::playerButtonClicked);
         //ui->tableauLayout->addWidget(label);
-        ui->playerLayout->addWidget(button);
+        //ui->playerLayout->addWidget(button);
+        playerLayout->addWidget(button);
     }
 
-    // handScrollWidget->setLayout(handLayout);
-    // ui->handScrollArea->setWidget(handScrollWidget);
+    playerButtonWidget->setLayout(playerLayout);
+    ui->playerButtonScrollArea->setWidget(playerButtonWidget);
 }
 
 void MainWindow::playerButtonClicked()
