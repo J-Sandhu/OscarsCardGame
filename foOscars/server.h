@@ -64,6 +64,8 @@ private:
     std::string protocolStartGame;
     std::string protocolCallBack;
     std::string protocolPlayerIndex;
+    std::string protocolSelectedPlayer;
+
 
 };
 

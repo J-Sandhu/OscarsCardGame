@@ -60,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
     protocolStartGame="~startgame:";
     protocolCallBack = "~callback:";
     protocolPlayerIndex = "~index:";
+    protocolSelectedPlayer = "~pselected";
 }
 
 MainWindow::~MainWindow()
@@ -395,6 +396,8 @@ void MainWindow::tableauCardClicked()
 
 }
 
+
+
 void MainWindow::actionCardClicked()
 {
     QPushButton* button = qobject_cast<QPushButton*>(sender());
@@ -402,7 +405,6 @@ void MainWindow::actionCardClicked()
     int actionCardIndex = handLayout->indexOf(button);
 
     std::cout << "you clicked the action card at: " << actionCardIndex << std::endl;
-
 
     clientSendMessage(protocolAction + to_string(actionCardIndex));
 
@@ -417,8 +419,15 @@ void MainWindow::updateView()
 
 void MainWindow::anotherPlayerPersonCardClicked()
 {
-    std::cout <<"you clicked someone else's person card" << std::endl;
+    QPushButton* button = qobject_cast<QPushButton*>(sender());
 
+    int playerIndex = playerLayout->indexOf(button);
+
+    std::cout << "you clicked the player button at: " << playerIndex << std::endl;
+
+    clientSendMessage(protocolSelectedPlayer + to_string(playerIndex));
+
+    //connect(button, &QPushButton::clicked, this, &MainWindow::an);
 }
 
 void MainWindow::showPlayerButtons()
@@ -467,6 +476,7 @@ void MainWindow::showPlayerButtons()
 void MainWindow::playerButtonClicked()
 {
     std::cout <<"getting into playerButton clicked" << std::endl;
+
 }
 
 //start the simulation -> only do when there are no cards in the tableau

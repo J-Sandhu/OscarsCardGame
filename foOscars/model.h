@@ -32,7 +32,7 @@ public:
 
     //chase's stuff
     void movementCardComplete(int indexInTab);
-    void HandleCallBack(long long id, QString message);
+    void HandleSelectedPlayer(long long id, QString message);
     void scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int misc);
     //card Tuple containns model's ptr function and callback
     typedef std::tuple<void(Model::*)(int, int, int), QVector<int>, void(Model::*)(int)> cardTuple; //function, array of params, callback (reference lines below)
@@ -61,6 +61,8 @@ public:
     void merylToFront(int, int, int);
     void crewToFront(int, int, int);
     void moveClosestBlueToFront(int, int, int);
+    void swapHands(int, int, int);
+    void swapHandsComplete(int victimPlayer);
     void dealNewActionCard(int currentPlayerIndex, int unused, int unused1);
     void discardOneAction(int, int, int);
 

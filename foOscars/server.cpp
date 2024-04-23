@@ -49,6 +49,7 @@ Server::Server(QWidget *parent): QObject(parent)
     protocolStartGame="~startgame:";
     protocolCallBack= "~callback:";
     protocolPlayerIndex = "~index:";
+    protocolSelectedPlayer = "~pselected:";
 
 
 }
@@ -128,9 +129,11 @@ void Server::readSocket()
         QString m= QString::fromStdString(message.substr(protocolAction.length()));
         model->HandleActionSelection(socket->socketDescriptor(),m);
     }
-    else if (message.rfind(protocolCallBack,0)==0)
+    else if (message.rfind(protocolSelectedPlayer,0)==0)
     {
-
+        std::cout<<"Server is handing off selected player protocol to model handle player selection"<<std::endl;
+        QString m= QString::fromStdString(message.substr(protocolAction.length()));
+        model->HandleSelectedPlayer(socket->socketDescriptor(),m);
     }
     else if (message.rfind(protocolTableau,0)==0)
     {

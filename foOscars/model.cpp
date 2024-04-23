@@ -113,9 +113,19 @@ void Model::HandleStartGame(long long id)
    // std::cout<<"gamestate.playerID != "<< id << " instead = " << gameState.players.at(0).id << std::endl;
 }
 
-void Model::HandleCallBack(long long id, QString message)
+void Model::HandleSelectedPlayer(long long id, QString message)
 {
 
+    if(id !=gameState.players[gameState.currentPlayerIndex].id)
+    {
+        cout<<"ignored selection from non-current player"<<endl;
+        return;
+    }
+
+    int returnedParam = message.toInt();
+    cardTuple actionCard = actionMap.at(currentAID);
+    auto[function, params, callback] = actionCard;
+    ((*this).*callback)(returnedParam);
 }
 
 void Model::addPointsFromActionCard(int scoreModification, int unused1, int unused2)
@@ -421,16 +431,30 @@ void Model::crewToFront(int unused, int unused1, int unused2)
  }
 
  //for card 46 - swap hands, 1
- void Model::swapHands1(int victimPlayer, int currentPlayer, int unused2)
+ void Model::swapHands( int unuse,int unused, int unused2)
+ {
+     std::cout<<"got into swap" << std::endl;
+
+     gameState.playerButtonsEnabled=true;
+     emit sendStatetoPlayer(gameState.serialize(),gameState.currentPlayerIndex);
+ }
+
+ void Model::swapHandsComplete(int victimPlayer)
  {
      //get seleceted player's action pile
      QVector<int> victimPile = gameState.players.at(victimPlayer).actionPile;
+     std::cout<<"victimPile: " << victimPlayer<< std::endl;
 
      //get this player's action pile
-     QVector<int> playerPile = gameState.players.at(currentPlayer).actionPile;
+     QVector<int> playerPile = gameState.players.at(gameState.currentPlayerIndex).actionPile;
+     std::cout<<"playerPile: " << gameState.currentPlayerIndex<< std::endl;
 
      //swap
-     victimPile.swap(&playerPile);
+     victimPile.swap(playerPile);
+     std::cout<<"victimPile: " << victimPlayer<<std::endl;
+     std::cout<<"playerPile: " << gameState.currentPlayerIndex<< std::endl;
+
+     endOfTurn();
  }
 
 
@@ -600,7 +624,7 @@ void Model::generateRandomHands()
             int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size()-1);
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
 
-            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(37)); //hard coded to test AC#
+            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(13)); //hard coded to test AC#
         }
     }
 }
@@ -864,6 +888,7 @@ void Model::populateActionMap()
 
     // add card 12: discard any noble
 
+
     // add card 13: winners walk
     QVector<int> parameters13{-1,100,0}; // enough to bring any card to the front
     cardTuple tuple13(&Model::movementCardPlayed, parameters13, &Model::movementCardComplete);
@@ -984,10 +1009,10 @@ void Model::populateActionMap()
     // cardTuple tuple43(&Model::discardOneAction, parameters43, nullptr);
     // actionMap.insert(std::pair<int,cardTuple>(43,tuple43));
 
-    // //add card 46: deal new action cards
-    // QVector<int> parameters46{-1,0,0};
-    // cardTuple tuple42(&Model::dealNewActionCard, parameters42, nullptr);
-    // actionMap.insert(std::pair<int,cardTuple>(42,tuple42));
+    //add card 46: deal new action cards
+    QVector<int> parameters46{-1,0,0};
+    cardTuple tuple46(&Model::swapHands, parameters46, &Model::swapHandsComplete);
+    actionMap.insert(std::pair<int,cardTuple>(46,tuple46));
 }
 
 

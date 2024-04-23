@@ -28,7 +28,7 @@ public:
     // 48+ 4
     // 2,3,4,8
     QVector<int> actionCardStack;
-
+    bool playerButtonsEnabled;
     //40 + 6
     // 2*2, 11*2, 12*4, 29*2
     QVector<int> personCardStack;

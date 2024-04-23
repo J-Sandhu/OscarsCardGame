@@ -126,5 +126,8 @@ private:
     // protocol for catching index in player array
     std::string protocolPlayerIndex;
 
+    //protocol for selecting a player
+    std::string protocolSelectedPlayer;
+
 };
 #endif // MAINWINDOW_H
