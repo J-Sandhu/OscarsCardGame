@@ -13,7 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
-#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
@@ -42,12 +42,13 @@ public:
     QFrame *gameplayFrame;
     QScrollArea *tableauScrollArea;
     QWidget *scrollAreaContents;
+    QGraphicsView *graphicsView;
     QScrollArea *handScrollArea;
     QWidget *scrollAreaWidgetContents;
     QLabel *nomineeCountLabel;
     QLabel *label_2;
-    QWidget *horizontalLayoutWidget;
-    QHBoxLayout *playerLayout;
+    QScrollArea *playerButtonScrollArea;
+    QWidget *scrollAreaWidgetContents_2;
     QPushButton *connectButton;
     QPushButton *hostButton;
     QPushButton *startbutton;
@@ -57,6 +58,8 @@ public:
     QFrame *portFrame;
     QLabel *label_4;
     QLineEdit *portLine;
+    QLabel *winnerNameLabel;
+    QPushButton *endGameButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -104,7 +107,7 @@ public:
         playerNameLine->setGeometry(QRect(170, 10, 261, 20));
         otherPlayersHandsButton = new QComboBox(centralwidget);
         otherPlayersHandsButton->setObjectName("otherPlayersHandsButton");
-        otherPlayersHandsButton->setGeometry(QRect(680, 10, 103, 32));
+        otherPlayersHandsButton->setGeometry(QRect(770, 20, 103, 32));
         gameplayFrame = new QFrame(centralwidget);
         gameplayFrame->setObjectName("gameplayFrame");
         gameplayFrame->setGeometry(QRect(170, 80, 1200, 750));
@@ -125,6 +128,9 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(scrollAreaContents->sizePolicy().hasHeightForWidth());
         scrollAreaContents->setSizePolicy(sizePolicy);
+        graphicsView = new QGraphicsView(scrollAreaContents);
+        graphicsView->setObjectName("graphicsView");
+        graphicsView->setGeometry(QRect(150, -120, 391, 421));
         tableauScrollArea->setWidget(scrollAreaContents);
         handScrollArea = new QScrollArea(gameplayFrame);
         handScrollArea->setObjectName("handScrollArea");
@@ -146,13 +152,14 @@ public:
         label_2 = new QLabel(gameplayFrame);
         label_2->setObjectName("label_2");
         label_2->setGeometry(QRect(770, 220, 81, 21));
-        horizontalLayoutWidget = new QWidget(gameplayFrame);
-        horizontalLayoutWidget->setObjectName("horizontalLayoutWidget");
-        horizontalLayoutWidget->setGeometry(QRect(10, 10, 1061, 200));
-        playerLayout = new QHBoxLayout(horizontalLayoutWidget);
-        playerLayout->setObjectName("playerLayout");
-        playerLayout->setSizeConstraint(QLayout::SetFixedSize);
-        playerLayout->setContentsMargins(0, 0, 0, 0);
+        playerButtonScrollArea = new QScrollArea(gameplayFrame);
+        playerButtonScrollArea->setObjectName("playerButtonScrollArea");
+        playerButtonScrollArea->setGeometry(QRect(0, 0, 991, 211));
+        playerButtonScrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents_2 = new QWidget();
+        scrollAreaWidgetContents_2->setObjectName("scrollAreaWidgetContents_2");
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 989, 209));
+        playerButtonScrollArea->setWidget(scrollAreaWidgetContents_2);
         connectButton = new QPushButton(centralwidget);
         connectButton->setObjectName("connectButton");
         connectButton->setGeometry(QRect(460, 40, 81, 32));
@@ -185,6 +192,15 @@ public:
         portLine = new QLineEdit(portFrame);
         portLine->setObjectName("portLine");
         portLine->setGeometry(QRect(10, 20, 91, 21));
+        winnerNameLabel = new QLabel(centralwidget);
+        winnerNameLabel->setObjectName("winnerNameLabel");
+        winnerNameLabel->setGeometry(QRect(250, 160, 521, 221));
+        QFont font2;
+        font2.setPointSize(60);
+        winnerNameLabel->setFont(font2);
+        endGameButton = new QPushButton(centralwidget);
+        endGameButton->setObjectName("endGameButton");
+        endGameButton->setGeometry(QRect(660, 10, 101, 61));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -215,6 +231,8 @@ public:
         label_4->setText(QCoreApplication::translate("MainWindow", "Port:", nullptr));
         portLine->setText(QString());
         portLine->setPlaceholderText(QCoreApplication::translate("MainWindow", "Port", nullptr));
+        winnerNameLabel->setText(QString());
+        endGameButton->setText(QCoreApplication::translate("MainWindow", "End Game", nullptr));
     } // retranslateUi
 
 };

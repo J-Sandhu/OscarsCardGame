@@ -424,10 +424,13 @@ void MainWindow::anotherPlayerPersonCardClicked()
 void MainWindow::showPlayerButtons()
 {
     //TODO: make this highlight the player whose turn it is
-    qDeleteAll(ui->playerLayout->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
-    std::cout <<"size of playerLayout after clearing: "<< ui->playerLayout->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly).size() <<std::endl;
+    //qDeleteAll(ui->playerLayout->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+    qDeleteAll(playerButtonWidget->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+    //std::cout <<"size of playerLayout after clearing: "<< ui->playerLayout->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly).size() <<std::endl;
+    //std::cout <<"size of gameState players array when drawing: " << gameState.players.size() << std::endl;
 
     for(int i = 0; i < gameState.players.size(); i++){
+        std::cout << "adding another player to the player buttons: " << i << std::endl;
         QString playerName = gameState.players.at(i).name;
         cout<<"pname in updateButton:"<<playerName.toStdString()<<endl;
         QPushButton* button = new QPushButton(this);
@@ -453,11 +456,12 @@ void MainWindow::showPlayerButtons()
         //label->setText("<b>Button</b> Test");
         connect(button, &QPushButton::clicked, this, &MainWindow::playerButtonClicked);
         //ui->tableauLayout->addWidget(label);
-        ui->playerLayout->addWidget(button);
+        //ui->playerLayout->addWidget(button);
+        playerLayout->addWidget(button);
     }
 
-    // handScrollWidget->setLayout(handLayout);
-    // ui->handScrollArea->setWidget(handScrollWidget);
+    playerButtonWidget->setLayout(playerLayout);
+    ui->playerButtonScrollArea->setWidget(playerButtonWidget);
 }
 
 void MainWindow::playerButtonClicked()

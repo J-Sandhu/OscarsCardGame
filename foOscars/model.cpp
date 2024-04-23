@@ -93,6 +93,7 @@ void Model::HandleActionSelection(long long id, QString message)
     cardFunction cardFunction= function;
     ((*this).*cardFunction)(params[0],params[1],params[2]);
 }
+
 void Model::HandleStartGame(long long id)
 {
     std::cout<<"getting into handle start game" << std::endl;
@@ -101,12 +102,12 @@ void Model::HandleStartGame(long long id)
         std::cout <<"game is already started" << std::endl;
         return;
     }
-    if (id==gameState.players[0].id)
+    if (id==gameState.players.at(0).id)
     {
         //populate tableau
         std::cout<< "game has not yet started! calling populate methods"<<std::endl;
         populateGameState();
-        std::cout << gameState.serialize().toStdString() << std::endl;
+        //std::cout << gameState.serialize().toStdString() << std::endl;
     }
 
    // std::cout<<"gamestate.playerID != "<< id << " instead = " << gameState.players.at(0).id << std::endl;
@@ -466,7 +467,6 @@ void Model::populateGameState()
 
     // populate the vector for the ids of people cards
     //40 + 6
-
     for(int i=0; i<41; i++)
         gameState.personCardStack.push_back(i);
 

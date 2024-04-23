@@ -51,6 +51,9 @@ public:
     QHBoxLayout* handLayout = new QHBoxLayout;
     QWidget* handScrollWidget = new QWidget;
 
+    QHBoxLayout* playerLayout = new QHBoxLayout;
+    QWidget* playerButtonWidget = new QWidget;
+
 
 
     void showCardsOnTableau();
