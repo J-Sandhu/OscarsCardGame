@@ -302,26 +302,36 @@ void Model::addFromTopThree(int unused, int unused1, int unused2){
 }
 
 
-// //for card 34
-// void Model::merylToFront(int unused, int unused1, int unused2)
-// {
-//     int merlyIndexInTableau;
-//     for (int i = 0; i< gameState.tableau.size(); i++)
-//     {
-//         //get merly card - 36
-//         merlyIndexInTableau = gameState.tableau.
+//for card 34
+void Model::merylToFront(int unused, int unused1, int unused2)
+{
+    //disable cards
+    for (int i = 0; i < gameState.tableau.size(); i++) {
+        gameState.tableauCardIsEnabled.push_back(false);
+    }
 
+    int merlyIndexInTableau;
 
-//     }
-// }
+    for (int i = 0; i< gameState.tableau.size(); i++)
+    {
+        //get merly card - id 36
+        peopleTuple person = peopleMap[gameState.tableau.at(i)];
+        auto[value, color, specialFunc] = person;
+
+        if (gameState.tableau.at(i) == 36)
+        {
+            merlyIndexInTableau = i;
+            gameState.tableau.move(merlyIndexInTableau, 0);
+            break;
+        }
+    }
+    endOfTurn();
+}
 
 // for card 35
 void Model::moveClosestBlueToFront(int specifiedColor , int unused , int unused2)
 {
     //disable cards
-
-    std::cout<<"got into move closest blue" << std::endl;
-
     for (int i = 0; i < gameState.tableau.size(); i++) {
         gameState.tableauCardIsEnabled.push_back(false);
     }
@@ -356,11 +366,47 @@ void Model::moveClosestBlueToFront(int specifiedColor , int unused , int unused2
         }
     }
     endOfTurn();
-
-
-
-
 }
+
+//for card 37
+void Model::crewToFront(int unused, int unused1, int unused2)
+{
+    //disable cards
+    for (int i = 0; i < gameState.tableau.size(); i++) {
+        gameState.tableauCardIsEnabled.push_back(false);
+    }
+
+    int closestCrewIndexTableau;
+    for(int i=0; i<gameState.tableau.size(); i++)
+    {
+        //get crew card - id 12
+        peopleTuple person = peopleMap[gameState.tableau.at(i)];
+        auto[value, color, specialFunc] = person;
+
+        if (gameState.tableau.at(i) == 12)
+        {
+            closestCrewIndexTableau = i;
+            gameState.tableau.move(closestCrewIndexTableau, 0);
+            break;
+        }
+    }
+    endOfTurn();
+ }
+
+ //for card 46 - swap hands, 1
+ void Model::swapHands1(int victimPlayer, int currentPlayer, int unused2)
+ {
+     //get seleceted player's action pile
+     QVector<int> victimPile = gameState.players.at(victimPlayer).actionPile;
+
+     //get this player's action pile
+     QVector<int> playerPile = gameState.players.at(currentPlayer).actionPile;
+
+     //swap
+     victimPile.swap(&playerPile);
+ }
+
+
 
 //for card 42 - deal new action card for all players
 void Model::dealNewActionCard(int unused2, int unused, int unused1)
@@ -491,7 +537,7 @@ void Model::generateRandomTableau()
         //gameState.personCardStack.removeAt(randomPersonIndex);
 
     }
-    gameState.tableau.push_back(gameState.personCardStack.at(2));
+    gameState.tableau.push_back(gameState.personCardStack.at(12));
 
     QVector<bool> newVector;
     for(int i=0; i<gameState.tableau.size(); i++)
@@ -527,7 +573,7 @@ void Model::generateRandomHands()
             int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size()-1);
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
 
-            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(35)); //hard coded to test AC#
+            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(37)); //hard coded to test AC#
         }
     }
 }
@@ -539,180 +585,185 @@ void Model::populatePeopleMap()
     //(value, color, special func)
 
 
-    //1 - the rock
+    //0 - the rock
     peopleTuple tuple(2,0, nullptr);
     //int= card id, tuple contains correspinding card's info
-    peopleMap.insert(std::pair<int,peopleTuple>(1,tuple));
+    peopleMap.insert(std::pair<int,peopleTuple>(0,tuple));
 
-    //2 - charlie chaplin
-    peopleTuple tuple2(2,0, nullptr);
+    //1- charlie chaplin
+    peopleTuple tuple1(1,0, nullptr);
     //int= card id, tuple contains correspinding card's info
+    peopleMap.insert(std::pair<int,peopleTuple>(1,tuple1));
+
+    //2- Background Actor
+    peopleTuple tuple2(1,0, nullptr);
     peopleMap.insert(std::pair<int,peopleTuple>(2,tuple2));
 
-    //3- Background Actor
-    peopleTuple tuple3(1,0, nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple3));
+    //3-bob hope
+    peopleTuple tuple3(3,0,nullptr);
+    peopleMap.insert(std::pair<int,peopleTuple>(3,tuple3));
+
 
     //4-Washed up action star
     peopleTuple tuple4(3,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple4));
+    peopleMap.insert(std::pair<int,peopleTuple>(4,tuple4));
 
 
-    //5-Peter O'toole
+    //5-Peter O'tool
     peopleTuple tuple5(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple5));
+    peopleMap.insert(std::pair<int,peopleTuple>(5,tuple5));
 
-    //6-Kevin Hart
+    //7-Kevin Hart
     peopleTuple tuple6(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple6));
+    peopleMap.insert(std::pair<int,peopleTuple>(6,tuple6));
 
-    //7- KILLEM murphey
+    //8- KILLEM murphey
     peopleTuple tuple7(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple7));
+    peopleMap.insert(std::pair<int,peopleTuple>(7,tuple7));
 
-    //8-Marlon Brando
+    //9-Marlon Brando
     peopleTuple tuple8(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple8));
+    peopleMap.insert(std::pair<int,peopleTuple>(8,tuple8));
 
-    //9-Joaquin Pheonix
+    //10-Joaquin Pheonix
     peopleTuple tuple9(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple9));
+    peopleMap.insert(std::pair<int,peopleTuple>(9,tuple9));
 
-    //10-brad
+    //11-brad
     peopleTuple tuple10(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple10));
+    peopleMap.insert(std::pair<int,peopleTuple>(10,tuple10));
 
 
     //GREEN LINE
 
 
 
-    //11-Boom mike
+    //12-Boom mike
     peopleTuple tuple11(1,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple11));
+    peopleMap.insert(std::pair<int,peopleTuple>(11,tuple11));
 
-    //12- Film Crew
+    //13- Film Crew
     peopleTuple tuple12(1,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple12));
+    peopleMap.insert(std::pair<int,peopleTuple>(12,tuple12));
 
-    //13- Stunt Double
+    //14- Stunt Double
     peopleTuple tuple13(1,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple13));
+    peopleMap.insert(std::pair<int,peopleTuple>(13,tuple13));
 
-    //14- Some Thheater kid
+    //15- Some Thheater kid
     peopleTuple tuple14(1,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple14));
+    peopleMap.insert(std::pair<int,peopleTuple>(14,tuple14));
 
-    //15- Interviwer
+    //16- Interviwer
     peopleTuple tuple15(1,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple15));
+    peopleMap.insert(std::pair<int,peopleTuple>(15,tuple15));
 
-    //16- eyelash
+    //17- eyelash
     peopleTuple tuple16(2,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple16));
+    peopleMap.insert(std::pair<int,peopleTuple>(16,tuple16));
 
-    //17- WOLFGANG
+    //18- WOLFGANG
     peopleTuple tuple17(3,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple17));
+    peopleMap.insert(std::pair<int,peopleTuple>(17,tuple17));
 
-    //18- Phin
+    //19- Phin
     peopleTuple tuple18(2,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple18));
+    peopleMap.insert(std::pair<int,peopleTuple>(18,tuple18));
 
     //PURPLe
 
-    //19- ROMAN
+    //20- ROMAN
     peopleTuple tuple19(-5,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple19));
+    peopleMap.insert(std::pair<int,peopleTuple>(19,tuple19));
 
 
-    //20- John Ford
+    //21- John Ford
     peopleTuple tuple20(4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple20));
+    peopleMap.insert(std::pair<int,peopleTuple>(20,tuple20));
 
-    //21- waititi
+    //22- waititi
     peopleTuple tuple21(2,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple21));
+    peopleMap.insert(std::pair<int,peopleTuple>(21,tuple21));
 
-    //22- walt
+    //23- walt
     peopleTuple tuple22(4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple22));
+    peopleMap.insert(std::pair<int,peopleTuple>(22,tuple22));
 
-    //23- aby
+    //24- aby
     peopleTuple tuple23(-4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple23));
+    peopleMap.insert(std::pair<int,peopleTuple>(23,tuple23));
 
-    //24- james ivory
+    //25- james ivory
     peopleTuple tuple24(4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple24));
+    peopleMap.insert(std::pair<int,peopleTuple>(24,tuple24));
 
-    //25- will wieler
+    //26- will wieler
     peopleTuple tuple25(4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple25));
+    peopleMap.insert(std::pair<int,peopleTuple>(25,tuple25));
 
-    //26- Nolan
+    //27- Nolan
     peopleTuple tuple26(-5,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple26));
+    peopleMap.insert(std::pair<int,peopleTuple>(26,tuple26));
 
-    //27- greta Gerwig
+    //28- greta Gerwig
     peopleTuple tuple27(4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple27));
+    peopleMap.insert(std::pair<int,peopleTuple>(27,tuple27));
 
     //reds
 
-    //28-emma watson
+    //29-emma watson
     peopleTuple tuple28(2, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple28));
+    peopleMap.insert(std::pair<int,peopleTuple>(28,tuple28));
 
 
-    //29-background actress
+    //30-background actress
     peopleTuple tuple29(1, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple29));
+    peopleMap.insert(std::pair<int,peopleTuple>(29,tuple29));
 
-    //30-Greer Garson
+    //31-Greer Garson
     peopleTuple tuple30(1, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple30));
+    peopleMap.insert(std::pair<int,peopleTuple>(30,tuple30));
 
-    //31-Micheal yeoh
+    //32-Micheal yeoh
     peopleTuple tuple31(2, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple31));
+    peopleMap.insert(std::pair<int,peopleTuple>(31,tuple31));
 
-    //32-Tatum o'neal
+    //33-Tatum o'neal
     peopleTuple tuple32(2, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple32));
+    peopleMap.insert(std::pair<int,peopleTuple>(32,tuple32));
 
-    //33- the agles watrees
+    //34- the agles watrees
     peopleTuple tuple33(1, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple33));
+    peopleMap.insert(std::pair<int,peopleTuple>(33,tuple33));
 
-    //34-kat hep
+    //35-kat hep
     peopleTuple tuple34(3, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple34));
+    peopleMap.insert(std::pair<int,peopleTuple>(34,tuple34));
 
-    //35-jen law
+    //36-jen law
     peopleTuple tuple35(3, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple35));
+    peopleMap.insert(std::pair<int,peopleTuple>(35,tuple35));
 
-    //36-Meryl
+    //37-Meryl
     peopleTuple tuple36(5, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple36));
+    peopleMap.insert(std::pair<int,peopleTuple>(36,tuple36));
 
 
-    //37-Margo Robbie
+    //38-Margo Robbie
     peopleTuple tuple37(3, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple37));
+    peopleMap.insert(std::pair<int,peopleTuple>(37,tuple37));
 
-    //38-patricia art
+    //39-patricia art
     peopleTuple tuple38(2, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple38));
+    peopleMap.insert(std::pair<int,peopleTuple>(38,tuple38));
 
-    //39- emma stone
+    //40- emma stone
     peopleTuple tuple39(4, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple39));
+    peopleMap.insert(std::pair<int,peopleTuple>(39,tuple39));
 
-    //40- gaga
+    //41- gaga
     peopleTuple tuple40(2, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple40));
+    peopleMap.insert(std::pair<int,peopleTuple>(40,tuple40));
 
 
 
@@ -876,10 +927,10 @@ void Model::populateActionMap()
     cardTuple tuple30(&Model::scoreManipulatorPlayed, parameters30, nullptr);
     actionMap.insert(std::pair<int,cardTuple>(30,tuple30));
 
-    //add 34: Marie to front (idk who's our "Marie")
-    // QVector<int> parameters34{-1,2,0};
-    // cardTuple tuple34(&Model::movementCardPlayed, parameters34, &Model::movementCardComplete);
-    // actionMap.insert(std::pair<int,cardTuple>(36,tuple34));
+    //add 34: Marie to front
+    QVector<int> parameters34{-1,0,0};
+    cardTuple tuple34(&Model::merylToFront, parameters34, nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(34,tuple34));
 
     //add card 35: closest blue to front
     QVector<int> parameters35{0,0,0};
@@ -891,6 +942,11 @@ void Model::populateActionMap()
     cardTuple tuple36(&Model::movementCardPlayed, parameters36, &Model::movementCardComplete);
     actionMap.insert(std::pair<int,cardTuple>(36,tuple36));
 
+    //add card 37: closest crew to front
+    QVector<int> parameters37{-1,0,0};
+    cardTuple tuple37(&Model::crewToFront, parameters37, nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(37,tuple37));
+
     //add card 42: deal new action cards
     QVector<int> parameters42{-1,0,0};
     cardTuple tuple42(&Model::dealNewActionCard, parameters42, nullptr);
@@ -901,6 +957,10 @@ void Model::populateActionMap()
     // cardTuple tuple43(&Model::discardOneAction, parameters43, nullptr);
     // actionMap.insert(std::pair<int,cardTuple>(43,tuple43));
 
+    // //add card 46: deal new action cards
+    // QVector<int> parameters46{-1,0,0};
+    // cardTuple tuple42(&Model::dealNewActionCard, parameters42, nullptr);
+    // actionMap.insert(std::pair<int,cardTuple>(42,tuple42));
 }
 
 

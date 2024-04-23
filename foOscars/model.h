@@ -58,7 +58,8 @@ public:
     void escapeCardPlayed2ndPart(int);
     void addToTableau(int numCardsToShuffle, int, int);
     void addFromTopThree(int, int, int);
-
+    void merylToFront(int, int, int);
+    void crewToFront(int, int, int);
     void moveClosestBlueToFront(int, int, int);
     void dealNewActionCard(int currentPlayerIndex, int unused, int unused1);
     void discardOneAction(int, int, int);
