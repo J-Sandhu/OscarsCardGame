@@ -142,16 +142,6 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <widget class="QGraphicsView" name="graphicsView">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>-120</y>
-         <width>391</width>
-         <height>421</height>
-        </rect>
-       </property>
-      </widget>
      </widget>
     </widget>
     <widget class="QScrollArea" name="handScrollArea">
@@ -399,6 +389,16 @@
     </property>
     <property name="text">
      <string>End Game</string>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>50</y>
+      <width>551</width>
+      <height>421</height>
+     </rect>
     </property>
    </widget>
   </widget>
