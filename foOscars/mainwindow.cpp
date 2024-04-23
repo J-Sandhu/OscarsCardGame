@@ -107,11 +107,11 @@ void MainWindow::connectClicked()
 
     if(clientSocket->waitForConnected())
     {
-        cout<<"Connected to Server"<<endl;
+        cout<<"Connected to Server, sending name: "<<ui->playerNameLine->text().toStdString()<<endl;
         ui->ipLine->setReadOnly(true);
         ui->portLine->setReadOnly(true);
         ui->playerNameLine->setReadOnly(true);
-        clientSendMessage("~pname:"+ui->playerNameLine->text().toStdString());            //we can figure out the protocol later
+        clientSendMessage(protocolName + ui->playerNameLine->text().toStdString());            //we can figure out the protocol later
     }
     else
         cout<<tr("The following error occurred: %1.").arg(clientSocket->errorString()).toStdString()<<endl;
@@ -163,6 +163,12 @@ void MainWindow::readSocket()
         clientIndexInPlayerArray = buffer.toInt();
         std::cout << "This client's index in the gameState player array is: " << clientIndexInPlayerArray << std::endl;
     }
+
+    if(clientSocket->bytesAvailable() != 0)
+    {
+        readSocket();
+    }
+
 }
 
 void MainWindow::displayMessage(const QString& str)
@@ -183,8 +189,11 @@ void MainWindow::sendChatMessage()
 
 void MainWindow::clientSendMessage(std::string message)
 {
+    clientSocket->flush();
+
     QByteArray buffer;
     buffer.append(message);
+
 
     QDataStream socketStream(clientSocket);
     socketStream.setVersion(QDataStream::Qt_5_15);
@@ -519,10 +528,12 @@ void MainWindow::displayWinnerAndConfettiSlot()
 //draws the confetti
 void MainWindow::showConfetti()
 {
+    std::cout <<"getting into show confetti" << std::endl;
     confetti.showConfettiCount++;
     ui->graphicsView->scene()->clear();
     if (confetti.showConfettiCount > 160)//8 seconds
     {
+        std::cout <<"setting winner name label " << std::endl;
         timer.stop();
         ui->winnerNameLabel->setText("");
         return;
@@ -533,12 +544,13 @@ void MainWindow::showConfetti()
     confetti.doConfettiSimulation();
     for(int i = 0; i<confetti.confettiVectors.size(); i++)
     {
+        //std::cout<<"getting into confetti loop" << std::endl;
         QRectF rect(confetti.confettiVectors.at(i)->GetPosition().x, confetti.confettiVectors.at(i)->GetPosition().y, 10, 10);
         QPen pen(Qt::black); // Black outline
         QBrush brush (colors[i % 4]);
         ui->graphicsView->scene()->addRect(rect, pen, brush);
     }
-
+    std::cout << "updating confetti scene" << std::endl;
     ui->graphicsView->scene()->update();
 }
 

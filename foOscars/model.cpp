@@ -31,20 +31,13 @@ void Model::HandlePlayerName(long long id, QString message)
         if (gameState.players.at(i).id==id)
         {
             gameState.players.at(i).name=message;
-            cout<<"player found in naming! :"<<gameState.players.at(i).name.toStdString()<<endl;
+            //cout<<"player found in naming! :"<<gameState.players.at(i).name.toStdString()<<endl;
+            emit sendChatToPlayers(message.append(" has joined the game"));
+
+            emit sendStateToPlayers(gameState.serialize());
+
         }
     }
-    // foreach (Player p, gameState.players)
-    // {
-    //     if (p.id==id)
-    //     {
-    //         p.name=message;
-    //         cout<<"player found in naming! :"<<p.name.toStdString()<<endl;
-
-    //     }
-    // }
-
-
 }
 void Model::HandleChatMessage(long long id, QString message)
 {

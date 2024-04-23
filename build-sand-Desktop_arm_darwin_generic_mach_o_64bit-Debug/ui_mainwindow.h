@@ -42,7 +42,6 @@ public:
     QFrame *gameplayFrame;
     QScrollArea *tableauScrollArea;
     QWidget *scrollAreaContents;
-    QGraphicsView *graphicsView;
     QScrollArea *handScrollArea;
     QWidget *scrollAreaWidgetContents;
     QLabel *nomineeCountLabel;
@@ -60,6 +59,7 @@ public:
     QLineEdit *portLine;
     QLabel *winnerNameLabel;
     QPushButton *endGameButton;
+    QGraphicsView *graphicsView;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -128,9 +128,6 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(scrollAreaContents->sizePolicy().hasHeightForWidth());
         scrollAreaContents->setSizePolicy(sizePolicy);
-        graphicsView = new QGraphicsView(scrollAreaContents);
-        graphicsView->setObjectName("graphicsView");
-        graphicsView->setGeometry(QRect(150, -120, 391, 421));
         tableauScrollArea->setWidget(scrollAreaContents);
         handScrollArea = new QScrollArea(gameplayFrame);
         handScrollArea->setObjectName("handScrollArea");
@@ -201,6 +198,9 @@ public:
         endGameButton = new QPushButton(centralwidget);
         endGameButton->setObjectName("endGameButton");
         endGameButton->setGeometry(QRect(660, 10, 101, 61));
+        graphicsView = new QGraphicsView(centralwidget);
+        graphicsView->setObjectName("graphicsView");
+        graphicsView->setGeometry(QRect(180, 50, 551, 421));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");

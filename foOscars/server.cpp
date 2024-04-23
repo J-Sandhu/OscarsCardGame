@@ -72,6 +72,7 @@ void Server::newConnection()
         // alert the player of its position within player array
         int newPlayerIndex = players.size()-1;
         sendIndex(newPlayerIndex,socket);
+        sendState(model->gameState.serialize());
         // connect(socket, &QAbstractSocket::errorOccurred, this, &MainWindow::displayError);
 
         //emit displayMessage(QString("INFO :: Client with sockd:%1 has just entered the room").arg(socket->socketDescriptor()));
@@ -120,7 +121,9 @@ void Server::readSocket()
     }
     else if (message.rfind(protocolChat,0)==0)
     {
+
         QString m= QString::fromStdString(message.substr(protocolChat.length()));
+        std::cout <<"receiving chat message: "<< m.toStdString() << std::endl;
         model->HandleChatMessage(socket->socketDescriptor(), m);
     }
     else if (message.rfind(protocolAction,0)==0)
@@ -157,6 +160,7 @@ void Server::sendMessage(QTcpSocket* socket, string message)
     {
         if(socket->isOpen())
         {
+            socket->flush();
 
             QByteArray block;
             block.append(message);
@@ -184,6 +188,7 @@ void Server::sendChat(QString message)
     {
         sendMessage(s,message.toStdString());
     }
+
 }
 void Server::sendState(QByteArray buffer)
 {
