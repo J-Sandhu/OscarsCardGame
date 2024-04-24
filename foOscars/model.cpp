@@ -1477,6 +1477,7 @@ void Model::endOfTurn()
     int personCollectedId =gameState.tableau.at(0);
 
     gameState.tableau.removeAt(0);
+    gameState.playerButtonsEnabled = false;
 
     int color = std::get<1>(peopleMap.at(personCollectedId));
     int score = std::get<0>(peopleMap.at(personCollectedId));
@@ -1691,8 +1692,10 @@ void Model::makeDiscardAction(int victimPlayerIndex)
     {
         for(int i=0; i<std::get<1>(actionMap.at(currentAID))[0]; i++)
         {
+            std::cout <<"Getting into generating random action to be removed from victim player" << std::endl;
             int randomActionIndex = QRandomGenerator::global()->bounded(gameState.players.at(victimPlayerIndex).actionPile.size());
             gameState.players.at(victimPlayerIndex).actionPile.removeAt(randomActionIndex);
+            std::cout <<"surviving it!" << std::endl;
         }
     }
 
