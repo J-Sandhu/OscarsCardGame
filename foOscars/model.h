@@ -218,6 +218,11 @@ private:
     ///
     void populateActionMap();
 
+    ///
+    /// \brief shuffles the cards in the tableau without modifying people card stack
+    ///
+    void shuffleTableau();
+
 
 
 
