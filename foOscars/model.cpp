@@ -591,6 +591,7 @@ void Model::choosePlayer( int unuse, int unused, int unused2)
     std::cout<<"got into swap" << std::endl;
 
     gameState.playerButtonsEnabled=true;
+
     emit sendStateToPlayer(gameState.serialize(),gameState.currentPlayerIndex);
 }
 
@@ -772,7 +773,6 @@ void Model::generateRandomTableau(QVector<int> availablePeople, int size)
     // gameState.tableau.push_back(gameState.personCardStack.at(2));
 
     // Only populate tableau with people cards that exist according to available people
-
     for(int i=1; i<peopleMap.size(); i++)
     {
         // generate a random index
@@ -1357,7 +1357,7 @@ void Model::populateActionMap()
     cardTuple tuple42(&Model::dealNewActionCard, parameters42, nullptr);
     actionMap.insert(std::pair<int,cardTuple>(42,tuple42));
 
-    // //add card 43: discard one action
+    // //add card 43: discard two action
     QVector<int> parameters43{2,0,0};
     cardTuple tuple43(&Model::choosePlayer, parameters43, &Model::makeDiscardAction);
     actionMap.insert(std::pair<int,cardTuple>(43, tuple43));
@@ -1556,25 +1556,17 @@ void Model::addNewPlayer(long long id)
 
 void Model::neutralizeGrays(int unused,int unused1,int unused2)
 {
-    // remove negative blues
-    for(int i =0; i<gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.size(); i++)
-        if(std::get<0>(peopleMap.at(gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.at(i)))<0)
-            gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.remove(i);
 
-    // remove negative greens
-    for(int i =0; i<gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.size(); i++)
-        if(std::get<0>(peopleMap.at(gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.at(i)))<0)
-            gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.remove(i);
-
-    // remove negative purples
-    for(int i =0; i<gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.size(); i++)
-        if(std::get<0>(peopleMap.at(gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.at(i)))<0)
-            gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.remove(i);
-
-    // remove negative reds
-    for(int i =0; i<gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.size(); i++)
-        if(std::get<0>(peopleMap.at(gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.at(i)))<0)
-            gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.remove(i);
+    if (gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.contains(19))
+    {
+        int romanIndex= gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.indexOf(19);
+        gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.removeAt(romanIndex);
+    }
+    if (gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.contains(23))
+    {
+        int ALMIndex= gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.indexOf(23);
+        gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.removeAt(ALMIndex);
+    }
 
     endOfTurn();
 }

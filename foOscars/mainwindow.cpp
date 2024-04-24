@@ -364,6 +364,9 @@ void MainWindow::showCardsInHand()
 
         if(gameState.currentPlayerIndex != clientIndexInPlayerArray)
             button->setEnabled(false);
+
+        if(gameState.playerButtonsEnabled)
+            button->setEnabled(false);
         //ui->tableauLayout->addWidget(label);
         handLayout->addWidget(button);
 
