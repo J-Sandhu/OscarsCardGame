@@ -585,6 +585,7 @@ void Model::choosePlayer( int unuse, int unused, int unused2)
     std::cout<<"got into swap" << std::endl;
 
     gameState.playerButtonsEnabled=true;
+
     emit sendStateToPlayer(gameState.serialize(),gameState.currentPlayerIndex);
 }
 
@@ -1349,7 +1350,7 @@ void Model::populateActionMap()
     cardTuple tuple42(&Model::dealNewActionCard, parameters42, nullptr);
     actionMap.insert(std::pair<int,cardTuple>(42,tuple42));
 
-    // //add card 43: discard one action
+    // //add card 43: discard two action
     QVector<int> parameters43{2,0,0};
     cardTuple tuple43(&Model::choosePlayer, parameters43, &Model::makeDiscardAction);
     actionMap.insert(std::pair<int,cardTuple>(43, tuple43));
