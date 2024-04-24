@@ -716,7 +716,7 @@ void Model::generateRandomTableau(QVector<int> availablePeople, int size)
 
     // Only populate tableau with people cards that exist according to available people
 
-    for(int i=1; i<20; i++)
+    for(int i=1; i<peopleMap.size(); i++)
     {
         // generate a random index
 
@@ -764,7 +764,7 @@ void Model::generateRandomHands()
     {
         // put 5 unique action cards into their hand
         gameState.players.at(i).actionPile.push_back(14);
-        for(int j =0; j<20; j++)
+        for(int j =0; j<actionMap.size(); j++)
         {
             //int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size());
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
