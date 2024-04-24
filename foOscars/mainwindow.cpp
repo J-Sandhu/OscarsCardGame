@@ -356,6 +356,9 @@ void MainWindow::showCardsInHand()
 
         //label->setText("<b>Button</b> Test");
         connect(button, &QPushButton::clicked, this, &MainWindow::actionCardClicked);
+
+        if(gameState.currentPlayerIndex != clientIndexInPlayerArray)
+            button->setEnabled(false);
         //ui->tableauLayout->addWidget(label);
         handLayout->addWidget(button);
 
