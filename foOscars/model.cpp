@@ -590,18 +590,11 @@ void Model::choosePlayer( int unuse, int unused, int unused2)
 
 void Model::swapHandsComplete(int victimPlayer)
 {
-    //get seleceted player's action pile
-    QVector<int> victimPile = gameState.players.at(victimPlayer).actionPile;
-    std::cout<<"victimPile: " << victimPlayer<< std::endl;
 
-    //get this player's action pile
-    QVector<int> playerPile = gameState.players.at(gameState.currentPlayerIndex).actionPile;
-    std::cout<<"playerPile: " << gameState.currentPlayerIndex<< std::endl;
+    //swap victim and current player's action piles
 
-    //swap
-    victimPile.swap(playerPile);
-    std::cout<<"victimPile: " << victimPlayer<<std::endl;
-    std::cout<<"playerPile: " << gameState.currentPlayerIndex<< std::endl;
+    gameState.players.at(victimPlayer).actionPile.swap(
+        gameState.players.at(gameState.currentPlayerIndex).actionPile);
 
     endOfTurn();
 }
