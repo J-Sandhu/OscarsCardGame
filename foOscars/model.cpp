@@ -233,7 +233,11 @@ void Model::movementCardComplete(int indexInTab)
 //for card 14
 void Model::frontToBack(int unused, int unused1, int unused2)
 {
-    gameState.tableau.move(0, gameState.tableau.size());
+    //gameState.tableau.move(0, gameState.tableau.size());
+    int firstCard=gameState.tableau.first();
+    gameState.tableau.removeFirst();
+    gameState.tableau.push_back(firstCard);
+    endOfTurn();
 }
 
 //reuse for 16, 17, 20
@@ -759,6 +763,7 @@ void Model::generateRandomHands()
     for(int i =0 ; i<gameState.players.size(); i++)
     {
         // put 5 unique action cards into their hand
+        gameState.players.at(i).actionPile.push_back(14);
         for(int j =0; j<20; j++)
         {
             //int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size());
