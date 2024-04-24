@@ -65,13 +65,22 @@ void Model::HandleTableauSelection(long long id, QString message)
 void Model::HandleActionSelection(long long id, QString message)
 {
 
-    if(id !=gameState.players[gameState.currentPlayerIndex].id)
+    if(id !=gameState.players.at(gameState.currentPlayerIndex).id)
     {
         cout<<"ignored selection from non-current player"<<endl;
         return;
     }
-    int actionIndex = message.toInt(); //index corresponds to tableau
-    currentAID= gameState.players.at(gameState.currentPlayerIndex).actionPile[actionIndex];
+
+    int actionIndex = message.toInt(); //index corresponds to the current player's hand.
+    currentAID = gameState.players.at(gameState.currentPlayerIndex).actionPile.at(actionIndex);
+
+    //remove action card from player's hand.
+    gameState.players.at(gameState.currentPlayerIndex).actionPile.removeAt(actionIndex);
+    // probably alert the player of this:
+
+    //TODO: see if we will need this. We should be sending where cards are enabled, but for some it's not working.
+    // it may be worth just sending it twice
+    emit sendStatetoPlayer(gameState.serialize(), gameState.currentPlayerIndex);
 
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
@@ -152,28 +161,29 @@ void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
 
     //TODO: make it so that we dont go out of bounds if someone plays +4 in the first slot
     if (specifiedColor != -1){
-        for (int i = 0; i<gameState.tableau.size(); i++){
-            std::cout <<"before looking at people tuple" <<std::endl;
-            std::cout <<"size of peoplemap: " << peopleMap.size() << std::endl;
+
+        // create the vector of non-enabled tableau
+        QVector<bool> newVector;
+        for(int j =0; j<gameState.tableau.size(); j++)
+            newVector.push_back(false);
+
+        for (int i = 0; i<gameState.tableau.size(); i++)
+        {
+            // std::cout <<"before looking at people tuple" <<std::endl;
+            // std::cout <<"size of peoplemap: " << peopleMap.size() << std::endl;
+
             peopleTuple person = peopleMap.at(gameState.tableau.at(i));
 
-            std::cout <<"getting past looking at people tuple" << std::endl;
+            //std::cout <<"getting past looking at people tuple" << std::endl;
             auto[value, color, specialFunc] = person;
             if(color == specifiedColor)
             {
-                //enable card at index in tableau
-
-                // intialize tableacardenabled array to false
-                QVector<bool> newVector;
-                for(int j =0; j<gameState.tableau.size(); j++)
-                    newVector.push_back(false);
-
-                gameState.tableauCardIsEnabled = newVector;
-                std::cout <<"Right before enabling a card in gamestate through model" << std::endl;
-                gameState.tableauCardIsEnabled.replace(i,true);
-                std::cout <<"surviving it!" << std::endl;
+                //std::cout <<"Right before enabling a card in gamestate through model" << std::endl;
+                newVector.replace(i,true);
+                //std::cout <<"surviving it!" << std::endl;
             }
         }
+        gameState.tableauCardIsEnabled = newVector;
     }
     else
     {
