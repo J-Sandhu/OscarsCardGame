@@ -26,6 +26,8 @@ public:
 
     QVector<bool> scoreManipulators{false,false,false,false};
 
+    int miscPoint=0;
+
 
     int score;
     long long id;
