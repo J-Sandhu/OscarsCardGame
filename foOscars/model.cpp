@@ -675,7 +675,9 @@ void Model::scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int m
     if(specifiedColor ==anyColor)
     {
         std::cout<<"color score buff: "<<colorScoreBuff<<std::endl;
-        gameState.players.at(gameState.currentPlayerIndex).score+=colorScoreBuff;
+        gameState.players.at(gameState.currentPlayerIndex).miscPoint+=colorScoreBuff;
+
+        std::cout<<"misc points here: "<< gameState.players.at(gameState.currentPlayerIndex).miscPoint<<std::endl;
         endOfTurn();
         return;
     }
@@ -1472,6 +1474,9 @@ void Model::recalculateScore()
 
         gameState.players.at(playerIndex).score+= num_Of_Crew * num_Of_Crew;
         std::cout <<"adding numcrew squared to score" << std::endl;
+
+        std::cout<<"misc points in recalulate score: "<< gameState.players.at(gameState.currentPlayerIndex).miscPoint<<std::endl;
+        updatedScore+= gameState.players.at(playerIndex).miscPoint;
 
         gameState.players.at(playerIndex).score= updatedScore;
         std::cout <<"replacing player score at index: " << playerIndex << std::endl;
