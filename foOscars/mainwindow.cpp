@@ -335,7 +335,10 @@ void MainWindow::showCardsInHand()
     // }
 
     cout<<"clientIndexInPlayerArray: "<<clientIndexInPlayerArray<<endl;
-    //TODO: look at how we are planning to identify which player we are.
+
+    // QString count("Your Hand: " );//+ gameState.players.at(clientIndexInPlayerArray).actionPile.size());
+    // ui->label_2->setText(count);
+        //TODO: look at how we are planning to identify which player we are.
     // for now I'm only showing player 0's hand which will ALWAYS be the server
     for(int i = 0; i < gameState.players.at(clientIndexInPlayerArray).actionPile.size(); i++){
         int actionCardID = gameState.players.at(clientIndexInPlayerArray).actionPile.at(i);

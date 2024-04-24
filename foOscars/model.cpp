@@ -217,7 +217,7 @@ void Model::movementCardComplete(int indexInTab)
         std::cout << "grabbed 2nd param in movement card complete" << std::endl;
         gameState.tableau.move(indexInTab,0);
     }
-    else if(indexInTab+params.at(1) > gameState.tableau.size()-1)
+    else if(indexInTab-params.at(1) > gameState.tableau.size()-1)
         gameState.tableau.move(indexInTab, gameState.tableau.size()-1);
     else
         gameState.tableau.move(indexInTab, indexInTab - params.at(1));
@@ -768,7 +768,7 @@ void Model::generateRandomTableau(QVector<int> availablePeople, int size)
 
     // Only populate tableau with people cards that exist according to available people
 
-    for(int i=1; i<20; i++)
+    for(int i=1; i<peopleMap.size(); i++)
     {
         // generate a random index
 
@@ -815,7 +815,7 @@ void Model::generateRandomHands()
     for(int i =0 ; i<gameState.players.size(); i++)
     {
         // put 5 unique action cards into their hand
-        for(int j =0; j<20; j++)
+        for(int j =0; j<actionMap.size(); j++)
         {
             //int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size());
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
@@ -1141,7 +1141,7 @@ void Model::populateActionMap()
     // add card 1: Re-cast
     QVector<int> parameters1{-1,0,0};
     cardTuple tuple1(&Model::movementCardPlayed,parameters1,&Model::replacePerson);
-    actionMap.insert(std::pair<int,cardTuple>(0,tuple1));
+    actionMap.insert(std::pair<int,cardTuple>(1,tuple1));
 
     //add card 2: back 1
     QVector<int> parameters2{-1,-1,0};
@@ -1164,7 +1164,7 @@ void Model::populateActionMap()
     actionMap.insert(std::pair<int,cardTuple>(5,tuple5));
 
     // add card 6: purple 2
-    QVector<int> parameters6{2,4,0};
+    QVector<int> parameters6{2,2,0};
     cardTuple tuple6(&Model::movementCardPlayed, parameters6, &Model::movementCardComplete);
     actionMap.insert(std::pair<int,cardTuple>(6,tuple6));
 
@@ -1192,7 +1192,7 @@ void Model::populateActionMap()
     // add card 12: Jell Cell Tengo
     QVector<int> parameters12{-1,0,0};
     cardTuple tuple12(&Model::movementCardPlayed,parameters12,&Model::discardPerson);
-    actionMap.insert(std::pair<int,cardTuple>(0,tuple12));
+    actionMap.insert(std::pair<int,cardTuple>(12,tuple12));
 
 
 
@@ -1206,8 +1206,8 @@ void Model::populateActionMap()
     cardTuple tuple14(&Model::frontToBack, parameters14, nullptr);
     actionMap.insert(std::pair<int,cardTuple>(14,tuple14));
 
-    // add card 15: green up 2
-    QVector<int> parameters15{1,2,0};
+    // add card 15: green up 3
+    QVector<int> parameters15{1,3,0};
     cardTuple tuple15(&Model::movementCardPlayed, parameters15, &Model::movementCardComplete);
     actionMap.insert(std::pair<int,cardTuple>(15,tuple15));
 
@@ -1239,7 +1239,7 @@ void Model::populateActionMap()
     //add card 21: mislabled envelops
     QVector<int> parameters21{0,-1,0};
     cardTuple tuple21(&Model::mixAfterTurn, parameters21, nullptr);
-    actionMap.insert(std::pair<int, cardTuple>(20, tuple21));
+    actionMap.insert(std::pair<int, cardTuple>(21, tuple21));
 
     //add card 22: add 3 new people to tableau
     QVector<int> parameters22{0,-1,0};
@@ -1303,7 +1303,7 @@ void Model::populateActionMap()
     actionMap.insert(std::pair<int,cardTuple>(32, tuple32));
 
     // add card 33: the same as card 14. sorry chase :(
-    //actionMap.insert(std::pair<int,cardTuple>(33,tuple14));
+    actionMap.insert(std::pair<int,cardTuple>(33,tuple14));
 
     //add 34: Marie to front
     QVector<int> parameters34{-1,0,0};
@@ -1355,7 +1355,7 @@ void Model::populateActionMap()
     // //add card 43: discard one action
     QVector<int> parameters43{2,0,0};
     cardTuple tuple43(&Model::choosePlayer, parameters43, &Model::makeDiscardAction);
-    actionMap.insert(std::pair<int,cardTuple>(40, tuple43));
+    actionMap.insert(std::pair<int,cardTuple>(43, tuple43));
 
     //add card 44: all players discard a random action
     QVector<int> parameters44{-1,0,0};
