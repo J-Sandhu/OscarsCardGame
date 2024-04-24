@@ -21,7 +21,18 @@ public:
     /// \brief Method used for testing model functionality.
     ///
     void modelTestMethod();
+    ///
+    /// \brief HandleChatMessage: receives a chat message, and sends it to all connected players
+    /// \param id: id of the sender
+    /// \param message: message sent by sender
+    ///
     void HandleChatMessage(long long id, QString message);
+    ///
+    /// \brief HandleTableauSelection: receives the player's selected tableau card's index as a qstring
+    /// and calls the last used action card's callback with the sent index as parameter
+    /// \param id: socketDescriptor of the sender
+    /// \param message: QString representing the player's chosen tableau card's index
+    ///
     void HandleTableauSelection(long long id, QString message);
     void HandleActionSelection(long long id, QString message);
     void HandlePlayerName(long long id, QString message);
