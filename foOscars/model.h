@@ -45,6 +45,7 @@ public:
     typedef std::tuple<int, int, void (Model::*)(int)> peopleTuple; //cardTuple = correpsonding info (value, color, special func)
     std::map <int,peopleTuple> peopleMap; // int = person id
     std::map <int,cardTuple> actionMap;
+    std::map<int, QString> peopleNameMap;
 
     int calulateColorSum(int color, bool manipultorEnabled, int playerIndex);
     void recalculateScore();
