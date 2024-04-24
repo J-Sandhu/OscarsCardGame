@@ -71,6 +71,7 @@ public:
     void movementThenDraw(int);
     void replacePerson(int);
     void discardPerson(int);
+    void disqualification(int);
 
 
     //blue,green,purple,red

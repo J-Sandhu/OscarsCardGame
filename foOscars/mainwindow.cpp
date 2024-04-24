@@ -154,7 +154,7 @@ void MainWindow::readSocket()
     {
         buffer.remove(0,protocolGameState.length());
         gameState.deserialize(buffer);
-        // std::cout << buffer.toStdString() << std::endl;
+        std::cout << buffer.toStdString() << std::endl;
         updateView();
     }
     else if(message.toStdString().rfind(protocolPlayerIndex,0)==0)
