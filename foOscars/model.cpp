@@ -112,7 +112,7 @@ void Model::HandleStartGame(long long id)
         //std::cout << gameState.serialize().toStdString() << std::endl;
     }
 
-   // std::cout<<"gamestate.playerID != "<< id << " instead = " << gameState.players.at(0).id << std::endl;
+    // std::cout<<"gamestate.playerID != "<< id << " instead = " << gameState.players.at(0).id << std::endl;
 }
 
 void Model::HandleSelectedPlayer(long long id, QString message)
@@ -450,72 +450,100 @@ void Model::crewToFront(int unused, int unused1, int unused2)
         }
     }
     endOfTurn();
- }
+}
 
- //for card 39 - take discarded action (random)
- void Model::takeDiscardedAction(int unused, int unused1, int unused2)
- {
-     std::cout<<"getting into take discarded action"<< std::endl;
-     int randomIndex = std::rand() % gameState.actionCardStack.size();
-     std::cout<<"current player action pile: " << gameState.players.at(gameState.currentPlayerIndex).actionPile.size() << std::endl;
-     gameState.players[gameState.currentPlayerIndex].actionPile.push_back(gameState.actionCardStack.at(randomIndex));
-     std::cout<<"current player action pile part 2: " << gameState.players[gameState.currentPlayerIndex].actionPile.size() << std::endl;
+//for card 39 - take discarded action (random)
+void Model::takeDiscardedAction(int unused, int unused1, int unused2)
+{
+    std::cout<<"getting into take discarded action"<< std::endl;
+    int randomIndex = std::rand() % gameState.actionCardStack.size();
+    std::cout<<"current player action pile: " << gameState.players.at(gameState.currentPlayerIndex).actionPile.size() << std::endl;
+    gameState.players[gameState.currentPlayerIndex].actionPile.push_back(gameState.actionCardStack.at(randomIndex));
+    std::cout<<"current player action pile part 2: " << gameState.players[gameState.currentPlayerIndex].actionPile.size() << std::endl;
 
-     emit sendStateToPlayer(gameState.serialize(),gameState.currentPlayerIndex);
- }
+    emit sendStateToPlayer(gameState.serialize(),gameState.currentPlayerIndex);
+}
 
- //for card 41 - draw 3 action, don't take a noble
- void Model::drawThreeActionNoNoble(int unused, int unused1, int unused3)
- {
-     drawActionCard(3);
-     emit sendStateToPlayers(gameState.serialize());
- }
+//for card 41 - draw 3 action, don't take a noble
+void Model::drawThreeActionNoNoble(int unused, int unused1, int unused3)
+{
+    drawActionCard(3);
+    if(gameState.tableau.empty())
+    {
+
+        if (gameState.round==4)
+            endGame();
+        else
+        {
+            gameState.round+=1;
+            generateRandomTableau(gameState.personCardStack,10);
+        }
+    }
+
+
+    //move to next players turn
+    if(gameState.currentPlayerIndex+=1>gameState.players.size()-1)
+        gameState.currentPlayerIndex=0;
+    else
+        gameState.currentPlayerIndex+=1;
+
+    // return the tableauCardEnabled vector for false
+    QVector<bool> enabledVec;
+    for(int i=0; i<gameState.tableau.size(); i++)
+        enabledVec.push_back(false);
+
+    gameState.tableauCardIsEnabled = enabledVec;
+
+    recalculateScore();
+
+    emit sendStateToPlayers(gameState.serialize());
+}
 
 
 //for card 43 - everyone remove an action
- void Model::allRemoveAnAction(int unused, int unused1, int unused2)
- {
-     for(int i = 0; i < gameState.players.size(); i++){
-         gameState.players.at(i).actionPile.removeAt(std::rand() % gameState.players.size());
-     }
-     emit sendStateToPlayers(gameState.serialize());
- }
+void Model::allRemoveAnAction(int unused, int unused1, int unused2)
+{
+    for(int i = 0; i < gameState.players.size(); i++){
+        gameState.players.at(i).actionPile.removeAt(std::rand() % gameState.players.size());
+    }
+    emit sendStateToPlayers(gameState.serialize());
+}
 
- //for card 46 - swap hands, 1
- void Model::choosePlayer( int unuse, int unused, int unused2)
- {
-     std::cout<<"got into swap" << std::endl;
+//for card 46 - swap hands, 1
+void Model::choosePlayer( int unuse, int unused, int unused2)
+{
+    std::cout<<"got into swap" << std::endl;
 
-     gameState.playerButtonsEnabled=true;
-     emit sendStateToPlayer(gameState.serialize(),gameState.currentPlayerIndex);
- }
+    gameState.playerButtonsEnabled=true;
+    emit sendStateToPlayer(gameState.serialize(),gameState.currentPlayerIndex);
+}
 
- void Model::swapHandsComplete(int victimPlayer)
- {
-     //get seleceted player's action pile
-     QVector<int> victimPile = gameState.players.at(victimPlayer).actionPile;
-     std::cout<<"victimPile: " << victimPlayer<< std::endl;
+void Model::swapHandsComplete(int victimPlayer)
+{
+    //get seleceted player's action pile
+    QVector<int> victimPile = gameState.players.at(victimPlayer).actionPile;
+    std::cout<<"victimPile: " << victimPlayer<< std::endl;
 
-     //get this player's action pile
-     QVector<int> playerPile = gameState.players.at(gameState.currentPlayerIndex).actionPile;
-     std::cout<<"playerPile: " << gameState.currentPlayerIndex<< std::endl;
+    //get this player's action pile
+    QVector<int> playerPile = gameState.players.at(gameState.currentPlayerIndex).actionPile;
+    std::cout<<"playerPile: " << gameState.currentPlayerIndex<< std::endl;
 
-     //swap
-     victimPile.swap(playerPile);
-     std::cout<<"victimPile: " << victimPlayer<<std::endl;
-     std::cout<<"playerPile: " << gameState.currentPlayerIndex<< std::endl;
+    //swap
+    victimPile.swap(playerPile);
+    std::cout<<"victimPile: " << victimPlayer<<std::endl;
+    std::cout<<"playerPile: " << gameState.currentPlayerIndex<< std::endl;
 
-     endOfTurn();
- }
+    endOfTurn();
+}
 
- // //for card 48 - end day
- // void Model::endDay(int unused ,int unused1, int unused2)
- // {
- //     std::cout<<"got into end day" << std::endl;
- //     endOfTurn();
- //     std::cout<<"end of turn doneeeeeeeeeee" << std::endl;
- //     endGame();
- // }
+// //for card 48 - end day
+// void Model::endDay(int unused ,int unused1, int unused2)
+// {
+//     std::cout<<"got into end day" << std::endl;
+//     endOfTurn();
+//     std::cout<<"end of turn doneeeeeeeeeee" << std::endl;
+//     endGame();
+// }
 
 
 
@@ -701,7 +729,7 @@ void Model::generateRandomHands()
 {
     //TODO: Either make the actionStack(the pile of action cards that hands are dealt from) into a vector like this
     // when it is generated.
-        // ISSUE: some action cards are meant to exist more than once
+    // ISSUE: some action cards are meant to exist more than once
 
     // basically, this is fine. However, we really need to deal with card exclusivity:
     // the idea that a particular instance of any card only exists in one location at one time.
@@ -1223,15 +1251,17 @@ void Model::populateActionMap()
     cardTuple tuple39(&Model::takeDiscardedAction, parameters39, nullptr);
     actionMap.insert(std::pair<int,cardTuple>(39,tuple39));
 
+
+
+    // add card 40: choose a players action card to discard
+    QVector<int> parameters40{1,0,0};
+    cardTuple tuple40(&Model::choosePlayer, parameters40, &Model::makeDiscardAction);
+    actionMap.insert(std::pair<int,cardTuple>(40, tuple40));
+
     //add card 41: draw 3 actions
     QVector<int> parameters41{-1,0,0};
     cardTuple tuple41(&Model::drawThreeActionNoNoble, parameters41, nullptr);
     actionMap.insert(std::pair<int,cardTuple>(41,tuple41));
-
-    // add card 40: choose a players action card to discard
-    QVector<int> parameters40{2,0,0};
-    cardTuple tuple40(&Model::choosePlayer, parameters40, &Model::makeDiscardAction);
-    actionMap.insert(std::pair<int,cardTuple>(40, tuple40));
 
     //add card 42: deal new action cards
     QVector<int> parameters42{-1,0,0};
@@ -1239,9 +1269,9 @@ void Model::populateActionMap()
     actionMap.insert(std::pair<int,cardTuple>(42,tuple42));
 
     // //add card 43: discard one action
-    // QVector<int> parameters43{-1,0,0};
-    // cardTuple tuple43(&Model::discardOneAction, parameters43, nullptr);
-    // actionMap.insert(std::pair<int,cardTuple>(43,tuple43));
+    QVector<int> parameters43{2,0,0};
+    cardTuple tuple43(&Model::choosePlayer, parameters43, &Model::makeDiscardAction);
+    actionMap.insert(std::pair<int,cardTuple>(40, tuple43));
 
     //add card 44: all players discard a random action
     QVector<int> parameters44{-1,0,0};
@@ -1283,24 +1313,18 @@ void Model::endOfTurn()
     else if(color ==red)
         gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.append(personCollectedId);
 
-
-
-    if(std::get<2>(peopleMap.at(personCollectedId))!=nullptr)
+    if(gameState.tableau.empty())
     {
 
-        //currently only card with specialness is Greer Garson, so wouldnt be a loss to get rid of her or not
-        //do her effect through a function
-    }
-    else
-    {
-        gameState.round+=1;
         if (gameState.round==4)
             endGame();
         else
         {
-            //some function that puts 10 people cards from deck into tableau
+            gameState.round+=1;
+            generateRandomTableau(gameState.personCardStack,10);
         }
     }
+
     //could be more based on the people card picked up
     drawActionCard(1);
 
@@ -1402,9 +1426,9 @@ void Model::endGame()
 {
     gameState.gameOver=true;
     emit sendStateToPlayers(gameState.serialize());
-      std::cout <<"done with seriliazing " << std::endl;
+    std::cout <<"done with seriliazing " << std::endl;
     emit displayWinnerAndConfetti();
-      std::cout <<"done with confetti display " << std::endl;
+    std::cout <<"done with confetti display " << std::endl;
 
 }
 
@@ -1459,7 +1483,7 @@ void Model::makeDiscardAction(int victimPlayerIndex)
         int randomActionIndex = QRandomGenerator::global()->bounded(gameState.players.at(victimPlayerIndex).actionPile.size());
         int otherActionCard = gameState.players.at(victimPlayerIndex).actionPile.at(randomActionIndex);
 
-         // choose random action in yourself
+        // choose random action in yourself
         int otherRandomIndex = QRandomGenerator::global()->bounded(gameState.players.at(gameState.currentPlayerIndex).actionPile.size());
         int yourActionCard = gameState.players.at(gameState.currentPlayerIndex).actionPile.at(otherRandomIndex);
 
