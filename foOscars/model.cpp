@@ -136,6 +136,7 @@ void Model::addPointsFromActionCard(int scoreModification, int unused1, int unus
     // Go into the current player's score manipulator and modify the "additional point" index within
     // score manipulator array.
     gameState.players.at(gameState.currentPlayerIndex).scoreManipulators[4] += scoreModification;
+    endOfTurn();
 }
 
 void Model::addPointsForColor(int color, int scoreModification, int unused1)
@@ -144,6 +145,7 @@ void Model::addPointsForColor(int color, int scoreModification, int unused1)
     // go into the current player's score manipulator and modify the proper color's additional point field within
     // within the score manipulator array.
     gameState.players.at(gameState.currentPlayerIndex).scoreManipulators[color] = 1;
+    endOfTurn();
 }
 
 void Model::decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModification, int unused1)
@@ -151,6 +153,7 @@ void Model::decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModificati
     std::cout << "removing: " << scoreModification << " points from player at index: " << victimPlayerIndex << std::endl;
     // go into the victim players score manipulator and modify the "additional point" index within the score manipulator array
     gameState.players.at(victimPlayerIndex).scoreManipulators[4] += scoreModification;
+    endOfTurn();
 }
 
 
@@ -216,7 +219,8 @@ void Model::movementCardComplete(int indexInTab)
         gameState.tableau.move(indexInTab, indexInTab - params.at(1));
 
     //gameState.currentPlayerIndex += 1; *talk to Jai about hadling other player turns
-    emit sendStateToPlayers(gameState.serialize());
+    // emit sendStateToPlayers(gameState.serialize());
+    endOfTurn();
 
 }
 
@@ -234,19 +238,23 @@ void Model::shuffleTableauPlayed(int numCardsToShuffle,int unused, int unused2)
     }
 
     //notify other players
-    emit sendStateToPlayers(gameState.serialize());
+    // emit sendStateToPlayers(gameState.serialize());
+    endOfTurn();
 }
 
 //for card 16
 void Model::shuffleTableauPlayed16(int unused, int unused1, int unused2)
 {
+
     shuffleTableauPlayed(4, 0, 0);
+    endOfTurn();
 }
 
 //for card 17
 void Model::shuffleTableauPlayed17(int unused, int unused1, int unused2)
 {
     shuffleTableauPlayed(5, 0, 0);
+    endOfTurn();
 }
 
 //for card 18
@@ -265,7 +273,8 @@ void Model::reverseCardPlayed(int unused, int unused1, int unused2)
         end--;
     }
 
-    emit sendStateToPlayers((gameState.serialize()));
+    // emit sendStateToPlayers((gameState.serialize()));
+    endOfTurn();
     // qDebug()<<"call reverse";
 }
 
@@ -274,7 +283,8 @@ void Model::reverseCardPlayed(int unused, int unused1, int unused2)
 void Model::newLinePlayed(int unused, int unused1, int unused2)
 {
     generateRandomTableau(gameState.personCardStack, 10);
-    emit sendStateToPlayers((gameState.serialize()));
+    endOfTurn();
+    // emit sendStateToPlayers((gameState.serialize()));
 }
 
 //for card 20
@@ -301,7 +311,9 @@ void Model::escapeCardPlayed2ndPart(int chosenIndex)
         newEnabledVector.push_back(false);
     gameState.tableauCardIsEnabled = newEnabledVector;
 
+
     shuffleTableauPlayed(gameState.tableau.size(), 0, 0);
+    endOfTurn()
 }
 
 //for card 21
@@ -321,7 +333,7 @@ void Model::addToTableau(int numCardsToAdd, int unused, int unused1)
         gameState.tableau.push_back(gameState.personCardStack.at(rand));
         gameState.personCardStack.removeAt(rand);
     }
-    emit sendStateToPlayers(gameState.serialize());
+    endOfTurn();
 }
 
 //for card 23
@@ -337,7 +349,7 @@ void Model::addFromTopThree(int unused, int unused1, int unused2){
     gameState.tableau.push_back(gameState.personCardStack.at(chosenIndex));
     gameState.personCardStack.removeAt(chosenIndex);
 
-    emit sendStateToPlayers(gameState.serialize());
+    endOfTurn();
 
 }
 
@@ -466,6 +478,7 @@ void Model::crewToFront(int unused, int unused1, int unused2)
 void Model::dealNewActionCard(int unused2, int unused, int unused1)
 {
     generateRandomHands();
+    endOfTurn();
 }
 
 //for card 44 - all players must discard 1 action card
@@ -480,6 +493,8 @@ void Model::discardOneAction(int unused0, int unused1, int unused2)
         gameState.players.at(i).actionPile.removeAt(gameState.players.at(i).actionPile.at(gameState.players.at(i).selectedActionIndex));
         std::cout<<"player action pile: "<< gameState.players.at(i).actionPile.size() << std::endl;
     }
+
+    endOfTurn();
 }
 
 void Model::afterYou(int victimPlayerIndex)
