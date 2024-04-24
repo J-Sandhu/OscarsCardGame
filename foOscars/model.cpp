@@ -573,7 +573,18 @@ void Model::populateGameState()
 
 
     // generate a random tableau
-    generateRandomTableau(gameState.personCardStack, 10);
+
+    //TODO: we can remove this once we have all people cards implemented. For now it only allows 1 of each type
+    // of card
+
+    // Only populate the random tableau with people cards that currently exist
+    QVector<int> existingPeopleCards;
+
+    for(std::map<int,peopleTuple>::iterator it = peopleMap.begin(); it != peopleMap.end(); ++it)
+        existingPeopleCards.push_back(it->first);
+
+
+    generateRandomTableau(existingPeopleCards, 10);
     populatePeopleMap();
 
     // generate random hands
@@ -592,25 +603,26 @@ void Model::generateRandomTableau(QVector<int> availablePeople, int size)
     gameState.tableau.clear();
     // gameState.tableau.push_back(gameState.personCardStack.at(2));
 
+    // Only populate tableau with people cards that exist according to available people
 
     for(int i=1; i<size+1; i++)
     {
         // generate a random index
 
-        // int randomPersonIndex = QRandomGenerator::global()->bounded(availablePeople.size()-1);
+        int randomExistingPersonIndex = QRandomGenerator::global()->bounded(availablePeople.size());
 
         //not so random random
-        int randomPersonIndex = 1;
+        //int randomPersonIndex = 1;
 
         //std::rand() % (max - min + 1) + min;
         //int randomTestVic = std::rand() % (19 - 10 +1) + 10 ; //using 10 - 19
         // put the ID from that index into the tableau
-        gameState.tableau.push_back(availablePeople.at(randomPersonIndex));//gameState.personCardStack.at(i+12));
+        gameState.tableau.push_back(availablePeople.at(randomExistingPersonIndex));
+        availablePeople.removeAt(randomExistingPersonIndex);
         // remove the ID at that index so that the same Person won't be included twice(except duplicate cards)
         //gameState.personCardStack.removeAt(randomPersonIndex);
 
     }
-   // gameState.tableau.push_back(gameState.personCardStack.at(12));
 
     QVector<bool> newVector;
     for(int i=0; i<gameState.tableau.size(); i++)
@@ -622,31 +634,33 @@ void Model::generateRandomTableau(QVector<int> availablePeople, int size)
 
 void Model::generateRandomHands()
 {
+    //TODO: Either make the actionStack(the pile of action cards that hands are dealt from) into a vector like this
+    // when it is generated.
+        // ISSUE: some action cards are meant to exist more than once
 
-    // I'm going to make a little thing to make hands only generate out of cards we have implemented.
-    //std::cout << "getting into random hands" << std::endl;
+    // basically, this is fine. However, we really need to deal with card exclusivity:
+    // the idea that a particular instance of any card only exists in one location at one time.
 
+
+    // Only populate hands with aciton cards that exist
     QVector<int> existingActionCards;
 
     for(std::map<int,cardTuple>::iterator it = actionMap.begin(); it != actionMap.end(); ++it)
         existingActionCards.push_back(it->first);
 
-    // for each of the 4 players
+    // for each of the joined players
     for(int i =0 ; i<gameState.players.size(); i++)
     {
         // put 5 unique action cards into their hand
         for(int j =0; j<6; j++)
         {
-            // TODO: Fix card gen
-            // generate a random index within the actionCardStack
-            //int randomActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size()-1);
-            // gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomActionIndex));
-            // gameState.actionCardStack.removeAt(randomActionIndex);
-
-            int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size()-1);
+            int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size());
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
 
-            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(0)); //hard coded to test AC#
+            // put a card into the hand
+            gameState.players.at(i).actionPile.push_back(existingActionCards.at(randomExistingActionIndex));
+            // remove it from "existing action cards"
+            existingActionCards.removeAt(randomExistingActionIndex);
         }
     }
 }

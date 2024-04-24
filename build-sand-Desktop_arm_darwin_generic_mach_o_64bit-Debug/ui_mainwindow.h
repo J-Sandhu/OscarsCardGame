@@ -47,7 +47,7 @@ public:
     QLabel *nomineeCountLabel;
     QLabel *label_2;
     QScrollArea *playerButtonScrollArea;
-    QWidget *scrollAreaWidgetContents_2;
+    QWidget *playerList;
     QPushButton *connectButton;
     QPushButton *hostButton;
     QPushButton *startbutton;
@@ -153,10 +153,10 @@ public:
         playerButtonScrollArea->setObjectName("playerButtonScrollArea");
         playerButtonScrollArea->setGeometry(QRect(0, 0, 991, 211));
         playerButtonScrollArea->setWidgetResizable(true);
-        scrollAreaWidgetContents_2 = new QWidget();
-        scrollAreaWidgetContents_2->setObjectName("scrollAreaWidgetContents_2");
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 989, 209));
-        playerButtonScrollArea->setWidget(scrollAreaWidgetContents_2);
+        playerList = new QWidget();
+        playerList->setObjectName("playerList");
+        playerList->setGeometry(QRect(0, 0, 989, 209));
+        playerButtonScrollArea->setWidget(playerList);
         connectButton = new QPushButton(centralwidget);
         connectButton->setObjectName("connectButton");
         connectButton->setGeometry(QRect(460, 40, 81, 32));
@@ -204,7 +204,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1184, 22));
+        menubar->setGeometry(QRect(0, 0, 1184, 24));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");

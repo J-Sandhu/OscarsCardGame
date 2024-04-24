@@ -473,8 +473,27 @@ void MainWindow::showPlayerButtons()
 
         //label->setText("<b>Button</b> Test");
         connect(button, &QPushButton::clicked, this, &MainWindow::anotherPlayerClicked);
-        //ui->tableauLayout->addWidget(label);
-        //ui->playerLayout->addWidget(button);
+
+        // if the button correspond to this player
+        if(i == clientIndexInPlayerArray)
+            button->setEnabled(false);
+
+        // if player buttons should be disabled(not a choose a player card)
+        if(!gameState.playerButtonsEnabled)
+            button->setEnabled(false);
+
+        // if this button corresponds to the player whose turn it is
+        if(i == gameState.currentPlayerIndex)
+        {
+            QPalette pal = button->palette();
+            pal.setColor(QPalette::Button, QColor(Qt::darkGreen));
+           // pal.setBrush(QPalette::Text, QColor(Qt::black));
+            button->setAutoFillBackground(true);
+            button->setPalette(pal);
+            button->update();
+        }
+
+
         playerLayout->addWidget(button);
     }
 
