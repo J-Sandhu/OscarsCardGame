@@ -524,7 +524,7 @@ void Model::allRemoveAnAction(int unused, int unused1, int unused2)
     for(int i = 0; i < gameState.players.size(); i++){
         gameState.players.at(i).actionPile.removeAt(std::rand() % gameState.players.size());
     }
-    emit sendStateToPlayers(gameState.serialize());
+    endOfTurn();
 }
 
 //for card 46 - swap hands, 1
@@ -622,18 +622,22 @@ void Model::scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int m
 {
     if(specifiedColor ==anyColor)
     {
+        std::cout<<"color score buff: "<<colorScoreBuff<<std::endl;
         gameState.players.at(gameState.currentPlayerIndex).score+=colorScoreBuff;
+        endOfTurn();
         return;
     }
     if(specifiedColor==purple)
     {
         int numberOfPurps= gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.size();
         drawActionCard(numberOfPurps);
+        endOfTurn();
         return;
     }
     else
     {
         gameState.players.at(gameState.currentPlayerIndex).scoreManipulators[specifiedColor]=colorScoreBuff;
+        endOfTurn();
     }
 }
 
