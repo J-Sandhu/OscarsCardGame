@@ -695,7 +695,7 @@ void Model::generateRandomHands()
             int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size()-1);
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
 
-            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(31)); //hard coded to test AC#
+            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(48)); //hard coded to test AC#
         }
     }
 }
@@ -1196,6 +1196,11 @@ void Model::populateActionMap()
     QVector<int> parameters46{-1,0,0};
     cardTuple tuple46(&Model::swapHands, parameters46, &Model::swapHandsComplete);
     actionMap.insert(std::pair<int,cardTuple>(46,tuple46));
+
+    //add card 48: scarlet pimpernel
+    QVector<int> parameters48{-1,0,0};
+    cardTuple tuple48(&Model::endDay, parameters48,nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(48,tuple48));
 }
 
 
@@ -1334,6 +1339,11 @@ void Model::endGame()
     emit displayWinnerAndConfetti();
 }
 
+void Model::endDay(int, int, int)
+{
+    endOfTurn();
+    endGame();
+}
 
 void Model::addNewPlayer(long long id)
 {

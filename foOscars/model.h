@@ -72,7 +72,7 @@ public:
     void replacePerson(int);
     void discardPerson(int);
     void disqualification(int);
-
+    void endDay(int, int, int);
 
     //blue,green,purple,red
     int blue = 0;
