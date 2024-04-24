@@ -49,6 +49,7 @@ public:
     void recalculateScore();
 
     //line order cards
+    void frontToBack(int, int, int);
     void shuffleTableauPlayed(int, int, int);
     void shuffleTableauPlayed16(int, int, int);
     void shuffleTableauPlayed17(int, int, int);
@@ -59,14 +60,19 @@ public:
     void addToTableau(int numCardsToShuffle, int, int);
     void addFromTopThree(int, int, int);
     void merylToFront(int, int, int);
+    void takeDiscardedAction(int, int, int);
     void crewToFront(int, int, int);
     void moveClosestBlueToFront(int, int, int);
     void swapHands(int, int, int);
     void swapHandsComplete(int victimPlayer);
     void dealNewActionCard(int currentPlayerIndex, int unused, int unused1);
     void discardOneAction(int, int, int);
-
+    void allRemoveAnAction(int, int, int);
     void movementThenDraw(int);
+    void drawThreeActionNoNoble(int, int, int);
+    void endDay(int, int, int);
+
+
 
     //blue,green,purple,red
     int blue = 0;
@@ -77,6 +83,7 @@ public:
     int numberOfColors= 4;
 
     void endOfTurn();
+
 
 
 

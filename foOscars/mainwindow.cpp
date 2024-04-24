@@ -401,8 +401,6 @@ void MainWindow::tableauCardClicked()
     int cardIndex = tableauLayout->indexOf(button);
 
     clientSendMessage(protocolTableau + to_string(cardIndex));
-
-
 }
 
 
@@ -426,7 +424,7 @@ void MainWindow::updateView()
     showPlayerButtons();
 }
 
-void MainWindow::anotherPlayerPersonCardClicked()
+void MainWindow::anotherPlayerClicked()
 {
     QPushButton* button = qobject_cast<QPushButton*>(sender());
 
@@ -472,7 +470,7 @@ void MainWindow::showPlayerButtons()
 
 
         //label->setText("<b>Button</b> Test");
-        connect(button, &QPushButton::clicked, this, &MainWindow::playerButtonClicked);
+        connect(button, &QPushButton::clicked, this, &MainWindow::anotherPlayerClicked);
         //ui->tableauLayout->addWidget(label);
         //ui->playerLayout->addWidget(button);
         playerLayout->addWidget(button);
@@ -485,6 +483,7 @@ void MainWindow::showPlayerButtons()
 void MainWindow::playerButtonClicked()
 {
     std::cout <<"getting into playerButton clicked" << std::endl;
+
 
 }
 

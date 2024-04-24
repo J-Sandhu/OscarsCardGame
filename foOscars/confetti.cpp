@@ -50,6 +50,7 @@ Confetti::Confetti()
         confettiVectors.at(i)->SetLinearVelocity(initialVelocity);
 
     }
+
 }
 
 void Confetti::doConfettiSimulation()
