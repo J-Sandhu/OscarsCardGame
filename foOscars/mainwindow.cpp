@@ -429,6 +429,14 @@ void MainWindow::updateView()
     showCardsOnTableau();
     showCardsInHand();
     showPlayerButtons();
+
+    QString round("Round: ");
+    round.append(QString::number(gameState.round));
+
+    ui->roundLabel->setText(round);
+    QString nominees("Nominees Remaining: ");
+    nominees.append(QString::number(gameState.tableau.size()));
+    ui->nomineeLabel->setText(nominees);
 }
 
 void MainWindow::anotherPlayerClicked()

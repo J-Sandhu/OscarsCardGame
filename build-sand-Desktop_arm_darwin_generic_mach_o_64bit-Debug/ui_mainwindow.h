@@ -59,6 +59,10 @@ public:
     QLabel *winnerNameLabel;
     QPushButton *endGameButton;
     QGraphicsView *graphicsView;
+    QWidget *verticalLayoutWidget_3;
+    QVBoxLayout *textLayout;
+    QLabel *roundLabel;
+    QLabel *nomineeLabel;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -200,7 +204,7 @@ public:
         portLine->setGeometry(QRect(10, 20, 91, 21));
         winnerNameLabel = new QLabel(centralwidget);
         winnerNameLabel->setObjectName("winnerNameLabel");
-        winnerNameLabel->setGeometry(QRect(250, 160, 521, 221));
+        winnerNameLabel->setGeometry(QRect(180, 160, 1021, 221));
         QFont font2;
         font2.setPointSize(60);
         winnerNameLabel->setFont(font2);
@@ -209,9 +213,26 @@ public:
         endGameButton->setGeometry(QRect(660, 10, 101, 61));
         graphicsView = new QGraphicsView(centralwidget);
         graphicsView->setObjectName("graphicsView");
-        graphicsView->setGeometry(QRect(0, -20, 361, 251));
+        graphicsView->setGeometry(QRect(170, 0, 3000, 3000));
         graphicsView->setFrameShape(QFrame::NoFrame);
         graphicsView->setFrameShadow(QFrame::Raised);
+        verticalLayoutWidget_3 = new QWidget(centralwidget);
+        verticalLayoutWidget_3->setObjectName("verticalLayoutWidget_3");
+        verticalLayoutWidget_3->setGeometry(QRect(789, 9, 331, 61));
+        textLayout = new QVBoxLayout(verticalLayoutWidget_3);
+        textLayout->setSpacing(0);
+        textLayout->setObjectName("textLayout");
+        textLayout->setContentsMargins(0, 0, 0, 0);
+        roundLabel = new QLabel(verticalLayoutWidget_3);
+        roundLabel->setObjectName("roundLabel");
+
+        textLayout->addWidget(roundLabel);
+
+        nomineeLabel = new QLabel(verticalLayoutWidget_3);
+        nomineeLabel->setObjectName("nomineeLabel");
+
+        textLayout->addWidget(nomineeLabel);
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -243,6 +264,8 @@ public:
         portLine->setPlaceholderText(QCoreApplication::translate("MainWindow", "Port", nullptr));
         winnerNameLabel->setText(QString());
         endGameButton->setText(QCoreApplication::translate("MainWindow", "End Game", nullptr));
+        roundLabel->setText(QString());
+        nomineeLabel->setText(QString());
     } // retranslateUi
 
 };

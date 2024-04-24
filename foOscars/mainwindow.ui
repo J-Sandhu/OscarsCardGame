@@ -370,9 +370,9 @@
    <widget class="QLabel" name="winnerNameLabel">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>180</x>
       <y>160</y>
-      <width>521</width>
+      <width>1021</width>
       <height>221</height>
      </rect>
     </property>
@@ -401,10 +401,10 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>-20</y>
-      <width>361</width>
-      <height>251</height>
+      <x>170</x>
+      <y>0</y>
+      <width>3000</width>
+      <height>3000</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -413,6 +413,35 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>789</x>
+      <y>9</y>
+      <width>331</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="textLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="roundLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="nomineeLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
