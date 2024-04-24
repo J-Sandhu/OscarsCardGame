@@ -372,15 +372,7 @@ void MainWindow::showCardsInHand()
     ui->handScrollArea->setWidget(handScrollWidget);
 }
 
-void MainWindow::updateOtherPlayersHandsBox(){
-    //at this point, we know how many players are currently in the game
-    for(int i = 0; i < gameState.players.size(); i++){
-        ui->otherPlayersHandsButton->addItem(gameState.players.at(i).name);
-    }
-    //connect to popup window
-    connect(ui->otherPlayersHandsButton, &QComboBox::currentIndexChanged, this, &MainWindow::displayPopUp);
 
-}
 
 void MainWindow::displayPopUp(int index)
 {

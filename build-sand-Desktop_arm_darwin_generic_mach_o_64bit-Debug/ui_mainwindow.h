@@ -11,7 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QLabel>
@@ -38,7 +37,6 @@ public:
     QPushButton *sendMessageButton;
     QLineEdit *messageLine;
     QLineEdit *playerNameLine;
-    QComboBox *otherPlayersHandsButton;
     QFrame *gameplayFrame;
     QScrollArea *tableauScrollArea;
     QWidget *scrollAreaContents;
@@ -105,9 +103,6 @@ public:
         playerNameLine = new QLineEdit(centralwidget);
         playerNameLine->setObjectName("playerNameLine");
         playerNameLine->setGeometry(QRect(170, 10, 261, 20));
-        otherPlayersHandsButton = new QComboBox(centralwidget);
-        otherPlayersHandsButton->setObjectName("otherPlayersHandsButton");
-        otherPlayersHandsButton->setGeometry(QRect(770, 20, 103, 32));
         gameplayFrame = new QFrame(centralwidget);
         gameplayFrame->setObjectName("gameplayFrame");
         gameplayFrame->setGeometry(QRect(170, 80, 1200, 750));
