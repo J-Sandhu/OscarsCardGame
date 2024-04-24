@@ -1273,28 +1273,31 @@ void Model::endOfTurn()
 
 void Model::recalculateScore()
 {
-    int updatedScore=0;
-
-    //color pile sums
-    for(int i=0;i<numberOfColors;i++)
+    for (int playerIndex=0; playerIndex<gameState.players.size();playerIndex++)
     {
-        updatedScore+= calulateColorSum(i, gameState.players.at(gameState.currentPlayerIndex).scoreManipulators.at(i));
-    }
+        int updatedScore=0;
 
-    //crew stuff
-    int num_Of_Crew=0;
-    int id_Of_Crew=12;
-
-    foreach(int person ,gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile )
-    {
-        if(person==id_Of_Crew)
+        //color pile sums
+        for(int i=0;i<numberOfColors;i++)
         {
-            num_Of_Crew++;
+            updatedScore+= calulateColorSum(i, gameState.players.at(playerIndex).scoreManipulators.at(i));
         }
-    }
-    gameState.players.at(gameState.currentPlayerIndex).score+= num_Of_Crew * num_Of_Crew;
 
-    gameState.players.at(gameState.currentPlayerIndex).score= updatedScore;
+        //crew stuff
+        int num_Of_Crew=0;
+        int id_Of_Crew=12;
+
+        foreach(int person ,gameState.players.at(playerIndex).greenPeoplePile )
+        {
+            if(person==id_Of_Crew)
+            {
+                num_Of_Crew++;
+            }
+        }
+        gameState.players.at(playerIndex).score+= num_Of_Crew * num_Of_Crew;
+
+        gameState.players.at(playerIndex).score= updatedScore;
+    }
 }
 
 int Model::calulateColorSum(int color, bool manipultorEnabled)
