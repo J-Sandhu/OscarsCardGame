@@ -350,6 +350,7 @@ void Model::addToTableau(int numCardsToAdd, int unused, int unused1)
         gameState.tableau.push_back(gameState.personCardStack.at(rand));
         gameState.personCardStack.removeAt(rand);
     }
+
     endOfTurn();
 }
 
@@ -527,11 +528,11 @@ void Model::blockPlayer(int unused, int unused1, int unused2){
 //for card 39 - take discarded action (random)
 void Model::takeDiscardedAction(int unused, int unused1, int unused2)
 {
-    std::cout<<"getting into take discarded action"<< std::endl;
+
     int randomIndex = std::rand() % gameState.actionCardStack.size();
-    std::cout<<"current player action pile: " << gameState.players.at(gameState.currentPlayerIndex).actionPile.size() << std::endl;
-    gameState.players[gameState.currentPlayerIndex].actionPile.push_back(gameState.actionCardStack.at(randomIndex));
-    std::cout<<"current player action pile part 2: " << gameState.players[gameState.currentPlayerIndex].actionPile.size() << std::endl;
+
+    gameState.players.at(gameState.currentPlayerIndex).actionPile.push_back(gameState.actionCardStack.at(randomIndex));
+    gameState.actionCardStack.removeAt(randomIndex);
 
     endOfTurn();
 }
@@ -742,14 +743,14 @@ void Model::populateGameState()
     //TODO: we can remove this once we have all people cards implemented. For now it only allows 1 of each type
     // of card
 
-    // Only populate the random tableau with people cards that currently exist
-    QVector<int> existingPeopleCards;
+    // // Only populate the random tableau with people cards that currently exist
+    // QVector<int> existingPeopleCards;
 
-    for(std::map<int,peopleTuple>::iterator it = peopleMap.begin(); it != peopleMap.end(); ++it)
-        existingPeopleCards.push_back(it->first);
+    // for(std::map<int,peopleTuple>::iterator it = peopleMap.begin(); it != peopleMap.end(); ++it)
+    //     existingPeopleCards.push_back(it->first);
 
 
-    generateRandomTableau(existingPeopleCards, 10);
+    generateRandomTableau(gameState.personCardStack, 10);
     populatePeopleMap();
 
     // generate random hands
@@ -769,11 +770,11 @@ void Model::generateRandomTableau(QVector<int> availablePeople, int size)
     // gameState.tableau.push_back(gameState.personCardStack.at(2));
 
     // Only populate tableau with people cards that exist according to available people
-    for(int i=1; i<peopleMap.size(); i++)
+    for(int i=0; i<size; i++)
     {
         // generate a random index
 
-        int randomExistingPersonIndex = QRandomGenerator::global()->bounded(availablePeople.size());
+        int randomExistingPersonIndex = QRandomGenerator::global()->bounded(gameState.personCardStack.size());
 
         //not so random random
         //int randomPersonIndex = 1;
@@ -781,7 +782,9 @@ void Model::generateRandomTableau(QVector<int> availablePeople, int size)
         //std::rand() % (max - min + 1) + min;
         //int randomTestVic = std::rand() % (19 - 10 +1) + 10 ; //using 10 - 19
         // put the ID from that index into the tableau
-        gameState.tableau.push_back(i);//availablePeople.at(randomExistingPersonIndex));
+        gameState.tableau.push_back(gameState.personCardStack.at(randomExistingPersonIndex));//availablePeople.at(randomExistingPersonIndex));
+
+        gameState.personCardStack.remove(randomExistingPersonIndex);
         //availablePeople.removeAt(randomExistingPersonIndex);
         // remove the ID at that index so that the same Person won't be included twice(except duplicate cards)
         //gameState.personCardStack.removeAt(randomPersonIndex);
@@ -793,6 +796,26 @@ void Model::generateRandomTableau(QVector<int> availablePeople, int size)
         newVector.push_back(false);
 
     gameState.tableauCardIsEnabled = newVector;
+}
+
+void Model::shuffleTableau()
+{
+    QVector<int> tableauCopy(gameState.tableau);
+
+    gameState.tableau.clear();
+    for(int i = 0; i<tableauCopy.size(); i++)
+    {
+        int randomTableauIndex = QRandomGenerator::global()->bounded(tableauCopy.size());
+        gameState.tableau.push_back(tableauCopy.at(randomTableauIndex));
+        tableauCopy.removeAt(randomTableauIndex);
+    }
+
+    QVector<bool> newVector;
+    for(int i=0; i<gameState.tableau.size(); i++)
+        newVector.push_back(false);
+
+    gameState.tableauCardIsEnabled = newVector;
+
 }
 
 
@@ -816,15 +839,17 @@ void Model::generateRandomHands()
     for(int i =0 ; i<gameState.players.size(); i++)
     {
         // put 5 unique action cards into their hand
-        for(int j =0; j<actionMap.size(); j++)
+        for(int j =0; j<5; j++)
         {
-            //int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size());
+            int randomExistingActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size());
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(48)); //hard coded to test AC#
 
             // put a card into the hand
             //gameState.players.at(i).actionPile.push_back(existingActionCards.at(randomExistingActionIndex));
-            gameState.players.at(i).actionPile.push_back(j);
+            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
+            gameState.actionCardStack.removeAt(randomExistingActionIndex);
+
             // remove it from "existing action cards"
             //existingActionCards.removeAt(randomExistingActionIndex);
 
@@ -1030,9 +1055,10 @@ void Model::drawActionCard(int numberOfCards)
         int randomActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size());
 
         int randomActionID= gameState.actionCardStack.at(randomActionIndex);
-        gameState.actionCardStack.removeAt(randomActionIndex);
 
-        gameState.players.at(gameState.currentPlayerIndex).actionPile.push_back(randomActionID);
+
+        gameState.players.at(gameState.currentPlayerIndex).actionPile.push_back(gameState.actionCardStack.at(randomActionID));
+        gameState.actionCardStack.removeAt(randomActionIndex);
     }
 
     std::cout << "finishing draw action card" << std::endl;
@@ -1049,13 +1075,10 @@ void Model::replacePerson(int indexInTab)
 
     std::cout << "getting into replacePerson" << std::endl;
 
-    int randomPersonID= QRandomGenerator::global()->bounded(gameState.personCardStack.size()-1);
+    int randomPersonID= QRandomGenerator::global()->bounded(gameState.personCardStack.size());
 
+    gameState.tableau.replace(indexInTab, gameState.personCardStack.at(randomPersonID));
     gameState.personCardStack.removeAt(randomPersonID);
-
-
-
-    gameState.tableau.replace(indexInTab, randomPersonID);
 
     endOfTurn();
 
@@ -1124,7 +1147,7 @@ void Model::mixAfterTurn(int unused, int unused1, int unuesed2)
     else
         gameState.currentPlayerIndex+=1;
 
-    generateRandomTableau(gameState.tableau, gameState.tableau.size());
+    shuffleTableau();
 
 
     emit sendStateToPlayers(gameState.serialize());
