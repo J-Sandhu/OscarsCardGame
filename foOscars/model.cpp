@@ -1141,7 +1141,7 @@ void Model::populateActionMap()
     // add card 12: Jell Cell Tengo
     QVector<int> parameters12{-1,0,0};
     cardTuple tuple12(&Model::movementCardPlayed,parameters12,&Model::discardPerson);
-    actionMap.insert(std::pair<int,cardTuple>(0,tuple12));
+    actionMap.insert(std::pair<int,cardTuple>(12,tuple12));
 
 
 
@@ -1188,7 +1188,7 @@ void Model::populateActionMap()
     //add card 21: mislabled envelops
     QVector<int> parameters21{0,-1,0};
     cardTuple tuple21(&Model::mixAfterTurn, parameters21, nullptr);
-    actionMap.insert(std::pair<int, cardTuple>(20, tuple21));
+    actionMap.insert(std::pair<int, cardTuple>(21, tuple21));
 
     //add card 22: add 3 new people to tableau
     QVector<int> parameters22{0,-1,0};
@@ -1247,7 +1247,7 @@ void Model::populateActionMap()
     actionMap.insert(std::pair<int,cardTuple>(32, tuple32));
 
     // add card 33: the same as card 14. sorry chase :(
-    //actionMap.insert(std::pair<int,cardTuple>(33,tuple14));
+    actionMap.insert(std::pair<int,cardTuple>(33,tuple14));
 
     //add 34: Marie to front
     QVector<int> parameters34{-1,0,0};
@@ -1299,7 +1299,7 @@ void Model::populateActionMap()
     // //add card 43: discard one action
     QVector<int> parameters43{2,0,0};
     cardTuple tuple43(&Model::choosePlayer, parameters43, &Model::makeDiscardAction);
-    actionMap.insert(std::pair<int,cardTuple>(40, tuple43));
+    actionMap.insert(std::pair<int,cardTuple>(43, tuple43));
 
     //add card 44: all players discard a random action
     QVector<int> parameters44{-1,0,0};
