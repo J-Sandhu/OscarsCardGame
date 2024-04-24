@@ -67,13 +67,12 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "updateActionHand",
     "std::vector<QImage>",
     "images",
-    "playerButtonClicked",
     "displayWinnerAndConfettiSlot",
     "endGameClicked"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
-    uint offsetsAndSizes[56];
+    uint offsetsAndSizes[54];
     char stringdata0[11];
     char stringdata1[11];
     char stringdata2[1];
@@ -99,9 +98,8 @@ struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
     char stringdata22[17];
     char stringdata23[20];
     char stringdata24[7];
-    char stringdata25[20];
-    char stringdata26[29];
-    char stringdata27[15];
+    char stringdata25[29];
+    char stringdata26[15];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMainWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -132,9 +130,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(325, 16),  // "updateActionHand"
         QT_MOC_LITERAL(342, 19),  // "std::vector<QImage>"
         QT_MOC_LITERAL(362, 6),  // "images"
-        QT_MOC_LITERAL(369, 19),  // "playerButtonClicked"
-        QT_MOC_LITERAL(389, 28),  // "displayWinnerAndConfettiSlot"
-        QT_MOC_LITERAL(418, 14)   // "endGameClicked"
+        QT_MOC_LITERAL(369, 28),  // "displayWinnerAndConfettiSlot"
+        QT_MOC_LITERAL(398, 14)   // "endGameClicked"
     },
     "MainWindow",
     "newMessage",
@@ -161,7 +158,6 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
     "updateActionHand",
     "std::vector<QImage>",
     "images",
-    "playerButtonClicked",
     "displayWinnerAndConfettiSlot",
     "endGameClicked"
 };
@@ -175,7 +171,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      19,   14, // methods
+      18,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -183,27 +179,26 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,  128,    2, 0x06,    1 /* Public */,
+       1,    1,  122,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    0,  131,    2, 0x0a,    3 /* Public */,
-       5,    1,  132,    2, 0x0a,    4 /* Public */,
-       6,    0,  135,    2, 0x0a,    6 /* Public */,
-       7,    0,  136,    2, 0x0a,    7 /* Public */,
-       8,    1,  137,    2, 0x0a,    8 /* Public */,
-      10,    1,  140,    2, 0x0a,   10 /* Public */,
-      13,    0,  143,    2, 0x0a,   12 /* Public */,
-      14,    0,  144,    2, 0x0a,   13 /* Public */,
-      15,    0,  145,    2, 0x0a,   14 /* Public */,
-      16,    0,  146,    2, 0x0a,   15 /* Public */,
-      17,    1,  147,    2, 0x0a,   16 /* Public */,
-      19,    0,  150,    2, 0x0a,   18 /* Public */,
-      20,    0,  151,    2, 0x0a,   19 /* Public */,
-      21,    0,  152,    2, 0x0a,   20 /* Public */,
-      22,    1,  153,    2, 0x0a,   21 /* Public */,
-      25,    0,  156,    2, 0x0a,   23 /* Public */,
-      26,    0,  157,    2, 0x0a,   24 /* Public */,
-      27,    0,  158,    2, 0x0a,   25 /* Public */,
+       4,    0,  125,    2, 0x0a,    3 /* Public */,
+       5,    1,  126,    2, 0x0a,    4 /* Public */,
+       6,    0,  129,    2, 0x0a,    6 /* Public */,
+       7,    0,  130,    2, 0x0a,    7 /* Public */,
+       8,    1,  131,    2, 0x0a,    8 /* Public */,
+      10,    1,  134,    2, 0x0a,   10 /* Public */,
+      13,    0,  137,    2, 0x0a,   12 /* Public */,
+      14,    0,  138,    2, 0x0a,   13 /* Public */,
+      15,    0,  139,    2, 0x0a,   14 /* Public */,
+      16,    0,  140,    2, 0x0a,   15 /* Public */,
+      17,    1,  141,    2, 0x0a,   16 /* Public */,
+      19,    0,  144,    2, 0x0a,   18 /* Public */,
+      20,    0,  145,    2, 0x0a,   19 /* Public */,
+      21,    0,  146,    2, 0x0a,   20 /* Public */,
+      22,    1,  147,    2, 0x0a,   21 /* Public */,
+      25,    0,  150,    2, 0x0a,   23 /* Public */,
+      26,    0,  151,    2, 0x0a,   24 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -224,7 +219,6 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 23,   24,
-    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -278,8 +272,6 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'updateActionHand'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<std::vector<QImage>, std::false_type>,
-        // method 'playerButtonClicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'displayWinnerAndConfettiSlot'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'endGameClicked'
@@ -310,9 +302,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 13: _t->actionCardClicked(); break;
         case 14: _t->anotherPlayerClicked(); break;
         case 15: _t->updateActionHand((*reinterpret_cast< std::add_pointer_t<std::vector<QImage>>>(_a[1]))); break;
-        case 16: _t->playerButtonClicked(); break;
-        case 17: _t->displayWinnerAndConfettiSlot(); break;
-        case 18: _t->endGameClicked(); break;
+        case 16: _t->displayWinnerAndConfettiSlot(); break;
+        case 17: _t->endGameClicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -357,13 +348,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 19)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 19;
+        _id -= 18;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 19)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 19;
+        _id -= 18;
     }
     return _id;
 }

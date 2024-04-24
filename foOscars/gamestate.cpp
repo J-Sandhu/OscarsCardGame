@@ -65,6 +65,8 @@ void GameState::deserialize(QByteArray serializedGameState)
     // deserialize the current player index
     currentPlayerIndex = jsonObj["Current_Player_Index"].toInt();
 
+    round = jsonObj["Round"].toInt();
+
     playerButtonsEnabled = jsonObj["Player_Buttons_Enabled"].toBool();
 
     QJsonArray actionCardStackArr = jsonObj["Action_Card_Stack"].toArray();
@@ -149,6 +151,8 @@ QByteArray GameState::serialize()
 
     // serialize the current player index
     jsonObj.insert("Current_Player_Index", currentPlayerIndex);
+
+    jsonObj.insert("Round", round);
 
     jsonObj.insert("Player_Buttons_Enabled", playerButtonsEnabled);
     // serialize the action card stack

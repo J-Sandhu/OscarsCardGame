@@ -88,7 +88,7 @@ public slots:
     void actionCardClicked();
     void anotherPlayerClicked();
     void updateActionHand(std::vector<QImage> images);
-    void playerButtonClicked();
+    // void playerButtonClicked();
     void displayWinnerAndConfettiSlot();
     void endGameClicked();
 
