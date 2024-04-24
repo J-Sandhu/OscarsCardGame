@@ -218,6 +218,7 @@ void Model::movementCardComplete(int indexInTab)
     else
         gameState.tableau.move(indexInTab, indexInTab - params.at(1));
 
+
     //gameState.currentPlayerIndex += 1; *talk to Jai about hadling other player turns
     // emit sendStateToPlayers(gameState.serialize());
     endOfTurn();
@@ -313,7 +314,7 @@ void Model::escapeCardPlayed2ndPart(int chosenIndex)
 
 
     shuffleTableauPlayed(gameState.tableau.size(), 0, 0);
-    endOfTurn()
+    endOfTurn();
 }
 
 //for card 21
@@ -1258,6 +1259,12 @@ void Model::endOfTurn()
     else
         gameState.currentPlayerIndex+=1;
 
+    // return the tableauCardEnabled vector for false
+    QVector<bool> enabledVec;
+    for(int i=0; i<gameState.tableau.size(); i++)
+        enabledVec.push_back(false);
+
+    gameState.tableauCardIsEnabled = enabledVec;
 
     emit sendStateToPlayers(gameState.serialize());
 }
