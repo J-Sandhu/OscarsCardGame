@@ -64,7 +64,6 @@ void Model::HandleTableauSelection(long long id, QString message)
 
 void Model::HandleActionSelection(long long id, QString message)
 {
-
     if(id !=gameState.players.at(gameState.currentPlayerIndex).id)
     {
         cout<<"ignored selection from non-current player"<<endl;
@@ -211,14 +210,19 @@ void Model::movementCardComplete(int indexInTab)
     // std::cout << "movementCardComplete is called as a callback. Paramters when I get to here is: " <<params[0]<<", "<<params[1]<<", "<<params[2]<<std::endl;
     // std::cout<<"indexInTab is: "<<indexInTab<<std::endl;
 
-    std::cout << "getting into movement card played" << std::endl;
+    std::cout << "getting into movement card complete" << std::endl;
+
     if(indexInTab-params.at(1) < 0)
+    {
+        std::cout << "grabbed 2nd param in movement card complete" << std::endl;
         gameState.tableau.move(indexInTab,0);
+    }
     else if(indexInTab+params.at(1) > gameState.tableau.size()-1)
         gameState.tableau.move(indexInTab, gameState.tableau.size()-1);
     else
         gameState.tableau.move(indexInTab, indexInTab - params.at(1));
 
+    std::cout << "getting past moving card, problem is likely in endofturn" << std::endl;
 
     //gameState.currentPlayerIndex += 1; *talk to Jai about hadling other player turns
     // emit sendStateToPlayers(gameState.serialize());
@@ -460,7 +464,7 @@ void Model::skipPlayer(int unused, int unused1, int unused2){
 
 //for card 47
 void Model::blockPlayer(int unused, int unused1, int unused2){
-    skipPlayer();
+    skipPlayer(0,0,0);
 }
 //for card 39 - take discarded action (random)
 void Model::takeDiscardedAction(int unused, int unused1, int unused2)
@@ -962,15 +966,18 @@ void Model::populatePeopleMap()
 
 void Model::drawActionCard(int numberOfCards)
 {
+    std::cout <<"getting into draw action card" << std::endl;
     for(int i =0;i<numberOfCards;i++)
     {
-        int randomActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size()-1);
+        int randomActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size());
 
         int randomActionID= gameState.actionCardStack.at(randomActionIndex);
         gameState.actionCardStack.removeAt(randomActionIndex);
 
         gameState.players.at(gameState.currentPlayerIndex).actionPile.push_back(randomActionID);
     }
+
+    std::cout << "finishing draw action card" << std::endl;
 
 }
 
@@ -1324,7 +1331,7 @@ void Model::endOfTurn()
     int color = std::get<1>(peopleMap.at(personCollectedId));
 
     //check which color
-    if(color ==blue)
+    if(color == blue)
         gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.append(personCollectedId);
     else if(color == green)
         gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.append(personCollectedId);
@@ -1335,7 +1342,6 @@ void Model::endOfTurn()
 
     if(gameState.tableau.empty())
     {
-
         if (gameState.round==4)
             endGame();
         else
@@ -1349,7 +1355,7 @@ void Model::endOfTurn()
     drawActionCard(1);
 
     //move to next players turn
-    if(gameState.currentPlayerIndex+=1>gameState.players.size()-1)
+    if(gameState.currentPlayerIndex+1>gameState.players.size()-1)
         gameState.currentPlayerIndex=0;
     else
         gameState.currentPlayerIndex+=1;
@@ -1370,50 +1376,60 @@ void Model::endOfTurn()
 
 void Model::recalculateScore()
 {
+    std::cout <<"getting into recalculate score" << std::endl;
     for (int playerIndex=0; playerIndex<gameState.players.size();playerIndex++)
     {
+        std::cout<<"Getting into playerLoop" << std::endl;
         int updatedScore=0;
 
         //color pile sums
         for(int i=0;i<numberOfColors;i++)
         {
-            updatedScore+= calulateColorSum(i, gameState.players.at(playerIndex).scoreManipulators.at(i));
+            std::cout <<"getting into number of color loop" << std::endl;
+            updatedScore += calulateColorSum(i, gameState.players.at(playerIndex).scoreManipulators.at(i), playerIndex);
+            std::cout<< "surviving" << std::endl;
         }
 
         //crew stuff
         int num_Of_Crew=0;
         int id_Of_Crew=12;
 
-        foreach(int person ,gameState.players.at(playerIndex).greenPeoplePile )
+        for(int person : gameState.players.at(playerIndex).greenPeoplePile)
         {
             if(person==id_Of_Crew)
             {
+                std::cout <<"incrementing # of crew" << std::endl;
                 num_Of_Crew++;
             }
         }
+
+
         gameState.players.at(playerIndex).score+= num_Of_Crew * num_Of_Crew;
+        std::cout <<"adding numcrew squared to score" << std::endl;
 
         gameState.players.at(playerIndex).score= updatedScore;
+        std::cout <<"replacing player score at index: " << playerIndex << std::endl;
     }
 }
 
-int Model::calulateColorSum(int color, bool manipultorEnabled)
+int Model::calulateColorSum(int color, bool manipultorEnabled, int playerIndex)
 {
     QVector<int> vectorToBeSummed;
 
+    std::cout <<"getting into calculate color sum" << std::endl;
     //check which color
     if(color ==blue)
-        vectorToBeSummed= gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile;
+        vectorToBeSummed= gameState.players.at(playerIndex).bluePeoplePile;
     else if(color == green)
-        vectorToBeSummed = gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile;
+        vectorToBeSummed = gameState.players.at(playerIndex).greenPeoplePile;
     else if(color ==purple)
-        vectorToBeSummed=gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile;
+        vectorToBeSummed=gameState.players.at(playerIndex).purplePeoplePile;
     else if(color ==red)
-        vectorToBeSummed=gameState.players.at(gameState.currentPlayerIndex).redPeoplePile;
+        vectorToBeSummed=gameState.players.at(playerIndex).redPeoplePile;
 
     //sum that color pile
     int pileSum=0;
-    foreach(int person ,vectorToBeSummed )
+    for(int person : vectorToBeSummed )
     {
 
         //0->6
@@ -1421,13 +1437,13 @@ int Model::calulateColorSum(int color, bool manipultorEnabled)
         //10->40
         //16->18
 
-        if(person==0 && gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.contains(6))
+        if(person==0 && gameState.players.at(playerIndex).bluePeoplePile.contains(6))
             pileSum+=std::get<0>(peopleMap.at(person))*3;
-        if(person==7 && gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.contains(37))
+        if(person==7 && gameState.players.at(playerIndex).redPeoplePile.contains(37))
             pileSum+=std::get<0>(peopleMap.at(person))*3;
-        if(person==10 && gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.contains(40))
+        if(person==10 && gameState.players.at(playerIndex).redPeoplePile.contains(40))
             pileSum+=std::get<0>(peopleMap.at(person))*3;
-        if(person==16 && gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.contains(18))
+        if(person==16 && gameState.players.at(playerIndex).greenPeoplePile.contains(18))
             pileSum+=std::get<0>(peopleMap.at(person))*3;
         else
             pileSum+=std::get<0>(peopleMap.at(person));

@@ -24,7 +24,7 @@ public:
     QVector<int> purplePeoplePile; // color index = 2
     QVector<int> redPeoplePile; // color index = 3
 
-    QVector<bool> scoreManipulators;
+    QVector<bool> scoreManipulators{false,false,false,false};
 
 
     int score;

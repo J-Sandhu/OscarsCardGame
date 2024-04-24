@@ -46,7 +46,7 @@ public:
     std::map <int,peopleTuple> peopleMap; // int = person id
     std::map <int,cardTuple> actionMap;
 
-    int calulateColorSum(int color, bool manipultorEnabled);
+    int calulateColorSum(int color, bool manipultorEnabled, int playerIndex);
     void recalculateScore();
 
     //line order cards
