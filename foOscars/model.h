@@ -79,6 +79,7 @@ public:
     void discardPerson(int);
     void disqualification(int);
 
+
     //blue,green,purple,red
     int blue = 0;
     int green = 1;
@@ -100,7 +101,7 @@ signals:
     void actionCardSelectedFromPersonalPile(Card selectedActionCard);
     void updateTableauAfterActionCardSelect();
     void gameInitializedSignal();
-    void sendStatetoPlayer(QByteArray, int playerIndex);
+    void sendStateToPlayer(QByteArray, int playerIndex);
     void displayWinnerAndConfetti();
 
 

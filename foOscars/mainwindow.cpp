@@ -304,9 +304,11 @@ void MainWindow::showCardsOnTableau()
         //label->setText("<b>Button</b> Test");
         connect(button, &QPushButton::clicked, this, &MainWindow::tableauCardClicked);
         //ui->tableauLayout->addWidget(label);
+
+        if(gameState.currentPlayerIndex != clientIndexInPlayerArray)
+            button ->setEnabled(false);
+
         tableauLayout->addWidget(button);
-
-
         //std::cout <<" adding labelbutton at: " << tableauLayout->indexOf(button) << std::endl;
 
 
@@ -356,6 +358,9 @@ void MainWindow::showCardsInHand()
 
         //label->setText("<b>Button</b> Test");
         connect(button, &QPushButton::clicked, this, &MainWindow::actionCardClicked);
+
+        if(gameState.currentPlayerIndex != clientIndexInPlayerArray)
+            button->setEnabled(false);
         //ui->tableauLayout->addWidget(label);
         handLayout->addWidget(button);
 
@@ -372,15 +377,7 @@ void MainWindow::showCardsInHand()
     ui->handScrollArea->setWidget(handScrollWidget);
 }
 
-void MainWindow::updateOtherPlayersHandsBox(){
-    //at this point, we know how many players are currently in the game
-    for(int i = 0; i < gameState.players.size(); i++){
-        ui->otherPlayersHandsButton->addItem(gameState.players.at(i).name);
-    }
-    //connect to popup window
-    connect(ui->otherPlayersHandsButton, &QComboBox::currentIndexChanged, this, &MainWindow::displayPopUp);
 
-}
 
 void MainWindow::displayPopUp(int index)
 {
@@ -461,18 +458,36 @@ void MainWindow::showPlayerButtons()
 
         button->setText(buttonText);
 
-        //button->setStyleSheet("border: none; color: palette(window-text); background: transparent;");
-
-        // label->setGeometry(0, 0, 350, 490);
-        // label->setPixmap(actionImages.at(actionCardID).scaledToHeight(label->geometry().height(), Qt::FastTransformation));
-        //label->setText("<l>Label</>");
-
-
-
         //label->setText("<b>Button</b> Test");
         connect(button, &QPushButton::clicked, this, &MainWindow::anotherPlayerClicked);
-        //ui->tableauLayout->addWidget(label);
-        //ui->playerLayout->addWidget(button);
+
+        // if this button corresponds to the player whose turn it is
+        if(i == gameState.currentPlayerIndex)
+        {
+            // QPalette pal = button->palette();
+            // pal.setColor(QPalette::Button, QColor(Qt::darkGreen));
+            // // pal.setBrush(QPalette::Text, QColor(Qt::black));
+            // button->setAutoFillBackground(true);
+            // button->setPalette(pal);
+            // button->update();
+            //button->setStyleSheet("background-color: solid #006400;");
+            button->setStyleSheet("border:3px solid #ffffff;");
+        }
+
+        // if the button correspond to this player
+        if(i == clientIndexInPlayerArray)
+        {
+            button->setEnabled(false);
+            //button->setStyleSheet("border:3px solid #ffffff;");
+
+        }
+        // if player buttons should be disabled(not a choose a player card)
+        if(!gameState.playerButtonsEnabled)
+            button->setEnabled(false);
+
+
+
+
         playerLayout->addWidget(button);
     }
 

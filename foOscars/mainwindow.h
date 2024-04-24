@@ -58,7 +58,6 @@ public:
 
     void showCardsOnTableau();
     void showCardsInHand();
-    void updateOtherPlayersHandsBox();
     void updateView();
     void showPlayerButtons();
 
