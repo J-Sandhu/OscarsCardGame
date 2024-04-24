@@ -142,6 +142,16 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <widget class="QGraphicsView" name="graphicsView">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>0</y>
+         <width>551</width>
+         <height>421</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QScrollArea" name="handScrollArea">
@@ -213,8 +223,14 @@
        <x>0</x>
        <y>0</y>
        <width>991</width>
-       <height>211</height>
+       <height>221</height>
       </rect>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
      </property>
      <property name="widgetResizable">
       <bool>true</bool>
@@ -225,7 +241,7 @@
         <x>0</x>
         <y>0</y>
         <width>989</width>
-        <height>209</height>
+        <height>219</height>
        </rect>
       </property>
      </widget>
@@ -391,16 +407,6 @@
      <string>End Game</string>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>50</y>
-      <width>551</width>
-      <height>421</height>
-     </rect>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -408,7 +414,7 @@
      <x>0</x>
      <y>0</y>
      <width>1184</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

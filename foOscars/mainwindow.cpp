@@ -463,35 +463,34 @@ void MainWindow::showPlayerButtons()
 
         button->setText(buttonText);
 
-        //button->setStyleSheet("border: none; color: palette(window-text); background: transparent;");
-
-        // label->setGeometry(0, 0, 350, 490);
-        // label->setPixmap(actionImages.at(actionCardID).scaledToHeight(label->geometry().height(), Qt::FastTransformation));
-        //label->setText("<l>Label</>");
-
-
-
         //label->setText("<b>Button</b> Test");
         connect(button, &QPushButton::clicked, this, &MainWindow::anotherPlayerClicked);
-
-        // if the button correspond to this player
-        if(i == clientIndexInPlayerArray)
-            button->setEnabled(false);
-
-        // if player buttons should be disabled(not a choose a player card)
-        if(!gameState.playerButtonsEnabled)
-            button->setEnabled(false);
 
         // if this button corresponds to the player whose turn it is
         if(i == gameState.currentPlayerIndex)
         {
-            QPalette pal = button->palette();
-            pal.setColor(QPalette::Button, QColor(Qt::darkGreen));
-           // pal.setBrush(QPalette::Text, QColor(Qt::black));
-            button->setAutoFillBackground(true);
-            button->setPalette(pal);
-            button->update();
+            // QPalette pal = button->palette();
+            // pal.setColor(QPalette::Button, QColor(Qt::darkGreen));
+            // // pal.setBrush(QPalette::Text, QColor(Qt::black));
+            // button->setAutoFillBackground(true);
+            // button->setPalette(pal);
+            // button->update();
+            //button->setStyleSheet("background-color: solid #006400;");
+            button->setStyleSheet("border:3px solid #ffffff;");
         }
+
+        // if the button correspond to this player
+        if(i == clientIndexInPlayerArray)
+        {
+            button->setEnabled(false);
+            //button->setStyleSheet("border:3px solid #ffffff;");
+
+        }
+        // if player buttons should be disabled(not a choose a player card)
+        if(!gameState.playerButtonsEnabled)
+            button->setEnabled(false);
+
+
 
 
         playerLayout->addWidget(button);
