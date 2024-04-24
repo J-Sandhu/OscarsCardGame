@@ -764,7 +764,6 @@ void Model::generateRandomTableau(QVector<int> availablePeople, int size)
     // gameState.tableau.push_back(gameState.personCardStack.at(2));
 
     // Only populate tableau with people cards that exist according to available people
-
     for(int i=1; i<peopleMap.size(); i++)
     {
         // generate a random index
@@ -1545,25 +1544,17 @@ void Model::addNewPlayer(long long id)
 
 void Model::neutralizeGrays(int unused,int unused1,int unused2)
 {
-    // remove negative blues
-    for(int i =0; i<gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.size(); i++)
-        if(std::get<0>(peopleMap.at(gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.at(i)))<0)
-            gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.remove(i);
 
-    // remove negative greens
-    for(int i =0; i<gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.size(); i++)
-        if(std::get<0>(peopleMap.at(gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.at(i)))<0)
-            gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.remove(i);
-
-    // remove negative purples
-    for(int i =0; i<gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.size(); i++)
-        if(std::get<0>(peopleMap.at(gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.at(i)))<0)
-            gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.remove(i);
-
-    // remove negative reds
-    for(int i =0; i<gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.size(); i++)
-        if(std::get<0>(peopleMap.at(gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.at(i)))<0)
-            gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.remove(i);
+    if (gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.contains(19))
+    {
+        int romanIndex= gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.indexOf(19);
+        gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.removeAt(romanIndex);
+    }
+    if (gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.contains(23))
+    {
+        int ALMIndex= gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.indexOf(23);
+        gameState.players.at(gameState.currentPlayerIndex).purplePeoplePile.removeAt(ALMIndex);
+    }
 
     endOfTurn();
 }
