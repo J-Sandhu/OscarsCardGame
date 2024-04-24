@@ -271,6 +271,8 @@ void MainWindow::showCardsOnTableau()
     // layout
     qDeleteAll(tableauScrollWidget->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
 
+    tableauLayout->setSpacing(0);
+    tableauLayout->setContentsMargins(0, 0, 0, 0);
     // update nominees remaining label
     QString nomineeCount("Nominees Remaining: ");
     nomineeCount.append(QString::number(gameState.tableau.size()));
@@ -328,6 +330,8 @@ void MainWindow::showCardsInHand()
     // layout
     qDeleteAll(handScrollWidget->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
 
+    handLayout->setSpacing(0);
+    handLayout->setContentsMargins(0, 0, 0, 0);
     // update nominees remaining label
     // for(int i =0; i<tableauLayout->count(); i++)
     // {
@@ -508,12 +512,6 @@ void MainWindow::showPlayerButtons()
     ui->playerButtonScrollArea->setWidget(playerButtonWidget);
 }
 
-void MainWindow::playerButtonClicked()
-{
-    std::cout <<"getting into playerButton clicked" << std::endl;
-
-
-}
 
 //start the simulation -> only do when there are no cards in the tableau
 void MainWindow::startConfetti()
