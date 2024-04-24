@@ -1090,7 +1090,7 @@ void Model::populateActionMap()
     // add card 1: Re-cast
     QVector<int> parameters1{-1,0,0};
     cardTuple tuple1(&Model::movementCardPlayed,parameters1,&Model::replacePerson);
-    actionMap.insert(std::pair<int,cardTuple>(0,tuple1));
+    actionMap.insert(std::pair<int,cardTuple>(1,tuple1));
 
     //add card 2: back 1
     QVector<int> parameters2{-1,-1,0};
@@ -1113,7 +1113,7 @@ void Model::populateActionMap()
     actionMap.insert(std::pair<int,cardTuple>(5,tuple5));
 
     // add card 6: purple 2
-    QVector<int> parameters6{2,4,0};
+    QVector<int> parameters6{2,2,0};
     cardTuple tuple6(&Model::movementCardPlayed, parameters6, &Model::movementCardComplete);
     actionMap.insert(std::pair<int,cardTuple>(6,tuple6));
 
