@@ -63,7 +63,7 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "index",
     "tableauCardClicked",
     "actionCardClicked",
-    "anotherPlayerPersonCardClicked",
+    "anotherPlayerClicked",
     "updateActionHand",
     "std::vector<QImage>",
     "images",
@@ -95,7 +95,7 @@ struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
     char stringdata18[6];
     char stringdata19[19];
     char stringdata20[18];
-    char stringdata21[31];
+    char stringdata21[21];
     char stringdata22[17];
     char stringdata23[20];
     char stringdata24[7];
@@ -128,13 +128,13 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(261, 5),  // "index"
         QT_MOC_LITERAL(267, 18),  // "tableauCardClicked"
         QT_MOC_LITERAL(286, 17),  // "actionCardClicked"
-        QT_MOC_LITERAL(304, 30),  // "anotherPlayerPersonCardClicked"
-        QT_MOC_LITERAL(335, 16),  // "updateActionHand"
-        QT_MOC_LITERAL(352, 19),  // "std::vector<QImage>"
-        QT_MOC_LITERAL(372, 6),  // "images"
-        QT_MOC_LITERAL(379, 19),  // "playerButtonClicked"
-        QT_MOC_LITERAL(399, 28),  // "displayWinnerAndConfettiSlot"
-        QT_MOC_LITERAL(428, 14)   // "endGameClicked"
+        QT_MOC_LITERAL(304, 20),  // "anotherPlayerClicked"
+        QT_MOC_LITERAL(325, 16),  // "updateActionHand"
+        QT_MOC_LITERAL(342, 19),  // "std::vector<QImage>"
+        QT_MOC_LITERAL(362, 6),  // "images"
+        QT_MOC_LITERAL(369, 19),  // "playerButtonClicked"
+        QT_MOC_LITERAL(389, 28),  // "displayWinnerAndConfettiSlot"
+        QT_MOC_LITERAL(418, 14)   // "endGameClicked"
     },
     "MainWindow",
     "newMessage",
@@ -157,7 +157,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
     "index",
     "tableauCardClicked",
     "actionCardClicked",
-    "anotherPlayerPersonCardClicked",
+    "anotherPlayerClicked",
     "updateActionHand",
     "std::vector<QImage>",
     "images",
@@ -273,7 +273,7 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'actionCardClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'anotherPlayerPersonCardClicked'
+        // method 'anotherPlayerClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'updateActionHand'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -308,7 +308,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 11: _t->displayPopUp((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 12: _t->tableauCardClicked(); break;
         case 13: _t->actionCardClicked(); break;
-        case 14: _t->anotherPlayerPersonCardClicked(); break;
+        case 14: _t->anotherPlayerClicked(); break;
         case 15: _t->updateActionHand((*reinterpret_cast< std::add_pointer_t<std::vector<QImage>>>(_a[1]))); break;
         case 16: _t->playerButtonClicked(); break;
         case 17: _t->displayWinnerAndConfettiSlot(); break;

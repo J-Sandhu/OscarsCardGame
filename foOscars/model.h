@@ -27,6 +27,7 @@ public:
     void HandlePlayerName(long long id, QString message);
     void HandleStartGame(long long id);
     void addNewPlayer(long long id);
+
     void endGame();
 
 
@@ -63,16 +64,20 @@ public:
     void takeDiscardedAction(int, int, int);
     void crewToFront(int, int, int);
     void moveClosestBlueToFront(int, int, int);
-    void swapHands(int, int, int);
+    void choosePlayer(int, int, int);
+    void mixAfterTurn(int,int,int);
     void swapHandsComplete(int victimPlayer);
-    void dealNewActionCard(int currentPlayerIndex, int unused, int unused1);
     void discardOneAction(int, int, int);
+    void dealNewActionCard(int, int, int);
     void allRemoveAnAction(int, int, int);
-    void movementThenDraw(int);
     void drawThreeActionNoNoble(int, int, int);
     void endDay(int, int, int);
 
 
+    void afterYou(int);
+    void replacePerson(int);
+    void discardPerson(int);
+    void disqualification(int);
 
     //blue,green,purple,red
     int blue = 0;
@@ -147,6 +152,11 @@ private:
     void movementCardPlayed(int requiredColor, int unused1, int unused2);
 
     ///
+    /// \brief For card 29. makes all negative cards no longer detriment score
+    ///
+    void neutralizeGrays(int unused,int unused1,int unused2);
+
+    ///
     /// \brief This method will replace the line
     /// \param unused1
     /// \param unused2
@@ -160,10 +170,16 @@ private:
     void populateGameState();
 
     ///
+    /// \brief Method for making a specific player discard a randumb action card
+    /// \param victimPlayerIndex
+    ///
+    void makeDiscardAction(int victimPlayerIndex);
+
+    ///
     /// \brief creates a random tableau and puts it into the game state
     ///  requires that game has been populated
     ///
-    void generateRandomTableau();
+    void generateRandomTableau(QVector<int> availablePeople, int size);
 
     ///
     /// \brief populates all player's hands with random action cards
