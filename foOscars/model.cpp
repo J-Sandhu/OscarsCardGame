@@ -217,7 +217,7 @@ void Model::movementCardComplete(int indexInTab)
         std::cout << "grabbed 2nd param in movement card complete" << std::endl;
         gameState.tableau.move(indexInTab,0);
     }
-    else if(indexInTab+params.at(1) > gameState.tableau.size()-1)
+    else if(indexInTab-params.at(1) > gameState.tableau.size()-1)
         gameState.tableau.move(indexInTab, gameState.tableau.size()-1);
     else
         gameState.tableau.move(indexInTab, indexInTab - params.at(1));
@@ -1150,8 +1150,8 @@ void Model::populateActionMap()
     cardTuple tuple14(&Model::frontToBack, parameters14, nullptr);
     actionMap.insert(std::pair<int,cardTuple>(14,tuple14));
 
-    // add card 15: green up 2
-    QVector<int> parameters15{1,2,0};
+    // add card 15: green up 3
+    QVector<int> parameters15{1,3,0};
     cardTuple tuple15(&Model::movementCardPlayed, parameters15, &Model::movementCardComplete);
     actionMap.insert(std::pair<int,cardTuple>(15,tuple15));
 

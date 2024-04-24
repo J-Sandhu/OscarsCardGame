@@ -148,7 +148,7 @@ public:
         nomineeCountLabel->setFont(font1);
         label_2 = new QLabel(gameplayFrame);
         label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(770, 220, 81, 21));
+        label_2->setGeometry(QRect(640, 220, 211, 21));
         playerButtonScrollArea = new QScrollArea(gameplayFrame);
         playerButtonScrollArea->setObjectName("playerButtonScrollArea");
         playerButtonScrollArea->setGeometry(QRect(0, 0, 991, 211));
@@ -204,7 +204,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1184, 24));
+        menubar->setGeometry(QRect(0, 0, 1184, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
