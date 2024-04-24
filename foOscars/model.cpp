@@ -1317,6 +1317,8 @@ void Model::endOfTurn()
 
     gameState.tableauCardIsEnabled = enabledVec;
 
+    recalculateScore();
+
     emit sendStateToPlayers(gameState.serialize());
 }
 
