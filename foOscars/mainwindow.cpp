@@ -485,8 +485,10 @@ void MainWindow::showPlayerButtons()
 
         }
         // if player buttons should be disabled(not a choose a player card)
+        cout<<"button enabled?: "<<gameState.playerButtonsEnabled<<endl;
         if(!gameState.playerButtonsEnabled)
             button->setEnabled(false);
+        else button->setEnabled(true);
 
 
 
