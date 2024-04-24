@@ -304,9 +304,11 @@ void MainWindow::showCardsOnTableau()
         //label->setText("<b>Button</b> Test");
         connect(button, &QPushButton::clicked, this, &MainWindow::tableauCardClicked);
         //ui->tableauLayout->addWidget(label);
+
+        if(gameState.currentPlayerIndex != clientIndexInPlayerArray)
+            button ->setEnabled(false);
+
         tableauLayout->addWidget(button);
-
-
         //std::cout <<" adding labelbutton at: " << tableauLayout->indexOf(button) << std::endl;
 
 
