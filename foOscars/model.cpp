@@ -80,7 +80,7 @@ void Model::HandleActionSelection(long long id, QString message)
 
     //TODO: see if we will need this. We should be sending where cards are enabled, but for some it's not working.
     // it may be worth just sending it twice
-    emit sendStatetoPlayer(gameState.serialize(), gameState.currentPlayerIndex);
+    emit sendStateToPlayer(gameState.serialize(), gameState.currentPlayerIndex);
 
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
@@ -196,7 +196,7 @@ void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
     }
     //TODO: rn works with only a host bc it will send the 2nd part of the 2 parter to ALL players (not the one who played the card)
     //emit sendStateToPlayers(gameState.serialize());
-    emit sendStatetoPlayer(gameState.serialize(),gameState.currentPlayerIndex);
+    emit sendStateToPlayer(gameState.serialize(), gameState.currentPlayerIndex);
 }
 
 void Model::movementCardComplete(int indexInTab)
@@ -439,7 +439,7 @@ void Model::crewToFront(int unused, int unused1, int unused2)
      std::cout<<"got into swap" << std::endl;
 
      gameState.playerButtonsEnabled=true;
-     emit sendStatetoPlayer(gameState.serialize(),gameState.currentPlayerIndex);
+     emit sendStateToPlayer(gameState.serialize(),gameState.currentPlayerIndex);
  }
 
  void Model::swapHandsComplete(int victimPlayer)

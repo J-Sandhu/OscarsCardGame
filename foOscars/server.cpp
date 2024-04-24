@@ -40,6 +40,7 @@ Server::Server(QWidget *parent): QObject(parent)
     // connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
     connect(model,&Model::sendChatToPlayers,this,&Server::sendChat);
     connect(model,&Model::sendStateToPlayers,this,&Server::sendState);
+    connect(model,&Model::sendStateToPlayer, this, &Server::sendStateToPlayer);
     connect(tcpServer, &QTcpServer::newConnection, this, &Server::newConnection);
     protocolName = "~pname:";
     protocolChat = "~chat:";
