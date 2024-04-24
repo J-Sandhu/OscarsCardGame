@@ -245,6 +245,9 @@ void Model::frontToBack(int unused, int unused1, int unused2)
 //reuse for 16, 17, 20
 void Model::shuffleTableauPlayed(int numCardsToShuffle,int unused, int unused2)
 {
+    if(gameState.tableau.size() < numCardsToShuffle)
+        numCardsToShuffle = gameState.tableau.size();
+
     for (int i = 0; i < numCardsToShuffle / 2; i++) {
         // Calculate the index of the corresponding element from the end
         int j = numCardsToShuffle - 1 - i;
@@ -327,6 +330,7 @@ void Model::escapeCardPlayed2ndPart(int chosenIndex)
     QVector<bool> newEnabledVector;
     for(int i =0; i<gameState.tableau.size(); i++)
         newEnabledVector.push_back(false);
+
     gameState.tableauCardIsEnabled = newEnabledVector;
 
 
@@ -1031,7 +1035,7 @@ void Model::populatePeopleMap()
     //29-emma watson
     peopleTuple tuple28(2, red,nullptr);
     peopleMap.insert(std::pair<int,peopleTuple>(28,tuple28));
-    peopleNameMap.insert(std::pair<int,QString>(21,tr("Emma Watson")));
+    peopleNameMap.insert(std::pair<int,QString>(28,tr("Emma Watson")));
 
 
 
@@ -1121,7 +1125,7 @@ void Model::drawActionCard(int numberOfCards)
         int randomActionID= gameState.actionCardStack.at(randomActionIndex);
 
 
-        gameState.players.at(gameState.currentPlayerIndex).actionPile.push_back(gameState.actionCardStack.at(randomActionID));
+        gameState.players.at(gameState.currentPlayerIndex).actionPile.push_back(randomActionID);
         gameState.actionCardStack.removeAt(randomActionIndex);
     }
 
@@ -1477,7 +1481,7 @@ void Model::endOfTurn()
     int personCollectedId =gameState.tableau.at(0);
 
     gameState.tableau.removeAt(0);
-    gameState.playerButtonsEnabled = false;
+
 
     int color = std::get<1>(peopleMap.at(personCollectedId));
     int score = std::get<0>(peopleMap.at(personCollectedId));
@@ -1530,6 +1534,8 @@ void Model::endOfTurn()
     gameState.tableauCardIsEnabled = enabledVec;
 
     recalculateScore();
+
+    gameState.playerButtonsEnabled = false;
 
     emit sendStateToPlayers(gameState.serialize());
 }
