@@ -763,7 +763,7 @@ void Model::generateRandomHands()
         {
             int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size());
             //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
-            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(48)); //hard coded to test AC#
+            gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(0)); //hard coded to test AC#
 
             // put a card into the hand
             gameState.players.at(i).actionPile.push_back(existingActionCards.at(randomExistingActionIndex));
