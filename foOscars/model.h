@@ -67,6 +67,8 @@ public:
     void discardOneAction(int, int, int);
     void afterYou(int);
     void movementThenDraw(int);
+    void disqualification(int);
+
 
     //blue,green,purple,red
     int blue = 0;
