@@ -45,13 +45,9 @@ void Model::HandleChatMessage(long long id, QString message)
         if (p.id==id)
             sender = p.name.toStdString()+": ";
     message.prepend(sender);
-    foreach (Player p, gameState.players)
-    {
-        if (p.id==id)
-            continue;
 
-        emit sendChatToPlayers(message);
-    }
+    emit sendChatToPlayers(message);
+
 
 }
 
