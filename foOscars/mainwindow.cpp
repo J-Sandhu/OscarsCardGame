@@ -458,7 +458,7 @@ void MainWindow::showPlayerButtons()
         button->setBaseSize(200,200);
         button->setFixedSize(200,200);
 
-        QString buttonSuffix("\n Score: ");
+        QString buttonSuffix("\n ---------------------- \n Score: ");
         buttonSuffix.append(QString::number(gameState.players.at(i).score));
         QString buttonText = playerName.append(buttonSuffix);
 
@@ -466,6 +466,8 @@ void MainWindow::showPlayerButtons()
 
         //label->setText("<b>Button</b> Test");
         connect(button, &QPushButton::clicked, this, &MainWindow::anotherPlayerClicked);
+
+        button->setStyleSheet("font-size: 20px;");
 
         // if this button corresponds to the player whose turn it is
         if(i == gameState.currentPlayerIndex)
@@ -477,12 +479,15 @@ void MainWindow::showPlayerButtons()
             // button->setPalette(pal);
             // button->update();
             //button->setStyleSheet("background-color: solid #006400;");
-            button->setStyleSheet("border:3px solid #ffffff;");
+            button->setStyleSheet("border:3px solid #ffffff; font-size: 20px;");
+
         }
 
         // if the button correspond to this player
         if(i == clientIndexInPlayerArray)
         {
+            buttonText.prepend("Me: ");
+            button->setText(buttonText);
             button->setEnabled(false);
             //button->setStyleSheet("border:3px solid #ffffff;");
 
