@@ -531,7 +531,7 @@ void Model::takeDiscardedAction(int unused, int unused1, int unused2)
     gameState.players[gameState.currentPlayerIndex].actionPile.push_back(gameState.actionCardStack.at(randomIndex));
     std::cout<<"current player action pile part 2: " << gameState.players[gameState.currentPlayerIndex].actionPile.size() << std::endl;
 
-    emit sendStateToPlayer(gameState.serialize(),gameState.currentPlayerIndex);
+    endOfTurn();
 }
 
 //for card 41 - draw 3 action, don't take a noble
