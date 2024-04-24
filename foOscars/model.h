@@ -72,7 +72,8 @@ public:
     void allRemoveAnAction(int, int, int);
     void drawThreeActionNoNoble(int, int, int);
     void endDay(int, int, int);
-
+    void blockPlayer(int, int, int);
+    void skipPlayer(int, int, int);
 
     void afterYou(int);
     void replacePerson(int);

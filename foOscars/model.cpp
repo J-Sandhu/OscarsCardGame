@@ -451,7 +451,17 @@ void Model::crewToFront(int unused, int unused1, int unused2)
     }
     endOfTurn();
 }
+\
+//for card 38
+void Model::skipPlayer(int unused, int unused1, int unused2){
+    endOfTurn();
+    endOfTurn();
+}
 
+//for card 47
+void Model::blockPlayer(int unused, int unused1, int unused2){
+    skipPlayer();
+}
 //for card 39 - take discarded action (random)
 void Model::takeDiscardedAction(int unused, int unused1, int unused2)
 {
@@ -1246,6 +1256,11 @@ void Model::populateActionMap()
     cardTuple tuple37(&Model::crewToFront, parameters37, nullptr);
     actionMap.insert(std::pair<int,cardTuple>(37,tuple37));
 
+    //add card 38: eastwood
+    QVector<int> parameters38{-1,0,0};
+    cardTuple tuple38(&Model::skipPlayer, parameters38, nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(38,tuple38));
+
     //add card 39: choose AC from discarded pile
     QVector<int> parameters39{-1,0,0};
     cardTuple tuple39(&Model::takeDiscardedAction, parameters39, nullptr);
@@ -1287,6 +1302,11 @@ void Model::populateActionMap()
     QVector<int> parameters46{-1,0,0};
     cardTuple tuple46(&Model::choosePlayer, parameters46, &Model::swapHandsComplete);
     actionMap.insert(std::pair<int,cardTuple>(46,tuple46));
+
+    //add card 47: block player
+    QVector<int> parameters47{-1,0,0};
+    cardTuple tuple47(&Model::blockPlayer, parameters47, nullptr);
+    actionMap.insert(std::pair<int,cardTuple>(47,tuple47));
 
     //add card 48: scarlet pimpernel
     QVector<int> parameters48{-1,0,0};
