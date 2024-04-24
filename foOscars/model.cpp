@@ -368,6 +368,58 @@ void Model::addFromTopThree(int unused, int unused1, int unused2){
 
 }
 
+//for card 31
+void Model::disqualification(int victimPlayerIndex)
+{
+    Player* victim = &gameState.players.at(victimPlayerIndex);
+    int peopleCardAmount = victim->purplePeoplePile.size();
+    peopleCardAmount += victim->bluePeoplePile.size();
+    peopleCardAmount += victim->redPeoplePile.size();
+    peopleCardAmount += victim->greenPeoplePile.size();
+    cout<<"peopleCardAmount:"<<peopleCardAmount<<endl;
+    if (peopleCardAmount==0)
+    {
+        endOfTurn();
+        return;
+    }
+
+    int cardNum= QRandomGenerator::global()->bounded(peopleCardAmount)+1;
+    cout<<"card num:"<<cardNum<<endl;
+    if (cardNum<= victim->purplePeoplePile.size())
+    {
+        victim->purplePeoplePile.removeAt(cardNum-1);
+        cout<<"removed from purples!"<<endl;
+        endOfTurn();
+
+        return;
+    }
+    cardNum -= victim->purplePeoplePile.size();
+    cout<<"card num after purples:"<<cardNum<<endl;
+
+    if (cardNum<= victim->bluePeoplePile.size())
+    {
+        victim->bluePeoplePile.removeAt(cardNum-1);
+        cout<<"removed from blues!"<<endl;
+        endOfTurn();
+        return;
+    }
+    cardNum -= victim->bluePeoplePile.size();
+    cout<<"card num after blues:"<<cardNum<<endl;
+
+    if (cardNum<= victim->redPeoplePile.size())
+    {
+        victim->redPeoplePile.removeAt(cardNum-1);
+        cout<<"removed from reds!"<<endl;
+        endOfTurn();
+        return;
+    }
+    cardNum -= victim->redPeoplePile.size();
+    cout<<"card num after reds:"<<cardNum<<endl;
+
+    victim->greenPeoplePile.removeAt(cardNum-1);
+    cout<<"removed from greens!"<<endl;
+    endOfTurn();
+}
 
 //for card 34
 void Model::merylToFront(int unused, int unused1, int unused2)
@@ -763,7 +815,6 @@ void Model::generateRandomHands()
     for(int i =0 ; i<gameState.players.size(); i++)
     {
         // put 5 unique action cards into their hand
-        gameState.players.at(i).actionPile.push_back(14);
         for(int j =0; j<20; j++)
         {
             //int randomExistingActionIndex = QRandomGenerator::global()->bounded(existingActionCards.size());
@@ -793,7 +844,7 @@ void Model::populatePeopleMap()
     peopleMap.insert(std::pair<int,peopleTuple>(0,tuple));
 
     //1- charlie chaplin
-    peopleTuple tuple1(1,0, nullptr);
+    peopleTuple tuple1(2,0, nullptr);
     //int= card id, tuple contains correspinding card's info
     peopleMap.insert(std::pair<int,peopleTuple>(1,tuple1));
 
@@ -1241,6 +1292,11 @@ void Model::populateActionMap()
     QVector<int> parameters30{purple,0,0};
     cardTuple tuple30(&Model::scoreManipulatorPlayed, parameters30, nullptr);
     actionMap.insert(std::pair<int,cardTuple>(30,tuple30));
+
+    //add card 31: disqualified
+    QVector<int> parameters31{0,0,0};
+    cardTuple tuple31(&Model::choosePlayer,parameters31,&Model::disqualification);
+    actionMap.insert(std::pair<int,cardTuple>(31,tuple31));
 
     QVector<int> parameters32{-1,0,0};
     cardTuple tuple32(&Model::choosePlayer, parameters32, &Model::makeDiscardAction);
