@@ -1319,26 +1319,21 @@ int Model::calulateColorSum(int color, bool manipultorEnabled)
     foreach(int person ,vectorToBeSummed )
     {
 
-        //crazy logic but this is to handle not searching for the same pair twice and doing the point boost twice
-        //so if you only search when you find the even half you only do the pair adding once.
-        if(person<=8 &&person>0&& (person%2==0) )
-        {
+        //0->6
+        //7->37
+        //10->40
+        //16->18
 
-            if(person==8&& gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.contains(7))
-            {
-                pileSum+=std::get<0>(peopleMap.at(person))*3;
-            }
-            else if(gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.contains(person-1))
-            {
-                pileSum+=std::get<0>(peopleMap.at(person))*3;
-            }
-
-        }
-        else
-        {
+        if(person==0 && gameState.players.at(gameState.currentPlayerIndex).bluePeoplePile.contains(6))
             pileSum+=std::get<0>(peopleMap.at(person))*3;
-        }
-
+        if(person==7 && gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.contains(37))
+            pileSum+=std::get<0>(peopleMap.at(person))*3;
+        if(person==10 && gameState.players.at(gameState.currentPlayerIndex).redPeoplePile.contains(40))
+            pileSum+=std::get<0>(peopleMap.at(person))*3;
+        if(person==16 && gameState.players.at(gameState.currentPlayerIndex).greenPeoplePile.contains(18))
+            pileSum+=std::get<0>(peopleMap.at(person))*3;
+        else
+            pileSum+=std::get<0>(peopleMap.at(person));
     }
 
     if(manipultorEnabled)
