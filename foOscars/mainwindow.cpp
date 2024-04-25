@@ -431,7 +431,7 @@ void MainWindow::updateView()
     showPlayerButtons();
 
     QString round("Round: ");
-    round.append(QString::number(gameState.round));
+    round.append(QString::number(gameState.round-1));
 
     ui->roundLabel->setText(round);
     QString nominees("Nominees Remaining: ");

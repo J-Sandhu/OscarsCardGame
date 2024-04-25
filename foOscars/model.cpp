@@ -74,7 +74,7 @@ void Model::HandleActionSelection(long long id, QString message)
 
     int actionIndex = message.toInt(); //index corresponds to the current player's hand.
     currentAID = gameState.players.at(gameState.currentPlayerIndex).actionPile.at(actionIndex);
-
+    gameState.actionCardStack.push_back(currentAID);
     //remove action card from player's hand.
     gameState.players.at(gameState.currentPlayerIndex).actionPile.removeAt(actionIndex);
     // probably alert the player of this:
@@ -621,6 +621,15 @@ void Model::swapHandsComplete(int victimPlayer)
 //for card 42 - deal new action card for all players
 void Model::dealNewActionCard(int unused2, int unused, int unused1)
 {
+    for(int i = 0; i< gameState.players.size(); i++)
+    {
+        for(j=0; j<gameState.players.at(i).actionPile.size();i++)
+        {
+            int id = gameState.players.at(i).actionPile.at(j);
+            gameState.players.at(i).actionPile.removeAt(j);
+            gameState.actionCardStack.push_back(id);
+        }
+    }
     generateRandomHands();
     endOfTurn();
 }
@@ -711,7 +720,7 @@ void Model::populateGameState()
     //     gameState.players.push_back(p);
     // }
 
-    gameState.round=1;
+    gameState.round=2;
     gameState.currentPlayerIndex=0;
     gameState.gameOver=false;
 
@@ -1019,7 +1028,7 @@ void Model::populatePeopleMap()
 
 
     //27- Nolan
-    peopleTuple tuple26(-5,purple,nullptr);
+    peopleTuple tuple26(4,purple,nullptr);
     peopleMap.insert(std::pair<int,peopleTuple>(26,tuple26));
     peopleNameMap.insert(std::pair<int,QString>(26,tr("Christopher Nolan")));
 
