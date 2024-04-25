@@ -204,7 +204,7 @@ public:
         portLine->setGeometry(QRect(10, 20, 91, 21));
         winnerNameLabel = new QLabel(centralwidget);
         winnerNameLabel->setObjectName("winnerNameLabel");
-        winnerNameLabel->setGeometry(QRect(180, 160, 1021, 221));
+        winnerNameLabel->setGeometry(QRect(300, 170, 1021, 221));
         QFont font2;
         font2.setPointSize(60);
         winnerNameLabel->setFont(font2);
