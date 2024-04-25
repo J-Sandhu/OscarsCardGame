@@ -1,18 +1,6 @@
 #include "model.h"
 Model::Model(QObject *parent) : QObject(parent){
-
-    //populateGameState();
-
     gameIsStarted=false;
-    std::cout << "########## OLD GAME STATE ############" << std::endl;
-    //std::cout << gameState.serialize().toStdString() << std::endl;
-
-
-    //gameState.deserialize(gameState.serialize());
-    std::cout << "############### NEW GAME STATE ################" << std::endl;
-    //std::cout << gameState.serialize().toStdString() << std::endl;
-
-
     populatePeopleMap();
     populateActionMap();
 }
@@ -20,22 +8,17 @@ Model::Model(QObject *parent) : QObject(parent){
 void Model::HandlePlayerName(long long id, QString message)
 {
     if (message.toStdString()=="player")
-    {
         message.append(to_string(id));
-        cout<<message.toStdString()<<endl;
-    }
+
 
     for (int i=0; i<gameState.players.size(); i++)
-    {
         if (gameState.players.at(i).id==id)
         {
             gameState.players.at(i).name=message;
-            //cout<<"player found in naming! :"<<gameState.players.at(i).name.toStdString()<<endl;
             emit sendChatToPlayers(message.append(" has joined the game"));
-
             emit sendStateToPlayers(gameState.serialize());
         }
-    }
+
 }
 
 void Model::HandleChatMessage(long long id, QString message)
@@ -47,17 +30,13 @@ void Model::HandleChatMessage(long long id, QString message)
     message.prepend(sender);
 
     emit sendChatToPlayers(message);
-
-
 }
 
 void Model::HandleTableauSelection(long long id, QString message)
 {
     if(id !=gameState.players[gameState.currentPlayerIndex].id)
-    {
-        cout<<"ignored selection from non-current player"<<endl;
         return;
-    }
+
     int returnedParam = message.toInt();
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
@@ -67,63 +46,37 @@ void Model::HandleTableauSelection(long long id, QString message)
 void Model::HandleActionSelection(long long id, QString message)
 {
     if(id !=gameState.players.at(gameState.currentPlayerIndex).id)
-    {
-        cout<<"ignored selection from non-current player"<<endl;
         return;
-    }
+
 
     int actionIndex = message.toInt(); //index corresponds to the current player's hand.
     currentAID = gameState.players.at(gameState.currentPlayerIndex).actionPile.at(actionIndex);
     gameState.actionCardStack.push_back(currentAID);
+
     //remove action card from player's hand.
     gameState.players.at(gameState.currentPlayerIndex).actionPile.removeAt(actionIndex);
-    // probably alert the player of this:
-
-    //TODO: see if we will need this. We should be sending where cards are enabled, but for some it's not working.
-    // it may be worth just sending it twice
     emit sendStateToPlayer(gameState.serialize(), gameState.currentPlayerIndex);
 
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
-    std::cout <<"############ Parameters in handleactionselection" << std::endl;
-    std::cout<<params[0]<<std::endl;
-    std::cout<<params[1]<<std::endl;
-    std::cout<<params[2]<<std::endl;
-
-    std::cout<<"get to action card selection being handled"<<std::endl;
-    // selectedActionCardIDFromPersonalPile = actionCardID;
-    // emit actionCardSelectedFromPersonalPile(selectedActionCard);
     cardFunction cardFunction= function;
     ((*this).*cardFunction)(params[0],params[1],params[2]);
 }
 
 void Model::HandleStartGame(long long id)
 {
-    std::cout<<"getting into handle start game" << std::endl;
     if (gameIsStarted)
-    {
-        std::cout <<"game is already started" << std::endl;
         return;
-    }
-    if (id==gameState.players.at(0).id)
-    {
-        //populate tableau
-        std::cout<< "game has not yet started! calling methods"<<std::endl;
-        populateGameState();
-        //std::cout << gameState.serialize().toStdString() << std::endl;
-    }
 
-    // std::cout<<"gamestate.playerID != "<< id << " instead = " << gameState.players.at(0).id << std::endl;
+    if (id==gameState.players.at(0).id)
+        populateGameState();
 }
 
 void Model::HandleSelectedPlayer(long long id, QString message)
 {
 
     if(id !=gameState.players[gameState.currentPlayerIndex].id)
-    {
-        cout<<"ignored selection from non-current player"<<endl;
         return;
-    }
 
     int returnedParam = message.toInt();
     cardTuple actionCard = actionMap.at(currentAID);
@@ -133,7 +86,6 @@ void Model::HandleSelectedPlayer(long long id, QString message)
 
 void Model::addPointsFromActionCard(int scoreModification, int unused1, int unused2)
 {
-    std::cout << "modifying score by : " << scoreModification << std::endl;
     // Go into the current player's score manipulator and modify the "additional point" index within
     // score manipulator array.
     gameState.players.at(gameState.currentPlayerIndex).scoreManipulators[4] += scoreModification;
@@ -142,7 +94,6 @@ void Model::addPointsFromActionCard(int scoreModification, int unused1, int unus
 
 void Model::addPointsForColor(int color, int scoreModification, int unused1)
 {
-    std::cout << "adding : " << scoreModification << " to all cards at color index: " << color << std::endl;
     // go into the current player's score manipulator and modify the proper color's additional point field within
     // within the score manipulator array.
     gameState.players.at(gameState.currentPlayerIndex).scoreManipulators[color] = 1;
@@ -151,7 +102,6 @@ void Model::addPointsForColor(int color, int scoreModification, int unused1)
 
 void Model::decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModification, int unused1)
 {
-    std::cout << "removing: " << scoreModification << " points from player at index: " << victimPlayerIndex << std::endl;
     // go into the victim players score manipulator and modify the "additional point" index within the score manipulator array
     gameState.players.at(victimPlayerIndex).scoreManipulators[4] += scoreModification;
     endOfTurn();
@@ -160,32 +110,19 @@ void Model::decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModificati
 
 void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
 {
-    std::cout << "getting into move person card emission function" << std::endl;
-    std::cout << specifiedColor << std::endl;
-
-    //TODO: make it so that we dont go out of bounds if someone plays +4 in the first slot
     if (specifiedColor != -1){
-
         // create the vector of non-enabled tableau
         QVector<bool> newVector;
+
         for(int j =0; j<gameState.tableau.size(); j++)
             newVector.push_back(false);
 
         for (int i = 0; i<gameState.tableau.size(); i++)
         {
-            // std::cout <<"before looking at people tuple" <<std::endl;
-            // std::cout <<"size of peoplemap: " << peopleMap.size() << std::endl;
-
             peopleTuple person = peopleMap.at(gameState.tableau.at(i));
-
-            //std::cout <<"getting past looking at people tuple" << std::endl;
             auto[value, color, specialFunc] = person;
             if(color == specifiedColor)
-            {
-                //std::cout <<"Right before enabling a card in gamestate through model" << std::endl;
                 newVector.replace(i,true);
-                //std::cout <<"surviving it!" << std::endl;
-            }
         }
         gameState.tableauCardIsEnabled = newVector;
     }
@@ -194,13 +131,10 @@ void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
         QVector<bool> newEnabledVector;
         for(int i =0; i<gameState.tableau.size(); i++)
             newEnabledVector.push_back(true);
-        std::cout <<"***************************************setting some cards to enabled" << std::endl;
 
         gameState.tableauCardIsEnabled = newEnabledVector;
     }
 
-    //TODO: rn works with only a host bc it will send the 2nd part of the 2 parter to ALL players (not the one who played the card)
-    //emit sendStateToPlayers(gameState.serialize());
     emit sendStateToPlayer(gameState.serialize(), gameState.currentPlayerIndex);
 }
 
@@ -209,25 +143,13 @@ void Model::movementCardComplete(int indexInTab)
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
 
-    // std::cout << "movementCardComplete is called as a callback. Paramters when I get to here is: " <<params[0]<<", "<<params[1]<<", "<<params[2]<<std::endl;
-    // std::cout<<"indexInTab is: "<<indexInTab<<std::endl;
-
-    std::cout << "getting into movement card complete" << std::endl;
-
     if(indexInTab-params.at(1) < 0)
-    {
-        std::cout << "grabbed 2nd param in movement card complete" << std::endl;
         gameState.tableau.move(indexInTab,0);
-    }
     else if(indexInTab-params.at(1) > gameState.tableau.size()-1)
         gameState.tableau.move(indexInTab, gameState.tableau.size()-1);
     else
         gameState.tableau.move(indexInTab, indexInTab - params.at(1));
 
-    std::cout << "getting past moving card, problem is likely in endofturn" << std::endl;
-
-    //gameState.currentPlayerIndex += 1; *talk to Jai about hadling other player turns
-    // emit sendStateToPlayers(gameState.serialize());
     endOfTurn();
 
 }
@@ -235,7 +157,6 @@ void Model::movementCardComplete(int indexInTab)
 //for card 14
 void Model::frontToBack(int unused, int unused1, int unused2)
 {
-    //gameState.tableau.move(0, gameState.tableau.size());
     int firstCard=gameState.tableau.first();
     gameState.tableau.removeFirst();
     gameState.tableau.push_back(firstCard);
@@ -259,14 +180,12 @@ void Model::shuffleTableauPlayed(int numCardsToShuffle,int unused, int unused2)
     }
 
     //notify other players
-    // emit sendStateToPlayers(gameState.serialize());
     endOfTurn();
 }
 
 //for card 16
 void Model::shuffleTableauPlayed16(int unused, int unused1, int unused2)
 {
-
     shuffleTableauPlayed(4, 0, 0);
     endOfTurn();
 }
@@ -294,9 +213,7 @@ void Model::reverseCardPlayed(int unused, int unused1, int unused2)
         end--;
     }
 
-    // emit sendStateToPlayers((gameState.serialize()));
     endOfTurn();
-    // qDebug()<<"call reverse";
 }
 
 
@@ -305,7 +222,6 @@ void Model::newLinePlayed(int unused, int unused1, int unused2)
 {
     generateRandomTableau(gameState.personCardStack, 10);
     endOfTurn();
-    // emit sendStateToPlayers((gameState.serialize()));
 }
 
 //for card 20
@@ -333,7 +249,6 @@ void Model::escapeCardPlayed2ndPart(int chosenIndex)
 
     gameState.tableauCardIsEnabled = newEnabledVector;
 
-
     shuffleTableauPlayed(gameState.tableau.size(), 0, 0);
     endOfTurn();
 }
@@ -341,12 +256,13 @@ void Model::escapeCardPlayed2ndPart(int chosenIndex)
 
 
 //for card 22
-void Model::addToTableau(int numCardsToAdd, int unused, int unused1)
-{   numCardsToAdd = 3;
+void Model::addToTableau(int numCardsToAdd, int unused, int unused1){
+
+    numCardsToAdd = 3;
+
     if(gameState.personCardStack.size() < numCardsToAdd)
-    {
         numCardsToAdd = gameState.personCardStack.size();
-    }
+
     for (int i = 0; i<numCardsToAdd; i++)
     {
         int rand = std::rand() % gameState.personCardStack.size();
@@ -362,9 +278,8 @@ void Model::addToTableau(int numCardsToAdd, int unused, int unused1)
 void Model::addFromTopThree(int unused, int unused1, int unused2){
     int numToChoose = 3;
     if(gameState.personCardStack.size() < numToChoose)
-    {
         numToChoose = gameState.personCardStack.size();
-    }
+
     int chosenIndex = std::rand() % numToChoose;
 
     gameState.tableauCardIsEnabled.push_back(false);
@@ -383,7 +298,7 @@ void Model::disqualification(int victimPlayerIndex)
     peopleCardAmount += victim->bluePeoplePile.size();
     peopleCardAmount += victim->redPeoplePile.size();
     peopleCardAmount += victim->greenPeoplePile.size();
-    cout<<"peopleCardAmount:"<<peopleCardAmount<<endl;
+
     if (peopleCardAmount==0)
     {
         endOfTurn();
@@ -391,40 +306,33 @@ void Model::disqualification(int victimPlayerIndex)
     }
 
     int cardNum= QRandomGenerator::global()->bounded(peopleCardAmount)+1;
-    cout<<"card num:"<<cardNum<<endl;
     if (cardNum<= victim->purplePeoplePile.size())
     {
         victim->purplePeoplePile.removeAt(cardNum-1);
-        cout<<"removed from purples!"<<endl;
         endOfTurn();
-
         return;
     }
+
     cardNum -= victim->purplePeoplePile.size();
-    cout<<"card num after purples:"<<cardNum<<endl;
 
     if (cardNum<= victim->bluePeoplePile.size())
     {
         victim->bluePeoplePile.removeAt(cardNum-1);
-        cout<<"removed from blues!"<<endl;
         endOfTurn();
         return;
     }
     cardNum -= victim->bluePeoplePile.size();
-    cout<<"card num after blues:"<<cardNum<<endl;
 
     if (cardNum<= victim->redPeoplePile.size())
     {
         victim->redPeoplePile.removeAt(cardNum-1);
-        cout<<"removed from reds!"<<endl;
         endOfTurn();
         return;
     }
     cardNum -= victim->redPeoplePile.size();
-    cout<<"card num after reds:"<<cardNum<<endl;
 
     victim->greenPeoplePile.removeAt(cardNum-1);
-    cout<<"removed from greens!"<<endl;
+
     endOfTurn();
 }
 
@@ -467,27 +375,13 @@ void Model::moveClosestBlueToFront(int specifiedColor , int unused , int unused2
 
     for(int i=0; i<gameState.tableau.size(); i++)
     {
-        std::cout<<"got into for loop" <<  std::endl;
-
         peopleTuple person = peopleMap[gameState.tableau.at(i)];
         auto[value, color, specialFunc] = person;
-
-        std::cout<<" id of first blue: "<<gameState.tableau.at(i)<<std::endl;
-        std::cout<<"get into " <<  std::endl;
-        std::cout<<color <<  std::endl;
-
 
         if(color == specifiedColor) //if a blue card exists
         {
             closestBlueIndex = i;
-            std::cout<<"blue: " << closestBlueIndex << std::endl;
-            //move blue to front
-            // gameState.tableau.insert(gameState.tableau.begin(), gameState.tableau.at(closestBlueIndex));
-            // //delete where it was
-            // gameState.tableau.removeAt(closestBlueIndex);
-
             gameState.tableau.move(closestBlueIndex, 0);
-
             break;
         }
     }
@@ -529,15 +423,13 @@ void Model::skipPlayer(int unused, int unused1, int unused2){
 void Model::blockPlayer(int unused, int unused1, int unused2){
     skipPlayer(0,0,0);
 }
+
 //for card 39 - take discarded action (random)
 void Model::takeDiscardedAction(int unused, int unused1, int unused2)
 {
-
     int randomIndex = std::rand() % gameState.actionCardStack.size();
-
     gameState.players.at(gameState.currentPlayerIndex).actionPile.push_back(gameState.actionCardStack.at(randomIndex));
     gameState.actionCardStack.removeAt(randomIndex);
-
     endOfTurn();
 }
 
@@ -547,7 +439,6 @@ void Model::drawThreeActionNoNoble(int unused, int unused1, int unused3)
     drawActionCard(3);
     if(gameState.tableau.empty())
     {
-
         if (gameState.round==4)
             endGame();
         else
@@ -580,17 +471,15 @@ void Model::drawThreeActionNoNoble(int unused, int unused1, int unused3)
 //for card 43 - everyone remove an action
 void Model::allRemoveAnAction(int unused, int unused1, int unused2)
 {
-    for(int i = 0; i < gameState.players.size(); i++){
+    for(int i = 0; i < gameState.players.size(); i++)
         gameState.players.at(i).actionPile.removeAt(std::rand() % gameState.players.size());
-    }
+
     endOfTurn();
 }
 
 //for card 46 - swap hands, 1
 void Model::choosePlayer( int unuse, int unused, int unused2)
 {
-    std::cout<<"got into swap" << std::endl;
-
     gameState.playerButtonsEnabled=true;
 
     emit sendStateToPlayer(gameState.serialize(),gameState.currentPlayerIndex);
@@ -598,25 +487,12 @@ void Model::choosePlayer( int unuse, int unused, int unused2)
 
 void Model::swapHandsComplete(int victimPlayer)
 {
-
     //swap victim and current player's action piles
-
     gameState.players.at(victimPlayer).actionPile.swap(
         gameState.players.at(gameState.currentPlayerIndex).actionPile);
 
     endOfTurn();
 }
-
-// //for card 48 - end day
-// void Model::endDay(int unused ,int unused1, int unused2)
-// {
-//     std::cout<<"got into end day" << std::endl;
-//     endOfTurn();
-//     std::cout<<"end of turn doneeeeeeeeeee" << std::endl;
-//     endGame();
-// }
-
-
 
 //for card 42 - deal new action card for all players
 void Model::dealNewActionCard(int unused2, int unused, int unused1)
@@ -637,46 +513,29 @@ void Model::dealNewActionCard(int unused2, int unused, int unused1)
 //for card 44 - all players must discard 1 action card
 void Model::discardOneAction(int unused0, int unused1, int unused2)
 {
-    std::cout<<"getting into discard one action"<<std::endl;
-
     //for each player
     for(int i =0 ; i<gameState.players.size(); i++)
-    {
-        std::cout<<"player action pile before removing: "<< gameState.players.at(i).actionPile.size() <<std::endl;
         gameState.players.at(i).actionPile.removeAt(gameState.players.at(i).actionPile.at(gameState.players.at(i).selectedActionIndex));
-        std::cout<<"player action pile: "<< gameState.players.at(i).actionPile.size() << std::endl;
-    }
 
     endOfTurn();
 }
 
 void Model::afterYou(int victimPlayerIndex)
 {
-    cout<<"inside After You..."<<endl;
     int firstCardID = gameState.tableau.at(0);          //get the id of the first card
     peopleTuple person = peopleMap[firstCardID];        //get the card associated with first card
     auto[value, color, specialFunc] = person;           //get details of card
     gameState.tableau.removeFirst();                    //remove card
+
     if(color==purple)
-    {
-        //add first card id to purple pile
         gameState.players.at(victimPlayerIndex).purplePeoplePile.push_back(firstCardID);
-    }
     else if (color==blue)
-    {
-        //add first card id to blue pile
         gameState.players.at(victimPlayerIndex).bluePeoplePile.push_back(firstCardID);
-    }
     else if (color==red)
-    {
-        //add first card id to red pile
         gameState.players.at(victimPlayerIndex).redPeoplePile.push_back(firstCardID);
-    }
     else if (color==green)
-    {
-        //add first card id to green pile
         gameState.players.at(victimPlayerIndex).greenPeoplePile.push_back(firstCardID);
-    }
+
     endOfTurn();
 }
 
@@ -684,10 +543,7 @@ void Model::scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int m
 {
     if(specifiedColor ==anyColor)
     {
-        std::cout<<"color score buff: "<<colorScoreBuff<<std::endl;
         gameState.players.at(gameState.currentPlayerIndex).miscPoint+=colorScoreBuff;
-
-        std::cout<<"misc points here: "<< gameState.players.at(gameState.currentPlayerIndex).miscPoint<<std::endl;
         endOfTurn();
         return;
     }
@@ -708,17 +564,9 @@ void Model::scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int m
 
 void Model::populateGameState()
 {
-    std::cout <<"getting into populate game state" <<std::endl;
 
     //clear ppl stack
     gameState.personCardStack.clear();
-    // probably get rid of this, but populate some players.
-    //TODO: definitely get rid of this lol
-    // for(int i = 0; i<4; i++)
-    // {
-    //     Player p;
-    //     gameState.players.push_back(p);
-    // }
 
     gameState.round=2;
     gameState.currentPlayerIndex=0;
@@ -749,20 +597,6 @@ void Model::populateGameState()
     for(int i=0; i<4; i++)
         gameState.personCardStack.push_back(12);
 
-
-
-    // generate a random tableau
-
-    //TODO: we can remove this once we have all people cards implemented. For now it only allows 1 of each type
-    // of card
-
-    // // Only populate the random tableau with people cards that currently exist
-    // QVector<int> existingPeopleCards;
-
-    // for(std::map<int,peopleTuple>::iterator it = peopleMap.begin(); it != peopleMap.end(); ++it)
-    //     existingPeopleCards.push_back(it->first);
-
-
     generateRandomTableau(gameState.personCardStack, 10);
     populatePeopleMap();
 
@@ -770,38 +604,21 @@ void Model::populateGameState()
     generateRandomHands();
 
     //emit signal that game has been initialized and notify mainwindow to upload card images
-    //emit gameInitializedSignal();
-    std::cout <<"Getting to send state to players" << std::endl;
     emit sendStateToPlayers(gameState.serialize());
 
 }
 
 void Model::generateRandomTableau(QVector<int> availablePeople, int size)
 {
-    std::cout << "getting into random tableau" << std::endl;
     gameState.tableau.clear();
-    // gameState.tableau.push_back(gameState.personCardStack.at(2));
 
     // Only populate tableau with people cards that exist according to available people
     for(int i=0; i<size; i++)
     {
         // generate a random index
-
         int randomExistingPersonIndex = QRandomGenerator::global()->bounded(gameState.personCardStack.size());
-
-        //not so random random
-        //int randomPersonIndex = 1;
-
-        //std::rand() % (max - min + 1) + min;
-        //int randomTestVic = std::rand() % (19 - 10 +1) + 10 ; //using 10 - 19
-        // put the ID from that index into the tableau
         gameState.tableau.push_back(gameState.personCardStack.at(randomExistingPersonIndex));//availablePeople.at(randomExistingPersonIndex));
-
         gameState.personCardStack.remove(randomExistingPersonIndex);
-        //availablePeople.removeAt(randomExistingPersonIndex);
-        // remove the ID at that index so that the same Person won't be included twice(except duplicate cards)
-        //gameState.personCardStack.removeAt(randomPersonIndex);
-
     }
 
     QVector<bool> newVector;
@@ -834,14 +651,6 @@ void Model::shuffleTableau()
 
 void Model::generateRandomHands()
 {
-    //TODO: Either make the actionStack(the pile of action cards that hands are dealt from) into a vector like this
-    // when it is generated.
-    // ISSUE: some action cards are meant to exist more than once
-
-    // basically, this is fine. However, we really need to deal with card exclusivity:
-    // the idea that a particular instance of any card only exists in one location at one time.
-
-
     // Only populate hands with aciton cards that exist
     QVector<int> existingActionCards;
 
@@ -855,17 +664,8 @@ void Model::generateRandomHands()
         for(int j =0; j<5; j++)
         {
             int randomExistingActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size());
-            //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
-            //gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(48)); //hard coded to test AC#
-
-            // put a card into the hand
-            //gameState.players.at(i).actionPile.push_back(existingActionCards.at(randomExistingActionIndex));
             gameState.players.at(i).actionPile.push_back(gameState.actionCardStack.at(randomExistingActionIndex));
             gameState.actionCardStack.removeAt(randomExistingActionIndex);
-
-            // remove it from "existing action cards"
-            //existingActionCards.removeAt(randomExistingActionIndex);
-
         }
     }
 }
@@ -1126,19 +926,15 @@ void Model::populatePeopleMap()
 
 void Model::drawActionCard(int numberOfCards)
 {
-    std::cout <<"getting into draw action card" << std::endl;
     for(int i =0;i<numberOfCards;i++)
     {
         int randomActionIndex = QRandomGenerator::global()->bounded(gameState.actionCardStack.size());
 
         int randomActionID= gameState.actionCardStack.at(randomActionIndex);
 
-
         gameState.players.at(gameState.currentPlayerIndex).actionPile.push_back(randomActionID);
         gameState.actionCardStack.removeAt(randomActionIndex);
     }
-
-    std::cout << "finishing draw action card" << std::endl;
 
 }
 
@@ -1147,10 +943,6 @@ void Model::replacePerson(int indexInTab)
 
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
-
-
-
-    std::cout << "getting into replacePerson" << std::endl;
 
     int randomPersonID= QRandomGenerator::global()->bounded(gameState.personCardStack.size());
 
@@ -1165,11 +957,6 @@ void Model::discardPerson(int indexInTab)
 {
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
-
-
-
-    std::cout << "getting into replacePerson" << std::endl;
-
 
     gameState.tableau.remove(indexInTab);
 
@@ -1202,8 +989,7 @@ void Model::mixAfterTurn(int unused, int unused1, int unuesed2)
     if(std::get<2>(peopleMap.at(personCollectedId))!=nullptr)
     {
 
-        //currently only card with specialness is Greer Garson, so wouldnt be a loss to get rid of her or not
-        //do her effect through a function
+
     }
     else
     {
@@ -1553,42 +1339,28 @@ void Model::endOfTurn()
 
 void Model::recalculateScore()
 {
-    std::cout <<"getting into recalculate score" << std::endl;
     for (int playerIndex=0; playerIndex<gameState.players.size();playerIndex++)
     {
-        std::cout<<"Getting into playerLoop" << std::endl;
         int updatedScore=0;
 
         //color pile sums
         for(int i=0;i<numberOfColors;i++)
-        {
-            std::cout <<"getting into number of color loop" << std::endl;
             updatedScore += calulateColorSum(i, gameState.players.at(playerIndex).scoreManipulators.at(i), playerIndex);
-            std::cout<< "surviving" << std::endl;
-        }
 
         //crew stuff
         int num_Of_Crew=0;
         int id_Of_Crew=12;
-
         for(int person : gameState.players.at(playerIndex).greenPeoplePile)
         {
             if(person==id_Of_Crew)
-            {
-                std::cout <<"incrementing # of crew" << std::endl;
-                num_Of_Crew++;
-            }
+                num_Of_Crew++;   
         }
 
 
         gameState.players.at(playerIndex).score+= num_Of_Crew * num_Of_Crew;
-        std::cout <<"adding numcrew squared to score" << std::endl;
-
-        std::cout<<"misc points in recalulate score: "<< gameState.players.at(gameState.currentPlayerIndex).miscPoint<<std::endl;
         updatedScore+= gameState.players.at(playerIndex).miscPoint;
 
         gameState.players.at(playerIndex).score= updatedScore;
-        std::cout <<"replacing player score at index: " << playerIndex << std::endl;
     }
 }
 
@@ -1596,7 +1368,6 @@ int Model::calulateColorSum(int color, bool manipultorEnabled, int playerIndex)
 {
     QVector<int> vectorToBeSummed;
 
-    std::cout <<"getting into calculate color sum" << std::endl;
     //check which color
     if(color ==blue)
         vectorToBeSummed= gameState.players.at(playerIndex).bluePeoplePile;
@@ -1611,12 +1382,7 @@ int Model::calulateColorSum(int color, bool manipultorEnabled, int playerIndex)
     int pileSum=0;
     for(int person : vectorToBeSummed )
     {
-
-        //0->6
-        //7->37
-        //10->40
-        //16->18
-
+        // hard coded special pairs
         if(person==0 && gameState.players.at(playerIndex).bluePeoplePile.contains(6))
             pileSum+=std::get<0>(peopleMap.at(person))*3;
         if(person==7 && gameState.players.at(playerIndex).redPeoplePile.contains(37))
@@ -1642,10 +1408,7 @@ void Model::endGame()
 {
     gameState.gameOver=true;
     emit sendStateToPlayers(gameState.serialize());
-    std::cout <<"done with seriliazing " << std::endl;
     emit displayWinnerAndConfetti();
-    std::cout <<"done with confetti display " << std::endl;
-
 }
 
 void Model::endDay(int, int, int)
@@ -1707,10 +1470,8 @@ void Model::makeDiscardAction(int victimPlayerIndex)
     {
         for(int i=0; i<std::get<1>(actionMap.at(currentAID))[0]; i++)
         {
-            std::cout <<"Getting into generating random action to be removed from victim player" << std::endl;
             int randomActionIndex = QRandomGenerator::global()->bounded(gameState.players.at(victimPlayerIndex).actionPile.size());
             gameState.players.at(victimPlayerIndex).actionPile.removeAt(randomActionIndex);
-            std::cout <<"surviving it!" << std::endl;
         }
     }
 

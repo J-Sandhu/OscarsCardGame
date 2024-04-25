@@ -5,44 +5,27 @@ GameState::GameState() {}
 
 void GameState::deserialize(QByteArray serializedGameState)
 {
-    //std::cout <<"calling deserialize" << std::endl;
     resetGameState();
-    //std::cout << "getting past resetting the game state" << std::endl;
 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(serializedGameState);
 
     QJsonObject jsonObj = jsonDoc.object();
 
-    //std::cout << "length of tableau: " << jsonObj["Tableau"].toArray().size() << std::endl;
-
     QJsonArray jsonPlayerArr= jsonObj["Players"].toArray();
 
     for (int i=0; i< jsonPlayerArr.size(); i++)
     {
-        //std::cout <<"getting into player array deserialization loop, index: "<< i << std::endl;
         // initialize a player to be copied into
         Player newPlayer;
-        //std::cout <<"getting past initializing a new player" << std::endl;
-
         QJsonObject thisPlayer = jsonPlayerArr.at(i).toObject();
-        //std::cout <<"grabbing the player from the json player array" << std::endl;
-
-        //std::cout <<"casting gamestate players score from JSON" << std::endl;
-        /// HERE IS THE PROBLEM
         newPlayer.score = thisPlayer["Score"].toInt();
         newPlayer.name = thisPlayer["Name"].toString();
-        cout<<"deserialized name: "<<newPlayer.name.toStdString()<<endl;
-
-        //std::cout <<"getting past placing the score" << std::endl;
         QJsonArray actionPileArray = thisPlayer["Action_Pile"].toArray();
-        //QVector<int> actionPileVector;
         QJsonArray blueManGroup = thisPlayer["Blue_Pile"].toArray();
         QJsonArray redGroup = thisPlayer["Red_Pile"].toArray();
         QJsonArray greenGroup = thisPlayer["Green_Pile"].toArray();
         QJsonArray purpleGroup = thisPlayer["Purple_Pile"].toArray();
 
-
-        //std::cout << actionPileArray.size() << std::endl;
         for(auto action : actionPileArray)
             newPlayer.actionPile.push_back(action.toInt());
 
@@ -72,34 +55,27 @@ void GameState::deserialize(QByteArray serializedGameState)
     playerButtonsEnabled = jsonObj["Player_Buttons_Enabled"].toBool();
 
     QJsonArray actionCardStackArr = jsonObj["Action_Card_Stack"].toArray();
-    //std::copy (actionCardStackArr.begin(), actionCardStackArr.end(), std::back_inserter(actionCardStack));
+
 
     for (auto action : actionCardStackArr){
-        //qDebug() << i.toString();
         actionCardStack.append(action.toInt());
     }
 
     QJsonArray personCardStackArr = jsonObj["People_Card_Stack"].toArray();
-    // std::copy (personCardStackArr.begin(), personCardStackArr.end(), std::back_inserter(personCardStack));
+
     for (auto person : personCardStackArr){
-        //qDebug() << i.toString();
         personCardStack.append(person.toInt());
     }
 
     QJsonArray tableauArr = jsonObj["Tableau"].toArray();
-    //std::copy (tableau.begin(), tableau.end(), std::back_inserter(tableauArr));
+
     for (auto person : tableauArr){
-        //qDebug() << i;
-        //std::cout <<"finding in tableau: "<< person << std::endl;
         tableau.append(person.toInt());
     }
 
     QJsonArray tableauEnabledArr = jsonObj["Tableau_Enabled"].toArray();
-    //std::copy (tableau.begin(), tableau.end(), std::back_inserter(tableauArr));
     tableauCardIsEnabled.clear();
     for (auto isEnabled : tableauEnabledArr){
-        //qDebug() << i;
-
         tableauCardIsEnabled.append(isEnabled.toBool());
     }
 }
@@ -131,7 +107,6 @@ QByteArray GameState::serialize()
         std::copy (player.purplePeoplePile.begin(), player.purplePeoplePile.end(), std::back_inserter(purpleGroup));
 
         QJsonValue playerName(player.name);
-        cout<<"inserting player name:"<<player.name.toStdString()<<endl;
         playerObj.insert("Action_Pile", actionPileArray);
         playerObj.insert("Blue_Pile", blueManGroup);
         playerObj.insert("Red_Pile", redGroup);
@@ -142,13 +117,6 @@ QByteArray GameState::serialize()
         playerObj.insert("Name", playerName);
 
         jsonPlayerArr.append(playerObj);
-
-
-        // frameObj.insert("Size", frame.size);
-        // std::cout << "saving frame size : " << frame.size << std::endl;
-        // // QString pixelDataString = QString::fromStdString(byteArr.toStdString());
-        // frameObj.insert("Pixels", QLatin1String(byteArr.toBase64()));
-        // jsonFrameArr.append(frameObj);
     }
 
     // serialize the current player index
@@ -159,6 +127,7 @@ QByteArray GameState::serialize()
     jsonObj.insert("Game_over", gameOver);
 
     jsonObj.insert("Player_Buttons_Enabled", playerButtonsEnabled);
+
     // serialize the action card stack
     QJsonArray actionCardStackArr;
     std::copy (actionCardStack.begin(), actionCardStack.end(), std::back_inserter(actionCardStackArr));
@@ -185,20 +154,6 @@ QByteArray GameState::serialize()
     // serialize
     jsonDoc.setObject(jsonObj);
     return jsonDoc.toJson();
-
-
-
-
-    // jsonObj.insert("Model_Frame_Size", model.frameSize);
-    // std::cout << "saving with model frame size " << model.frameSize << std::endl;
-    // jsonObj.insert("Frames", jsonFrameArr);
-    // jsonDoc.setObject(jsonObj);
-
-    // //write to file
-    // QFile file(fileName);
-    // file.open(QIODevice::WriteOnly);
-    // file.write(jsonDoc.toJson());
-    // file.close();
 }
 
 void GameState::resetGameState()

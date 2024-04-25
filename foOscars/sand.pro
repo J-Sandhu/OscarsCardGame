@@ -60,7 +60,6 @@ SOURCES += \
     gamestate.cpp \
     mainwindow.cpp \
     model.cpp \
-    otherplayerhands.cpp \
     player.cpp \
     server.cpp \
     main.cpp
@@ -130,7 +129,6 @@ HEADERS += \
     gamestate.h \
     mainwindow.h \
     model.h \
-    otherplayerhands.h \
     player.h \
     server.h
 

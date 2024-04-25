@@ -43,8 +43,7 @@ public:
     /// \brief gameOver:
     ///  whether the game is over
     bool gameOver;
-    // 48+ 4
-    // 2,3,4,8
+
     ///
     /// \brief actionCardStack:
     /// holds all action cards which have not yet been drawn (deck)
@@ -53,8 +52,6 @@ public:
     /// \brief playerButtonsEnabled:
     ///  indicates when the player should select a target player for a card effect
     bool playerButtonsEnabled;
-    //40 + 6
-    // 2*2, 11*2, 12*4, 29*2
     ///
     /// \brief personCardStack:
     /// holds all player cards which have not yet been drawn (deck)

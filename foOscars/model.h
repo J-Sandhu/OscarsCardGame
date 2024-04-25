@@ -12,7 +12,6 @@ class Model : public QObject
     Q_OBJECT
 public:
     GameState gameState;
-
     int selectedActionCardIDFromPersonalPile;
     bool gameIsStarted;
     explicit Model(QObject *parent = nullptr);
@@ -34,34 +33,133 @@ public:
     /// \param message: QString representing the player's chosen tableau card's index
     ///
     void HandleTableauSelection(long long id, QString message);
+
+    ///
+    /// \brief HandleActionSelection: Handles when a player selects an action card
+    /// \param id socketDescriptor of the sender
+    /// \param message Qstring which represents the selected action card
+    ///
     void HandleActionSelection(long long id, QString message);
+
+    ///
+    /// \brief HandlePlayerName: handles when a player specifies their name.
+    /// \param id socketDescriptor
+    /// \param message name
+    ///
     void HandlePlayerName(long long id, QString message);
+
+    ///
+    /// \brief HandleStartGame: handles when a player clicks the start game button in view
+    /// \param id socketDescriptor
+    ///
     void HandleStartGame(long long id);
+
+    ///
+    /// \brief HandleSelectedPlayer: handles when a player selects another player to sabotage
+    /// \param id socketDescriptor
+    /// \param message selected player
+    ///
+    void HandleSelectedPlayer(long long id, QString message);
+
+    ///
+    /// \brief addNewPlayer: creates a new player within the gameState's players vector
+    /// \param id
     void addNewPlayer(long long id);
 
+    ///
+    /// \brief endGame: ends the game and alerts all clients
+    ///
     void endGame();
 
 
-    //chase's stuff
+    ///
+    /// \brief movementCardComplete: callback for when a player selects a person card to move
+    /// \param indexInTab
+    ///
     void movementCardComplete(int indexInTab);
-    void HandleSelectedPlayer(long long id, QString message);
+
+    //specify integer verions of each color specification to clarify parameters
+    int blue = 0;
+    int green = 1;
+    int purple = 2;
+    int red = 3;
+    int anyColor= -1;
+    int numberOfColors= 4;
+
+    ///
+    /// \brief scoreManipulatorPlayed: Handles when an action card that manipulates score
+    /// \param specifiedColor: effected color as listed above
+    /// \param colorScoreBuff: how much the color effects score
+    /// \param misc: extra information to be specified by specific function
+    ///
     void scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int misc);
-    //card Tuple containns model's ptr function and callback
+
+
+    ///
+    /// \brief cardTuple: tuple to hold information and function pointers associated with an action card
+    ///
     typedef std::tuple<void(Model::*)(int, int, int), QVector<int>, void(Model::*)(int)> cardTuple; //function, array of params, callback (reference lines below)
+
+    ///
+    /// function pointer associated with an action card
+    ///
     typedef void (Model::* cardFunction)(int, int, int);
+
+    ///
+    /// function pointer associated with 2-part(further player input) action cards
+    ///
     typedef void (Model::* cardCallBack)(int);
+
+    /// ID of the action card that is currently in play
     int currentAID;
+
+    ///
+    /// \brief populationActionMap: used to populate the actionMap, a
+    /// collection of card index's and their card tuples
+    ///
     void populationActionMap();
 
-    typedef std::tuple<int, int, void (Model::*)(int)> peopleTuple; //cardTuple = correpsonding info (value, color, special func)
-    std::map <int,peopleTuple> peopleMap; // int = person id
+    ///
+    /// \brief peopleTupleL tuple to hold information and function pointers associated with people cards
+    /// //cardTuple = correpsonding info (value, color, special func)
+    ///
+    typedef std::tuple<int, int, void (Model::*)(int)> peopleTuple;
+
+    ///
+    /// \brief peopleMap: map of all people card ids and their tuples
+    ///
+    std::map <int,peopleTuple> peopleMap;
+
+    ///
+    /// \brief actionMap: map of all action card ids and their tuples
+    ///
     std::map <int,cardTuple> actionMap;
+
+    ///
+    /// \brief peopleNameMap: map of people names for chat
+    ///
     std::map<int, QString> peopleNameMap;
 
+    ///
+    /// \brief calulateColorSum: calculates the total number of the specified color a player has
+    /// and its effect on the score
+    /// \param color: color we are looking for
+    /// \param manipultorEnabled: whether or not the score manipulator is active
+    /// \param playerIndex: specified player
+    /// \return
+    ///
     int calulateColorSum(int color, bool manipultorEnabled, int playerIndex);
+
+    ///
+    /// \brief recalculateScore: recalculates and updates the scores of all players/
+    ///
     void recalculateScore();
 
-    //line order cards
+
+    ///
+    /// \brief methods associated with moving cards
+    /// all triple void triple int parameter methods are used in actionCardTuples
+    ///
     void frontToBack(int, int, int);
     void shuffleTableauPlayed(int, int, int);
     void shuffleTableauPlayed16(int, int, int);
@@ -87,20 +185,20 @@ public:
     void blockPlayer(int, int, int);
     void skipPlayer(int, int, int);
 
+    ///
+    /// \brief methods associated with specific cards
+    ///
     void afterYou(int);
     void replacePerson(int);
     void discardPerson(int);
     void disqualification(int);
 
-
-    //blue,green,purple,red
-    int blue = 0;
-    int green = 1;
-    int purple = 2;
-    int red = 3;
-    int anyColor= -1;
-    int numberOfColors= 4;
-
+    ///
+    /// \brief endOfTurn: performs end of turn proceedure including:
+    /// incrementing player turn, checking for end of game, recalculating scores,
+    /// restarting rounds, drawing new action card, alerting server to send
+    /// serialized gameState
+    ///
     void endOfTurn();
 
 
@@ -109,12 +207,37 @@ public:
 
 
 signals:
+    ///
+    /// \brief sendChatToPlayers: alerts the server to send chat messages
+    ///
     void sendChatToPlayers(QString);
+
+    ///
+    /// \brief sendStateToPlayers: alerts the server to send the state to all players
+    ///
     void sendStateToPlayers(QByteArray);
-    void actionCardSelectedFromPersonalPile(Card selectedActionCard);
+
+    ///
+    /// \brief actionCardSelectedFromPersonalPile: alerts the server of the action card
+    /// \param selectedActionCard
+    ///
+    //void actionCardSelectedFromPersonalPile(Card selectedActionCard);
+
+    ///
+    /// \brief updateTableauAfterActionCardSelect:
+    /// alerts the server to alert the view to update the tableau
+    ///
     void updateTableauAfterActionCardSelect();
-    void gameInitializedSignal();
+
+    ///
+    /// \brief sendStateToPlayer: send the state to a specific player
+    /// \param playerIndex: index of player to send to
+    ///
     void sendStateToPlayer(QByteArray, int playerIndex);
+
+    ///
+    /// \brief displayWinnerAndConfetti
+    /// alert the server to alert the view to show confetti
     void displayWinnerAndConfetti();
 
 
@@ -208,6 +331,10 @@ private:
     ///
     void populatePeopleMap();
 
+    ///
+    /// \brief drawActionCard: draws the specified number of action cards
+    /// \param numberOfCards
+    ///
     void drawActionCard(int numberOfCards);
 
 
@@ -222,10 +349,6 @@ private:
     /// \brief shuffles the cards in the tableau without modifying people card stack
     ///
     void shuffleTableau();
-
-
-
-
 };
 
 #endif // MODEL_H

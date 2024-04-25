@@ -12,7 +12,7 @@ public:
 
     QVector <b2Body*> confettiVectors;
 
-    int screenX; //have to scale to fit screen later
+    int screenX;
     int screenY;
     int confettiTimeLength;
     int showConfettiCount = 0;
