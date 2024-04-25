@@ -426,9 +426,16 @@ void MainWindow::actionCardClicked()
 
 void MainWindow::updateView()
 {
+
+
     showCardsOnTableau();
     showCardsInHand();
     showPlayerButtons();
+
+    if(gameState.gameOver)
+    {
+        displayWinnerAndConfettiSlot();
+    }
 
     QString round("Round: ");
     round.append(QString::number(gameState.round-1));
