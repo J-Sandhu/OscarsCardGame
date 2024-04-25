@@ -427,15 +427,18 @@ void MainWindow::actionCardClicked()
 void MainWindow::updateView()
 {
 
+    std::cout<<"game over bool:"<< gameState.gameOver<<std::endl;
+    if(gameState.gameOver)
+    {
+        std::cout<<"Gets into game over updateView"<<std::endl;
+        displayWinnerAndConfettiSlot();
+    }
 
     showCardsOnTableau();
     showCardsInHand();
     showPlayerButtons();
 
-    if(gameState.gameOver)
-    {
-        displayWinnerAndConfettiSlot();
-    }
+
 
     QString round("Round: ");
     round.append(QString::number(gameState.round-1));

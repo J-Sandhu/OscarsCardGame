@@ -67,9 +67,7 @@ void GameState::deserialize(QByteArray serializedGameState)
 
     round = jsonObj["Round"].toInt();
 
-
-
-    gameOver = jsonObj["Game_over"].toInt();
+    gameOver = jsonObj["Game_over"].toBool();
 
     playerButtonsEnabled = jsonObj["Player_Buttons_Enabled"].toBool();
 
