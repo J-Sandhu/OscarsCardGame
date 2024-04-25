@@ -623,7 +623,7 @@ void Model::dealNewActionCard(int unused2, int unused, int unused1)
 {
     for(int i = 0; i< gameState.players.size(); i++)
     {
-        for(j=0; j<gameState.players.at(i).actionPile.size();i++)
+        for(int j=0; j<gameState.players.at(i).actionPile.size();i++)
         {
             int id = gameState.players.at(i).actionPile.at(j);
             gameState.players.at(i).actionPile.removeAt(j);
