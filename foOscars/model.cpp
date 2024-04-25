@@ -574,7 +574,13 @@ void Model::populateGameState()
 
     // populate the vector with the ids of action cards
     for(int i=0; i<49; i++)
+    {
+        // cards we no longer want 20, 42, 17, 45
+        if(i == 20 || i == 42 || i == 17 ||i == 45)
+            continue;
+
         gameState.actionCardStack.push_back(i);
+    }
 
     // push back values for the duplicate cards
     // 2, 3 4 8
