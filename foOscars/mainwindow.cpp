@@ -102,6 +102,8 @@ void MainWindow::connectClicked()
         ui->ipLine->setReadOnly(true);
         ui->portLine->setReadOnly(true);
         ui->playerNameLine->setReadOnly(true);
+        ui->connectButton->setEnabled(false);
+        ui->hostButton->setEnabled(false);
         clientSendMessage(protocolName + ui->playerNameLine->text().toStdString());            //we can figure out the protocol later
     }
     else
@@ -215,6 +217,7 @@ void MainWindow::onStartClicked()
     clientSendMessage(protocolStartGame);
     ui->winnerNameLabel->setVisible(false);
     ui->endGameButton->setEnabled(true);
+    ui->startbutton->setEnabled(false);
 }
 
 void MainWindow::showCardsOnTableau()
