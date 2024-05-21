@@ -193,6 +193,7 @@ void MainWindow::clientSendMessage(std::string message)
 
 void MainWindow::loadResources()
 {
+
     for(int i = 0; i<49 ; i++)
     {
         QString filename = QString::number(i);

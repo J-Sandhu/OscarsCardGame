@@ -680,253 +680,18 @@ void Model::generateRandomHands()
 
 void Model::populatePeopleMap()
 {
-    //(value, color, special func)
-
-
-    //0 - the rock
-    peopleTuple tuple(2,0, nullptr);
-    //int= card id, tuple contains correspinding card's info
-    peopleMap.insert(std::pair<int,peopleTuple>(0,tuple));
-    peopleNameMap.insert(std::pair<int,QString>(0,tr("The Rock")));
-
-    //1- charlie chaplin
-    peopleTuple tuple1(2,0, nullptr);
-    //int= card id, tuple contains correspinding card's info
-    peopleMap.insert(std::pair<int,peopleTuple>(1,tuple1));
-    peopleNameMap.insert(std::pair<int,QString>(1,tr("Charlie Chaplin")));
-
-    //2- Background Actor
-    peopleTuple tuple2(1,0, nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(2,tuple2));
-     peopleNameMap.insert(std::pair<int,QString>(2,tr("Background actor")));
-
-
-    //4-bob hope
-     peopleTuple tuple4(3,0,nullptr);
-     peopleMap.insert(std::pair<int,peopleTuple>(4,tuple4));
-     peopleNameMap.insert(std::pair<int,QString>(4,tr("Bob Hope")));
-
-
-    //3-Washed up action star
-    peopleTuple tuple3(1,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(3,tuple3));
-    peopleNameMap.insert(std::pair<int,QString>(3,tr("Washed up action star")));
-
-
-    //5-Peter O'tool
-    peopleTuple tuple5(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(5,tuple5));
-    peopleNameMap.insert(std::pair<int,QString>(5,tr("Peter O'Toole")));
-
-
-    //7-Kevin Hart
-    peopleTuple tuple6(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(6,tuple6));
-    peopleNameMap.insert(std::pair<int,QString>(6,tr("Kevin Hart")));
-
-
-    //8- KILLEM murphey
-    peopleTuple tuple7(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(7,tuple7));
-    peopleNameMap.insert(std::pair<int,QString>(7,tr("Cillian Murphy")));
-
-    //9-Marlon Brando
-    peopleTuple tuple8(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(8,tuple8));
-    peopleNameMap.insert(std::pair<int,QString>(8,tr("Marlon Brando")));
-
-    //10-Joaquin Pheonix
-    peopleTuple tuple9(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(9,tuple9));
-    peopleNameMap.insert(std::pair<int,QString>(9,tr("Bradley Cooper")));
-
-    //11-brad
-    peopleTuple tuple10(2,0,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(10,tuple10));
-    peopleNameMap.insert(std::pair<int,QString>(10,tr("Joaquin Phoenix")));
-
-
-    //GREEN LINE
-
-
-
-    //12-Boom mike
-    peopleTuple tuple11(1,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(11,tuple11));
-    peopleNameMap.insert(std::pair<int,QString>(11,tr("Boom Mic Guy")));
-
-    //13- Film Crew
-    peopleTuple tuple12(1,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(12,tuple12));
-    peopleNameMap.insert(std::pair<int,QString>(12,tr("Film Crew")));
-
-    //14- Stunt Double
-    peopleTuple tuple13(1,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(13,tuple13));
-    peopleNameMap.insert(std::pair<int,QString>(13,tr("Stunt Double")));
-
-
-    //15- Some Thheater kid
-    peopleTuple tuple14(1,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(14,tuple14));
-    peopleNameMap.insert(std::pair<int,QString>(14,tr("Some Theater Kid")));
-
-    //16- Interviwer
-    peopleTuple tuple15(1,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(15,tuple15));
-    peopleNameMap.insert(std::pair<int,QString>(15,tr("Interviewer")));
-
-    //17- eyelash
-    peopleTuple tuple16(2,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(16,tuple16));
-    peopleNameMap.insert(std::pair<int,QString>(16,tr("Billie Eilish")));
-
-    //18- WOLFGANG
-    peopleTuple tuple17(3,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(17,tuple17));
-    peopleNameMap.insert(std::pair<int,QString>(17,tr("Wolfgang Puck")));
-
-    //19- Phin
-    peopleTuple tuple18(2,1,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(18,tuple18));
-    peopleNameMap.insert(std::pair<int,QString>(18,tr("Finneas O'Connell")));
-
-    //PURPLe
-
-    //20- ROMAN
-    peopleTuple tuple19(-5,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(19,tuple19));
-        peopleNameMap.insert(std::pair<int,QString>(19,tr("Roman Polanski")));
-
-
-    //21- John Ford
-    peopleTuple tuple20(4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(20,tuple20));
-    peopleNameMap.insert(std::pair<int,QString>(20,tr("John Ford")));
-
-    //22- waititi
-    peopleTuple tuple21(2,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(21,tuple21));
-    peopleNameMap.insert(std::pair<int,QString>(21,tr("Taika Waititi")));
-
-
-    //23- walt
-    peopleTuple tuple22(4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(22,tuple22));
-    peopleNameMap.insert(std::pair<int,QString>(22,tr("Walt Disney")));
-
-    //24- aby
-    peopleTuple tuple23(-4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(23,tuple23));
-    peopleNameMap.insert(std::pair<int,QString>(23,tr("Abby Lee Miller")));
-
-
-    //25- james ivory
-    peopleTuple tuple24(4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(24,tuple24));
-    peopleNameMap.insert(std::pair<int,QString>(24,tr("James Ivory")));
-
-
-    //26- will wieler
-    peopleTuple tuple25(4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(25,tuple25));
-    peopleNameMap.insert(std::pair<int,QString>(25,tr("Will Wieler")));
-
-
-    //27- Nolan
-    peopleTuple tuple26(4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(26,tuple26));
-    peopleNameMap.insert(std::pair<int,QString>(26,tr("Christopher Nolan")));
-
-
-    //28- greta Gerwig
-    peopleTuple tuple27(4,purple,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(27,tuple27));
-    peopleNameMap.insert(std::pair<int,QString>(27,tr("Greta Gerwig")));
-
-
-    //reds
-
-    //29-emma watson
-    peopleTuple tuple28(2, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(28,tuple28));
-    peopleNameMap.insert(std::pair<int,QString>(28,tr("Emma Watson")));
-
-
-
-    //30-background actress
-    peopleTuple tuple29(1, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(29,tuple29));
-    peopleNameMap.insert(std::pair<int,QString>(29,tr("Background Actress")));
-
-
-    //31-Greer Garson
-    peopleTuple tuple30(1, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(30,tuple30));
-    peopleNameMap.insert(std::pair<int,QString>(30,tr("Greer Garson")));
-
-
-    //32-Micheal yeoh
-    peopleTuple tuple31(2, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(31,tuple31));
-    peopleNameMap.insert(std::pair<int,QString>(31,tr("Michelle Yeoh")));
-
-
-    //33-Tatum o'neal
-    peopleTuple tuple32(2, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(32,tuple32));
-    peopleNameMap.insert(std::pair<int,QString>(32,tr("Tatum O'Neal")));
-
-
-    //34- the agles watrees
-    peopleTuple tuple33(1, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(33,tuple33));
-    peopleNameMap.insert(std::pair<int,QString>(33,tr("Los Angeles Waitress")));
-
-
-    //35-kat hep
-    peopleTuple tuple34(3, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(34,tuple34));
-    peopleNameMap.insert(std::pair<int,QString>(34,tr("Katherine Hepburn")));
-
-
-    //36-jen law
-    peopleTuple tuple35(3, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(35,tuple35));
-    peopleNameMap.insert(std::pair<int,QString>(35,tr("Jennifer Lawrence")));
-
-
-    //37-Meryl
-    peopleTuple tuple36(5, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(36,tuple36));
-    peopleNameMap.insert(std::pair<int,QString>(36,tr("Meryl Streep")));
-
-
-
-    //38-Margo Robbie
-    peopleTuple tuple37(3, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(37,tuple37));
-    peopleNameMap.insert(std::pair<int,QString>(37,tr("Margot Robbie")));
-
-
-    //39-patricia art
-    peopleTuple tuple38(2, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(38,tuple38));
-    peopleNameMap.insert(std::pair<int,QString>(38,tr("Patricia Arquette")));
-
-
-    //40- emma stone
-    peopleTuple tuple39(4, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(39,tuple39));
-    peopleNameMap.insert(std::pair<int,QString>(39,tr("Emma Stone")));
-
-
-    //41- gaga
-    peopleTuple tuple40(2, red,nullptr);
-    peopleMap.insert(std::pair<int,peopleTuple>(40,tuple40));
-    peopleNameMap.insert(std::pair<int,QString>(40,tr("Lady Gaga")));
-
-
+    QFile file(":/people/peopleInfo");
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    while(!file.atEnd())
+    {
+        QString personInfo = file.readLine();
+        QStringList list = personInfo.split(",");
+
+        peopleTuple tuple(list.at(1).toInt(),list.at(2).toInt(),list.at(3));
+        peopleMap.insert(std::pair<int,peopleTuple>(list.at(0).toInt(),tuple));
+    }
+    file.close();
 }
 
 
@@ -992,21 +757,15 @@ void Model::mixAfterTurn(int unused, int unused1, int unuesed2)
 
 
 
-    if(std::get<2>(peopleMap.at(personCollectedId))!=nullptr)
-    {
 
-
-    }
-    else
-    {
-        gameState.round+=1;
+    gameState.round+=1;
         if (gameState.round==4)
             endGame();
         else
         {
             //some function that puts 10 people cards from deck into tableau
         }
-    }
+
     //could be more based on the people card picked up
     drawActionCard(1);
 
@@ -1299,7 +1058,7 @@ void Model::endOfTurn()
 
     QString playerCollectionMessage= gameState.players.at(gameState.currentPlayerIndex).name;
     playerCollectionMessage.append(tr(" collected "));
-    playerCollectionMessage.append(peopleNameMap.at(personCollectedId));
+    playerCollectionMessage.append(std::get<2>(peopleMap.at(personCollectedId)));
     playerCollectionMessage.append(tr(", worth "));
     playerCollectionMessage.append(QString::number(score));
     playerCollectionMessage.append(tr(" points"));

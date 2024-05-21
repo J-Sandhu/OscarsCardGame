@@ -123,7 +123,7 @@ public:
     /// \brief peopleTupleL tuple to hold information and function pointers associated with people cards
     /// //cardTuple = correpsonding info (value, color, special func)
     ///
-    typedef std::tuple<int, int, void (Model::*)(int)> peopleTuple;
+    typedef std::tuple<int, int,QString> peopleTuple;
 
     ///
     /// \brief peopleMap: map of all people card ids and their tuples
