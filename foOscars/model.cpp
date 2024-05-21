@@ -119,20 +119,18 @@ void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
 
         for (int i = 0; i<gameState.tableau.size(); i++)
         {
-            peopleTuple person = peopleMap.at(gameState.tableau.at(i));
-            auto[value, color, specialFunc] = person;
-            if(color == specifiedColor)
-                newVector.replace(i,true);
+            int colorOfPerson = std::get<1>(peopleMap.at(gameState.tableau.at(i)));
+
+            if(colorOfPerson == specifiedColor)
+                gameState.tableauCardIsEnabled.replace(i,true);
+            else
+                gameState.tableauCardIsEnabled.replace(i,false);
         }
-        gameState.tableauCardIsEnabled = newVector;
     }
     else
     {
-        QVector<bool> newEnabledVector;
-        for(int i =0; i<gameState.tableau.size(); i++)
-            newEnabledVector.push_back(true);
-
-        gameState.tableauCardIsEnabled = newEnabledVector;
+     for(int i =0; i<gameState.tableau.size(); i++)
+        gameState.tableauCardIsEnabled.replace(i,true);
     }
 
     emit sendStateToPlayer(gameState.serialize(), gameState.currentPlayerIndex);
