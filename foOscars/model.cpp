@@ -108,29 +108,23 @@ void Model::decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModificati
 }
 
 
-void Model::movementCardPlayed(int specifiedColor, int unused, int unused1)
+void Model::movementCardPlayed(int enabledColor, int unused, int unused1)
 {
-    if (specifiedColor != -1){
-        // create the vector of non-enabled tableau
-        QVector<bool> newVector;
-
-        for(int j =0; j<gameState.tableau.size(); j++)
-            newVector.push_back(false);
-
+    if (enabledColor == anyColor){
+        for(int i =0; i<gameState.tableau.size(); i++)
+            gameState.tableauCardIsEnabled.replace(i,true);
+    }
+    else
+    {
         for (int i = 0; i<gameState.tableau.size(); i++)
         {
-            int colorOfPerson = std::get<1>(peopleMap.at(gameState.tableau.at(i)));
+            int colorOfPersonCard = std::get<1>(peopleMap.at(gameState.tableau.at(i)));
 
-            if(colorOfPerson == specifiedColor)
+            if(colorOfPersonCard == enabledColor)
                 gameState.tableauCardIsEnabled.replace(i,true);
             else
                 gameState.tableauCardIsEnabled.replace(i,false);
         }
-    }
-    else
-    {
-     for(int i =0; i<gameState.tableau.size(); i++)
-        gameState.tableauCardIsEnabled.replace(i,true);
     }
 
     emit sendStateToPlayer(gameState.serialize(), gameState.currentPlayerIndex);
