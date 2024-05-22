@@ -13,8 +13,8 @@ using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
     , clientSocket(new QTcpSocket(this))
+    , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     //enable the connection buttons and text
     ui->connectButton->setEnabled(true);
     ui->hostButton->setEnabled(true);
+    ui->roundLabel->setText("Round: 0");
 
     ui->ipLine->setEnabled(true);
     ui->ipLine->setEnabled(true);
@@ -165,7 +166,7 @@ void MainWindow::displayMessage(const QString& str)
     ui->receivedMessageText->append(str);
 }
 
-void MainWindow::displayError(QAbstractSocket::SocketError socketError)
+void MainWindow::displayError()
 {
     cout<<clientSocket->errorString().toStdString()<<endl;
 }
@@ -326,7 +327,7 @@ void MainWindow::updateView()
     showPlayerButtons();
 
     QString round("Round: ");
-    round.append(QString::number(gameState.round-1));
+    round.append(QString::number(gameState.round));
 
     ui->roundLabel->setText(round);
     QString nominees("Nominees Remaining: ");
@@ -345,7 +346,7 @@ void MainWindow::showPlayerButtons()
 {
     qDeleteAll(playerButtonWidget->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
 
-    for(int i = 0; i < gameState.players.size(); i++){
+    for(int i = 0; i <(int) gameState.players.size(); i++){
         QString playerName = gameState.players.at(i).name;
         QPushButton* button = new QPushButton(this);
 
@@ -403,7 +404,7 @@ void MainWindow::displayWinnerName()
     int highScore = gameState.players.at(0).score;
 
     // Iterate through  players to find highest score
-    for (int i = 1; i < gameState.players.size(); i++)
+    for (int i = 1; i <(int) gameState.players.size(); i++)
     {
         if (gameState.players.at(i).score > highScore)
         {

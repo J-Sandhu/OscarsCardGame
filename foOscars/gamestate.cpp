@@ -86,7 +86,7 @@ QByteArray GameState::serialize()
     QJsonDocument jsonDoc;
     QJsonArray jsonPlayerArr;
 
-    for(int i =0; i<players.size(); i++){
+    for(int i =0; i<(int)players.size(); i++){
         Player player = players.at(i);
 
         QJsonObject playerObj;

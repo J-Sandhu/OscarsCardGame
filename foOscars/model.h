@@ -6,6 +6,7 @@
 #include "gamestate.h"
 #include <QRandomGenerator>
 #include <QObject>
+#include <algorithm>
 
 class Model : public QObject
 {
@@ -84,7 +85,10 @@ public:
     int purple = 2;
     int red = 3;
     int anyColor= -1;
+    int gray=-2;
     int numberOfColors= 4;
+
+
 
     ///
     /// \brief scoreManipulatorPlayed: Handles when an action card that manipulates score
@@ -92,18 +96,19 @@ public:
     /// \param colorScoreBuff: how much the color effects score
     /// \param misc: extra information to be specified by specific function
     ///
-    void scoreManipulatorPlayed(int specifiedColor, int colorScoreBuff, int misc);
+    void scoreManipulatorPlayed();
 
 
     ///
     /// \brief cardTuple: tuple to hold information and function pointers associated with an action card
     ///
-    typedef std::tuple<void(Model::*)(int, int, int), QVector<int>, void(Model::*)(int)> cardTuple; //function, array of params, callback (reference lines below)
+    typedef std::tuple<void(Model::*)(), QVector<int>, void(Model::*)(int)> cardTuple; //function, array of params, callback (reference lines below)
 
     ///
     /// function pointer associated with an action card
     ///
-    typedef void (Model::* cardFunction)(int, int, int);
+    typedef void (Model::* cardFunction)();
+
 
     ///
     /// function pointer associated with 2-part(further player input) action cards
@@ -160,30 +165,33 @@ public:
     /// \brief methods associated with moving cards
     /// all triple void triple int parameter methods are used in actionCardTuples
     ///
-    void frontToBack(int, int, int);
-    void shuffleTableauPlayed(int, int, int);
-    void shuffleTableauPlayed16(int, int, int);
-    void shuffleTableauPlayed17(int, int, int);
-    void reverseCardPlayed(int, int, int);
-    void newLinePlayed(int, int, int);
-    void escapeCardPlayed1stPart(int, int, int);
-    void escapeCardPlayed2ndPart(int);
-    void addToTableau(int numCardsToShuffle, int, int);
-    void addFromTopThree(int, int, int);
-    void merylToFront(int, int, int);
-    void takeDiscardedAction(int, int, int);
-    void crewToFront(int, int, int);
-    void moveClosestBlueToFront(int, int, int);
-    void choosePlayer(int, int, int);
-    void mixAfterTurn(int,int,int);
+    void frontToBack();
+    void shuffleTableauPlayed();
+
+    void reverseLine();
+    void newLine();
+    void escapeCardPlayed();
+    void escapeCardPlayedCallBack(int);
+    void addToTableau();
+
+    void personToFront();
+    void takeDiscardedAction();
+
+    void moveClosestColorToFront();
+    void choosePlayer();
+    void mixAfterTurn();
     void swapHandsComplete(int victimPlayer);
-    void discardOneAction(int, int, int);
-    void dealNewActionCard(int, int, int);
-    void allRemoveAnAction(int, int, int);
-    void drawThreeActionNoNoble(int, int, int);
-    void endDay(int, int, int);
-    void blockPlayer(int, int, int);
-    void skipPlayer(int, int, int);
+    void discardOneAction();
+    void dealNewActionCard();
+    void allRemoveAnAction();
+    void drawExtraActionNoNoble();
+    void endDay();
+
+    void skipPlayer();
+
+
+    void incrementPlayerTurn();
+    void collectPerson();
 
     ///
     /// \brief methods associated with specific cards
@@ -199,7 +207,7 @@ public:
     /// restarting rounds, drawing new action card, alerting server to send
     /// serialized gameState
     ///
-    void endOfTurn();
+    void endOfTurn(bool mixAfterTurn=false, bool collectOnTurn=true, bool emitOnTurn=true,int drawExtraAction=0);
 
 
 
@@ -254,29 +262,29 @@ private:
     /// parameters
     ///
 
-    ///
-    /// \brief Adds additional points to the current players score calculator
-    /// \param victimPlayerID
-    /// \param scoreModification
-    /// \param unused paramter
-    ///
-    void addPointsFromActionCard(int scoreModification, int unused1, int unused2);
+    // ///
+    // /// \brief Adds additional points to the current players score calculator
+    // /// \param victimPlayerID
+    // /// \param scoreModification
+    // /// \param unused paramter
+    // ///
+    // void addPointsFromActionCard(int scoreModification, int unused1, int unused2);
 
-    ///
-    /// \brief Modifies color multiplier of the current players score calculator
-    /// \param index of color that will be modified
-    /// \param scoreModification the amount the point values of that color are modified
-    /// \param unused parameter
-    ///
-    void addPointsForColor(int color, int scoreModification, int unused1);
+    // ///
+    // /// \brief Modifies color multiplier of the current players score calculator
+    // /// \param index of color that will be modified
+    // /// \param scoreModification the amount the point values of that color are modified
+    // /// \param unused parameter
+    // ///
+    // void addPointsForColor(int color, int scoreModification, int unused1);
 
-    ///
-    /// \brief modifies the specified player's score calculator.
-    /// \param index of player to be sabotaged
-    /// \param scoreModification the amount the victim's score will be affected by
-    /// \param unused parameter
-    ///
-    void decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModification, int unused1);
+    // ///
+    // /// \brief modifies the specified player's score calculator.
+    // /// \param index of player to be sabotaged
+    // /// \param scoreModification the amount the victim's score will be affected by
+    // /// \param unused parameter
+    // ///
+    // void decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModification, int unused1);
 
     ///
     /// \brief modifies the position of the specified card within the tableau
@@ -286,12 +294,12 @@ private:
     /// \param positionModification number of positions the card is being used
     /// \param unused parameter
     ///
-    void movementCardPlayed(int requiredColor, int unused1, int unused2);
+    void movementCardPlayed();
 
     ///
     /// \brief For card 29. makes all negative cards no longer detriment score
     ///
-    void neutralizeGrays(int unused,int unused1,int unused2);
+    void neutralizeGrays();
 
     ///
     /// \brief This method will replace the line
@@ -316,7 +324,7 @@ private:
     /// \brief creates a random tableau and puts it into the game state
     ///  requires that game has been populated
     ///
-    void generateRandomTableau(QVector<int> availablePeople, int size);
+    void generateRandomTableau(int size);
 
     ///
     /// \brief populates all player's hands with random action cards
@@ -345,10 +353,10 @@ private:
     ///
     void populateActionMap();
 
-    ///
-    /// \brief shuffles the cards in the tableau without modifying people card stack
-    ///
-    void shuffleTableau();
+    // ///
+    // /// \brief shuffles the cards in the tableau without modifying people card stack
+    // ///
+    // void shuffleTableau();
 };
 
 #endif // MODEL_H

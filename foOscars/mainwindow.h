@@ -106,7 +106,7 @@ public slots:
     /// \param socketError
     /// Alerts the user that something has gone wrong with
     /// network connection
-    void displayError(QAbstractSocket::SocketError socketError);
+    void displayError();
 
     ///
     /// \brief sendChatMessage
