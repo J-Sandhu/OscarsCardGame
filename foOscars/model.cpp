@@ -84,29 +84,6 @@ void Model::HandleSelectedPlayer(long long id, QString message)
     ((*this).*callback)(returnedParam);
 }
 
-// void Model::addPointsFromActionCard(int scoreModification, int unused1, int unused2)
-// {
-//     // Go into the current player's score manipulator and modify the "additional point" index within
-//     // score manipulator array.
-//     gameState.players.at(gameState.currentPlayerIndex).scoreManipulators[4] += scoreModification;
-//     endOfTurn();
-// }
-
-// void Model::addPointsForColor(int color, int scoreModification, int unused1)
-// {
-//     // go into the current player's score manipulator and modify the proper color's additional point field within
-//     // within the score manipulator array.
-//     gameState.players.at(gameState.currentPlayerIndex).scoreManipulators[color] = 1;
-//     endOfTurn();
-// }
-
-// void Model::decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModification, int unused1)
-// {
-//     // go into the victim players score manipulator and modify the "additional point" index within the score manipulator array
-//     gameState.players.at(victimPlayerIndex).scoreManipulators[4] += scoreModification;
-//     endOfTurn();
-// }
-
 
 void Model::movementCardPlayed()
 {
@@ -528,27 +505,6 @@ void Model::generateRandomTableau(int size)
 
     gameState.tableauCardIsEnabled = newVector;
 }
-
-// void Model::shuffleTableau()
-// {
-//     QVector<int> tableauCopy(gameState.tableau);
-
-//     gameState.tableau.clear();
-//     for(int i = 0; i<tableauCopy.size(); i++)
-//     {
-//         int randomTableauIndex = QRandomGenerator::global()->bounded(tableauCopy.size());
-//         gameState.tableau.push_back(tableauCopy.at(randomTableauIndex));
-//         tableauCopy.removeAt(randomTableauIndex);
-//     }
-
-//     QVector<bool> newVector;
-//     for(int i=0; i<gameState.tableau.size(); i++)
-//         newVector.push_back(false);
-
-//     gameState.tableauCardIsEnabled = newVector;
-
-// }
-
 
 void Model::generateRandomHands()
 {

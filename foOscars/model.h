@@ -225,11 +225,6 @@ signals:
     ///
     void sendStateToPlayers(QByteArray);
 
-    ///
-    /// \brief actionCardSelectedFromPersonalPile: alerts the server of the action card
-    /// \param selectedActionCard
-    ///
-    //void actionCardSelectedFromPersonalPile(Card selectedActionCard);
 
     ///
     /// \brief updateTableauAfterActionCardSelect:
@@ -263,28 +258,6 @@ private:
     ///
 
     // ///
-    // /// \brief Adds additional points to the current players score calculator
-    // /// \param victimPlayerID
-    // /// \param scoreModification
-    // /// \param unused paramter
-    // ///
-    // void addPointsFromActionCard(int scoreModification, int unused1, int unused2);
-
-    // ///
-    // /// \brief Modifies color multiplier of the current players score calculator
-    // /// \param index of color that will be modified
-    // /// \param scoreModification the amount the point values of that color are modified
-    // /// \param unused parameter
-    // ///
-    // void addPointsForColor(int color, int scoreModification, int unused1);
-
-    // ///
-    // /// \brief modifies the specified player's score calculator.
-    // /// \param index of player to be sabotaged
-    // /// \param scoreModification the amount the victim's score will be affected by
-    // /// \param unused parameter
-    // ///
-    // void decreaseOtherPlayerPoints(int victimPlayerIndex, int scoreModification, int unused1);
 
     ///
     /// \brief modifies the position of the specified card within the tableau
@@ -353,10 +326,7 @@ private:
     ///
     void populateActionMap();
 
-    // ///
-    // /// \brief shuffles the cards in the tableau without modifying people card stack
-    // ///
-    // void shuffleTableau();
+
 };
 
 #endif // MODEL_H
