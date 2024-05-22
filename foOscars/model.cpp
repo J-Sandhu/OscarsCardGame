@@ -40,6 +40,9 @@ void Model::HandleTableauSelection(long long id, QString message)
     int returnedParam = message.toInt();
     cardTuple actionCard = actionMap.at(currentAID);
     auto[function, params, callback] = actionCard;
+
+    std::cout<<"Current AID: "<<currentAID<<" and returned param: "<<returnedParam<<std::endl;
+
     ((*this).*callback)(returnedParam);
 }
 
@@ -59,6 +62,7 @@ void Model::HandleActionSelection(long long id, QString message)
 
 
     cardFunction cardFunction= std::get<0>(actionMap.at(currentAID));
+
 
     ((*this).*cardFunction)();
 }
@@ -115,7 +119,7 @@ void Model::movementCardComplete(int locationInTab)
     auto params = std::get<1>(actionMap.at(currentAID));
     int numMovements =params.at(1);
 
-
+    std::cout<<"Location in Tab: "<<locationInTab<<" and numOfMovemnets: "<<numMovements<<endl;
     if(locationInTab-numMovements<0)
         gameState.tableau.move(locationInTab,0);
     else if(locationInTab-numMovements > gameState.tableau.size()-1)
@@ -605,17 +609,16 @@ void Model::populateActionMap()
         QString cardInfo = file.readLine();
         QStringList list = cardInfo.split(",");
 
-        std::cout<<"Got to: "<<list.at(0).toStdString()<<std::endl;
-
         QVector<int> parameters{list.at(2).toInt(),list.at(3).toInt(),list.at(4).toInt()};
-        std::cout<<"Parameters: "<<list.at(2).toStdString()<<" "<<list.at(3).toStdString()<<" "<<list.at(4).toStdString()<<std::endl;
 
         cardTuple tuple;
 
-        if(list.at(5)!="nullptr")
-            tuple= cardTuple(functionMap[list.at(1)],parameters,callBackMap[list.at(5)]);
-        else
+
+
+        if(list.at(5).trimmed()=="nullptr")
             tuple= cardTuple(functionMap[list.at(1)],parameters,nullptr);
+        else
+            tuple= cardTuple(functionMap[list.at(1)],parameters,callBackMap[list.at(5).trimmed()]);
 
         actionMap.insert(std::pair<int,cardTuple>(list.at(0).toInt(),tuple));
     }
