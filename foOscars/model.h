@@ -129,11 +129,43 @@ public:
     /// //cardTuple = correpsonding info (value, color, special func)
     ///
     typedef std::tuple<int, int,QString> peopleTuple;
+    typedef std::pair<QString, void(Model::*)()> functionTuple;
+    typedef std::pair<QString, void(Model::*)(int)> callBackTuple;
 
     ///
     /// \brief peopleMap: map of all people card ids and their tuples
     ///
     std::map <int,peopleTuple> peopleMap;
+
+
+    std::map<QString, void(Model::*)()> functionMap{
+        functionTuple("choosePlayer",&Model::choosePlayer),
+        functionTuple("movementCardPlayed",&Model::movementCardPlayed),
+        functionTuple("shuffleTableauPlayed",&Model::shuffleTableauPlayed),
+        functionTuple("reverseLine",&Model::reverseLine),
+        functionTuple("newLine",&Model::newLine),
+        functionTuple("escapeCardPlayed",&Model::escapeCardPlayed),
+        functionTuple("mixAfterTurn",&Model::mixAfterTurn),
+        functionTuple("addToTableau",&Model::addToTableau),
+        functionTuple("scoreManipulatorPlayed",&Model::scoreManipulatorPlayed),
+        functionTuple("personToFront",&Model::personToFront),
+        functionTuple("moveClosestColorToFront",&Model::moveClosestColorToFront),
+        functionTuple("takeDiscardedAction",&Model::takeDiscardedAction),
+        functionTuple("drawExtraActionNoNoble",&Model::drawExtraActionNoNoble),
+        functionTuple("dealNewActionCard",&Model::dealNewActionCard),
+        functionTuple("allRemoveAnAction",&Model::allRemoveAnAction),
+        functionTuple("endDay",&Model::endDay)};
+
+    std::map<QString,void(Model::*)(int)> callBackMap{
+        callBackTuple("afterYou",&Model::afterYou),
+        callBackTuple("replacePerson",&Model::replacePerson),
+        callBackTuple("movementCardComplete",&Model::movementCardComplete),
+        callBackTuple("discardPerson",&Model::discardPerson),
+        callBackTuple("escapeCardPlayedCallBack",&Model::escapeCardPlayedCallBack),
+        callBackTuple("disqualification",&Model::disqualification),
+        callBackTuple("makeDiscardAction",&Model::makeDiscardAction),
+        callBackTuple("swapHandsComplete",&Model::swapHandsComplete)};
+
 
     ///
     /// \brief actionMap: map of all action card ids and their tuples

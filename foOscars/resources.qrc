@@ -49,6 +49,7 @@
         <file>47.png</file>
         <file>48.png</file>
         <file>37.png</file>
+        <file>actionInfo</file>
     </qresource>
     <qresource prefix="/people">
         <file>0p.png</file>
